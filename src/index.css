@@ -1,4 +1,4 @@
-@import url("https://fonts.googleapis.com/css2?family=Poppins:ital,wght@0,100;0,200;0,300;0,400;0,500;0,600;0,700;0,800;0,900;1,100;1,200;1,300;1,400;1,500;1,600;1,700;1,800;1,900&display=swap");
+@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
 
 @import "tailwindcss";
 
@@ -12,8 +12,11 @@
 
   /* color */
 
-  --color-primary: green;
-  --color-bg-custom: linear-gradient(red, yellow);
+  --color-Primary: #64B5F6;
+  --color-Secondary: #2A4C67;
+  --color-Tertiary: #4C4C4C;
+  --color-bg-custom: #F7F2ED;
+  --color-bg-custom1: #FAF6F3;
 
   /* breakpoint */
   --breakpoint-xxs: 390px;
@@ -183,6 +186,7 @@
   }
   body {
     @apply bg-background text-foreground;
+    background: #F7F2ED;
   }
 }
 
@@ -219,4 +223,35 @@
 
 .bg-custom {
   background: var(--color-bg-custom);
+}
+
+@keyframes waves {
+  0% {
+    transform: scale(0.2);
+    opacity: 0;
+  }
+  50% {
+    opacity: 0.9;
+  }
+  100% {
+    transform: scale(0.9);
+    opacity: 0;
+  }
+}
+
+.waves {
+  width: 150px;
+  height: 150px;
+  animation: waves 3s ease-in-out infinite;
+  opacity: 0;
+}
+
+.wave-1 {
+  animation-delay: 0s;
+}
+.wave-2 {
+  animation-delay: 1s;
+}
+.wave-3 {
+  animation-delay: 2s;
 }
