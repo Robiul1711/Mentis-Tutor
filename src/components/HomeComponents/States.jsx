@@ -1,0 +1,48 @@
+import React from 'react'
+import { CourseIcon, QAIcon, StarIcon, StudentIcon } from '../SVG/Icons'
+import Title from '../common/Title'
+
+const States = () => {
+    const data = [
+        {
+            title:"500+",
+            subtitle:"5 Star Reviews",
+            icon:<StarIcon />
+        },
+        {
+            title:"50,000+",
+            subtitle:"Question Answers",
+            icon:<QAIcon />
+        },
+        {
+            title:"120+",
+            subtitle:"Course Video",
+            icon:<CourseIcon />
+        },
+        {
+            title:"22,225222",
+            subtitle:"Students",
+            icon:<StudentIcon />
+        }
+    ]
+  return (
+    <div className='section-padding-x bg-black py-16 grid grid-cols-2 md:grid-cols-4 '>
+        {
+            data.map((item) => (
+                <div className='flex  gap-4'>
+                    {item.icon}
+                    <div className='flex flex-col '>
+                        <Title level="title32" className="text-white">{item.title}</Title>
+                        <Title level="title20" className="text-Tertiary">{item.subtitle}</Title>
+
+                    </div>
+                </div>
+            ))
+        }
+
+
+    </div>
+  )
+}
+
+export default States
