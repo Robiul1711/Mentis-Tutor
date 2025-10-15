@@ -187,9 +187,13 @@
   body {
     @apply bg-background text-foreground;
     background: #F7F2ED;
+
   }
 }
-
+.dark body {
+  background: #0B1120; /* Dark mode background */
+ 
+}
 .section-padding-x {
   padding-left: 16px;
   padding-right: 16px;
@@ -254,4 +258,8 @@
 }
 .wave-3 {
   animation-delay: 2s;
+}
+
+button {
+  cursor: pointer;
 }

@@ -125,7 +125,7 @@ const MyQuiz = () => {
                 {/* Details */}
                 <td className="p-4">
                   <button className="text-blue-600 font-medium hover:underline">
-                    View
+                    Details
                   </button>
                 </td>
               </tr>
