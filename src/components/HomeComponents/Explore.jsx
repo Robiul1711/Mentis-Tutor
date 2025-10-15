@@ -23,7 +23,7 @@ const Explore = () => {
       </div>
 
       {/* Content Box */}
-      <div className="mt-14 p-6 sm:p-10 border bg-bg-custom1 rounded-2xl flex flex-col lg:flex-row gap-10">
+      <div className="mt-14 p-6 sm:p-10 border bg-bg-custom1 dark:bg-[#0B1120] rounded-2xl flex flex-col lg:flex-row gap-10">
         {/* Left Image */}
         <div className="w-full lg:w-1/2 max-h-[416px] flex justify-center">
           <img
@@ -74,7 +74,7 @@ const Explore = () => {
           <CommonButton link={"/course-details"} variant="secondary" className="mt-6 group w-full sm:w-auto">
             Start Your 2 Day Free Trial
             <span className="rounded-full p-1 bg-black group-hover:bg-secondaryColor ml-2">
-              <MdArrowOutward className="text-primaryColor text-2xl group-hover:text-white" />
+              <MdArrowOutward className="text-primaryColor text-2xl group-hover:text-white dark:text-white" />
             </span>
           </CommonButton>
         </div>

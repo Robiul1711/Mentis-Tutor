@@ -50,8 +50,8 @@ const SideBar = ({ sidebar, open, setOpen }) => {
       <div
         className={`h-full py-6 ${
           open
-            ? "left-0 top-0 w-[320px] z-[220] shadow-lg bg-Secondary overflow-y-auto"
-            : "-left-full xl:w-[350px] w-[320px]"
+            ? "left-0 top-0 w-[280px] z-[220] shadow-lg bg-Secondary overflow-y-auto"
+            : "-left-full xl:w-[300px] w-[280px]"
         }
         bg-Secondary  backdrop-blur-md  flex flex-col gap-8 shadow-md xlg:static fixed transition-all duration-300`}
       >

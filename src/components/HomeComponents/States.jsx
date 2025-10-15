@@ -26,7 +26,7 @@ const States = () => {
         }
     ]
   return (
-    <div className='section-padding-x bg-black py-16 grid grid-cols-2 md:grid-cols-4 '>
+    <div className='section-padding-x bg-black dark:bg-[#0B1120]  py-16 grid grid-cols-2 md:grid-cols-4 '>
         {
             data.map((item) => (
                 <div className='flex  gap-4'>

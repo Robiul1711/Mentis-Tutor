@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="section-padding-x section-padding-y bg-bg-custom1">
+    <footer className="section-padding-x section-padding-y bg-bg-custom1 dark:bg-[#0B1120]">
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-8 pb-8 border-b border-black">
         {/* Logo */}
@@ -44,25 +44,25 @@ const Footer = () => {
         <div className="flex gap-4">
           <a
             href="#"
-            className="p-3 rounded-full bg-white text-custom-primary hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
+            className="p-3 rounded-full bg-white text-custom-primary dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
           >
             <FaFacebookF className="w-4 h-4" />
           </a>
           <a
             href="#"
-            className="p-3 rounded-full bg-white text-custom-primary hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
+            className="p-3 rounded-full bg-white text-custom-primary  dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
           >
             <FaTwitter className="w-4 h-4" />
           </a>
           <a
             href="#"
-            className="p-3 rounded-full bg-white text-custom-primary hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
+            className="p-3 rounded-full bg-white dark:bg-[#110f0f]  dark:border text-custom-primary hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
           >
             <FaInstagram className="w-4 h-4" />
           </a>
           <a
             href="#"
-            className="p-3 rounded-full bg-white text-custom-primary hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
+            className="p-3 rounded-full bg-white text-custom-primary dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
           >
             <FaLinkedinIn className="w-4 h-4" />
           </a>

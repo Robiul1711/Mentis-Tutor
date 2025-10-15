@@ -95,7 +95,7 @@ const EditProfile = () => {
 
       {/* Save Button */}
       <div className="flex justify-end">
-        <Button type="submit" className="bg-Primary rounded-full text-black">
+        <Button type="submit" className="bg-Primary rounded-full ">
           Save Changes
         </Button>
       </div>
