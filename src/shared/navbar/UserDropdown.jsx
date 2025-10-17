@@ -93,9 +93,9 @@ const UserDropdown = () => {
     <div className="relative" ref={dropdownRef}>
       <button
         onClick={toggleDropdown}
-        className="flex items-center gap-2 text-white text-lg"
+        className="flex items-center gap-2 "
       >
-     <img className="w-12 h-12 rounded-full object-cover" src={profile} alt="image" />
+     <img className="w-12 h-12 p-2 bg-white rounded-full object-cover" src={profile} alt="image" />
       </button>
 
       {isOpen && (

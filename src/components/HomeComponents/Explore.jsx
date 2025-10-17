@@ -74,7 +74,7 @@ const Explore = () => {
           <CommonButton link={"/course-details"} variant="secondary" className="mt-6 group w-full sm:w-auto">
             Start Your 2 Day Free Trial
             <span className="rounded-full p-1 bg-black group-hover:bg-secondaryColor ml-2">
-              <MdArrowOutward className="text-primaryColor text-2xl group-hover:text-white dark:text-white" />
+              <MdArrowOutward className="text-primaryColor text-2xl group-hover:text-white text-white" />
             </span>
           </CommonButton>
         </div>

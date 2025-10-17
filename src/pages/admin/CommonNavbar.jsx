@@ -18,7 +18,7 @@ const CommonNavbar = ({ open, setOpen }) => {
         </span>
         <div className="text-black dark:text-white">
           <h1 className="md:text-3xl font-bold">
-            Welcome Back, Jorge Franco!
+            Welcome Back, Iyad!
           </h1>
         </div>
       </div>
