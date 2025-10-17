@@ -1,3 +1,4 @@
+import AllPastPapers from "@/components/admin/AllPastPapers";
 import Dashboard from "@/components/admin/Dashboard";
 import HelpAndSupport from "@/components/admin/HelpAndSupport";
 import Message from "@/components/admin/Message";
@@ -78,8 +79,6 @@ const router = createBrowserRouter([
         path: "/tearms-and-conditions",
         element: <TearmsAndConditions />,
       },
-
-
     ],
   },
   // Admin routes
@@ -102,6 +101,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/my-quiz",
         element: <MyQuiz />, 
+      },
+      {
+        path: "/dashboard/past-papers",
+        element: <AllPastPapers />, 
       },
       {
         path: "/dashboard/help-and-support",

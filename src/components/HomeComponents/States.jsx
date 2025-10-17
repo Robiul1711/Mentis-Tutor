@@ -1,5 +1,5 @@
 import React from 'react'
-import { CourseIcon, QAIcon, StarIcon, StudentIcon } from '../SVG/Icons'
+// import { CourseIcon, QAIcon, StarIcon, StudentIcon } from '../SVG/Icons'
 import Title from '../common/Title'
 
 const States = () => {
@@ -7,26 +7,36 @@ const States = () => {
         {
             title:"500+",
             subtitle:"5 Star Reviews",
-            icon:<StarIcon />
+            // icon:<StarIcon />
         },
         {
             title:"50,000+",
             subtitle:"Question Answers",
-            icon:<QAIcon />
+            // icon:<QAIcon />
         },
         {
             title:"120+",
             subtitle:"Course Video",
-            icon:<CourseIcon />
+            // icon:<CourseIcon />
         },
         {
             title:"22,225222",
             subtitle:"Students",
-            icon:<StudentIcon />
-        }
+            // icon:<StudentIcon />
+        },
+                {
+            title:"500+",
+            subtitle:"5 Star Reviews",
+            // icon:<StarIcon />
+        },
+        {
+            title:"50,000+",
+            subtitle:"Question Answers",
+            // icon:<QAIcon />
+        },
     ]
   return (
-    <div className='section-padding-x bg-black dark:bg-[#0B1120]  py-16 grid grid-cols-2 md:grid-cols-4 '>
+    <div className='section-padding-x bg-black dark:bg-[#0B1120] gap-12  py-16 grid grid-cols-3'>
         {
             data.map((item) => (
                 <div className='flex  gap-4'>

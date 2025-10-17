@@ -5,7 +5,7 @@ export default function WeeklySchedule() {
     {
       time: '8:30 AM - 4:00 PM',
       activities: ['Lesson', 'Lesson', 'Lesson', 'Lesson', 'Lesson', 'Lesson', 'Lesson'],
-      color: 'bg-red-50'
+   
     },
     {
       time: '8:30 AM - 4:00 PM',
@@ -40,8 +40,6 @@ export default function WeeklySchedule() {
   ];
 
   return (
-  
-    
         <div className=" rounded-2xl shadow-xl overflow-hidden">
           {/* Header */}
           <div className="grid grid-cols-8 bg-gradient-to-r from-slate-700 to-slate-800">
@@ -55,7 +53,7 @@ export default function WeeklySchedule() {
 
           {/* Schedule Rows */}
           {schedule.map((row, rowIdx) => (
-            <div key={rowIdx} className={`grid grid-cols-8 ${row.color} border-b border-slate-200 last:border-b-0`}>
+            <div key={rowIdx} className={`grid grid-cols-8  border-b border-slate-200 last:border-b-0`}>
               <div className="p-3 font-medium text-xs text-slate-700 border-r border-slate-200 flex items-center">
                 {row.time}
               </div>
@@ -70,7 +68,5 @@ export default function WeeklySchedule() {
             </div>
           ))}
         </div>
-    
-  
   );
 }

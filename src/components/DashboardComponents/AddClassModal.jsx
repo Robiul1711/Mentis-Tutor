@@ -71,7 +71,7 @@ export default function ClassScheduleDialog() {
 
             <div className="space-y-3 max-h-[450px] overflow-y-auto pr-2">
               {schedule.map((item, index) => (
-                <div key={index} className="grid grid-cols-3 gap-4 text-xs">
+                <div key={index} className="grid grid-cols-3 gap-4 text-sm">
                   <div className="bg-white rounded px-4 py-3">{item.day}</div>
                   <div className="bg-white rounded px-4 py-3">{item.time}</div>
                   <div className="bg-white rounded">

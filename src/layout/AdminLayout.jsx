@@ -1,6 +1,6 @@
 
 
-import { DashboardIcon, HelpIcon, MessageIcon, MyCourseIcon, MyQuizIcon, SettingsIcon } from "@/components/DashboardIcons/DashIcons";
+import { DashboardIcon, HelpIcon, MessageIcon, MyCourseIcon, MyQuizIcon, PastPapersIcon, SettingsIcon } from "@/components/DashboardIcons/DashIcons";
 import CommonNavbar from "@/pages/admin/CommonNavbar";
 import SideBar from "@/pages/admin/SideBar";
 
@@ -48,6 +48,14 @@ const AdminLayout = () => {
     },
     {
       id: 5,
+      icon: <PastPapersIcon  />,
+      text: "Past Papers",
+      path: "/dashboard/past-papers", // main path (optional, if you still want to keep it)
+      activePaths: ["/dashboard/past-papers"], // all paths that should make this item active
+      sublink: false,
+    },
+    {
+      id: 6,
       icon: <HelpIcon />,
       text: "Help & Support",
       path: "/dashboard/help-and-support", // main path (optional, if you still want to keep it)
@@ -55,7 +63,7 @@ const AdminLayout = () => {
       sublink: false,
     },
     {
-      id: 6,
+      id: 7,
       icon: <SettingsIcon  />,
       text: "Settinngs",
       path: "/dashboard/settings", // main path (optional, if you still want to keep it)
