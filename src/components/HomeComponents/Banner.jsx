@@ -15,7 +15,7 @@ const Banner = () => {
           <span className="text-Primary">Mentis.</span>
         </Title>
 
-        <Title level="title20" className="text-gray-600 leading-relaxed">
+        <Title level="title20" className="text-gray-600 dark:text-[#BABABA] leading-relaxed">
           Master GCSE Maths for less than the cost of one tutoring session. Only
           <span className="font-semibold"> £25/month </span>
           for full course videos, past papers, quizzes, and 1-to-1 support.

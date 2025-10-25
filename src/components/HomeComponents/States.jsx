@@ -36,14 +36,14 @@ const States = () => {
         },
     ]
   return (
-    <div className='section-padding-x bg-black dark:bg-[#0B1120] gap-12  py-16 grid grid-cols-3'>
+    <div className='section-padding-x bg-[#1C1C1C] dark:bg-[#0B1120] gap-12  py-16 grid grid-cols-3'>
         {
             data.map((item) => (
                 <div className='flex  gap-4'>
                     {item.icon}
                     <div className='flex flex-col '>
                         <Title level="title32" className="text-white">{item.title}</Title>
-                        <Title level="title20" className="text-Tertiary">{item.subtitle}</Title>
+                        <Title level="title20" className="text-[#BABABA]">{item.subtitle}</Title>
 
                     </div>
                 </div>

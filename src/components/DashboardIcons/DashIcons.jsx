@@ -70,3 +70,30 @@ export const PdfIcon =({className})=>{
 </svg>
     )
 }
+export const ConfidentIcon =({className})=>{
+    return(
+<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#008000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M8 15C8.91212 16.2144 10.3643 17 12 17C13.6357 17 15.0879 16.2144 16 15" stroke="#008000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M8.00897 9H8M16 9H15.991" stroke="#008000" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+    )
+}
+export const OKIcon =({className})=>{
+    return(
+<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#BA8900" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8.00897 9H8M16 9H15.991" stroke="#BA8900" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+  <path d="M10 16L15 14" stroke="#BA8900" stroke-width="1.5" stroke-linecap="round" stroke-linejoin="round"/>
+</svg>
+    )
+}
+export const NeedWoekIcon =({className})=>{
+    return(
+<svg className={className} xmlns="http://www.w3.org/2000/svg" width="24" height="24" viewBox="0 0 24 24" fill="none">
+  <path d="M12 22C17.5228 22 22 17.5228 22 12C22 6.47715 17.5228 2 12 2C6.47715 2 2 6.47715 2 12C2 17.5228 6.47715 22 12 22Z" stroke="#FF0000" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M10 11L8.5 9.5M8.5 9.5L7 8M8.5 9.5L7 11M8.5 9.5L10 8M17 11L15.5 9.5M15.5 9.5L14 8M15.5 9.5L14 11M15.5 9.5L17 8" stroke="#FF0000" stroke-width="1.5" stroke-linejoin="round"/>
+  <path d="M8 17C8.91212 15.7856 10.3643 15 12 15C13.6357 15 15.0879 15.7856 16 17" stroke="#FF0000" stroke-width="1.5" stroke-linejoin="round"/>
+</svg>
+    )
+}

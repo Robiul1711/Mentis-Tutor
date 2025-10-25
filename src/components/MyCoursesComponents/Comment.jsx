@@ -55,7 +55,7 @@ const Comment = () => {
           <Topic />
         </div>
         <div className="w-[60%]">
-  <div className="max-w-3xl mx-auto space-y-6">
+  <div className="max-w-4xl mx-auto space-y-6">
         {comments.map((comment) => (
           <div key={comment.id} className="bg-white rounded-lg p-6 shadow-sm">
             <div className="flex gap-3">
