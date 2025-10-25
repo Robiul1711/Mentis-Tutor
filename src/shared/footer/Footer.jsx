@@ -44,25 +44,25 @@ const Footer = () => {
         <div className="flex gap-4">
           <a
             href="#"
-            className="p-3 rounded-full bg-white text-custom-primary dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
+            className="p-3 rounded-full bg-white dark:border-white text-custom-primary dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
           >
             <FaFacebookF className="w-4 h-4" />
           </a>
           <a
             href="#"
-            className="p-3 rounded-full bg-white text-custom-primary  dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
+            className="p-3 rounded-full bg-white dark:border-white text-custom-primary  dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
           >
             <FaTwitter className="w-4 h-4" />
           </a>
           <a
             href="#"
-            className="p-3 rounded-full bg-white dark:bg-[#110f0f]  dark:border text-custom-primary hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
+            className="p-3 rounded-full bg-white dark:border-white dark:bg-[#110f0f]  dark:border text-custom-primary hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
           >
             <FaInstagram className="w-4 h-4" />
           </a>
           <a
             href="#"
-            className="p-3 rounded-full bg-white text-custom-primary dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
+            className="p-3 rounded-full bg-white dark:border-white text-custom-primary dark:bg-[#110f0f] dark:border hover:text-Tertiary duration-300  hover:bg-custom-primary transition"
           >
             <FaLinkedinIn className="w-4 h-4" />
           </a>

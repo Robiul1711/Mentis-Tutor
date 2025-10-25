@@ -67,18 +67,18 @@ const GetInTouch = () => {
           <h2 className="text-2xl font-semibold mb-4">Contact Form</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>
-              <label className="block mb-1 text-gray-700 text-base">Name</label>
+              <label className="block mb-1 dark:text-white text-base">Name</label>
               <input
                 {...register("name", { required: "Name is required" })}
                 placeholder="Enter your name."
-                className="w-full px-4 py-2 border rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-[#64B5F6] rounded-md text-base dark:border-white bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.name && (
                 <p className="text-red-500 text-base">{errors.name.message}</p>
               )}
             </div>
             <div>
-              <label className="block mb-1 text-gray-700 text-base">
+              <label className="block mb-1 dark:text-white text-base">
                 Email
               </label>
               <input
@@ -90,20 +90,20 @@ const GetInTouch = () => {
                   },
                 })}
                 placeholder="Enter your email."
-                className="w-full px-4 py-2 border rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.email && (
                 <p className="text-red-500 text-base">{errors.email.message}</p>
               )}
             </div>
             <div>
-              <label className="block mb-1 text-gray-700 text-base">
+              <label className="block mb-1 dark:text-white text-base">
                 Subject
               </label>
               <input
                 {...register("subject", { required: "Subject is required" })}
                 placeholder="Enter your subject."
-                className="w-full px-4 py-2 border rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.subject && (
                 <p className="text-red-500 text-base">
@@ -112,14 +112,14 @@ const GetInTouch = () => {
               )}
             </div>
             <div>
-              <label className="block mb-1 text-gray-700 text-base">
+              <label className="block mb-1 dark:text-white text-base">
                 Message
               </label>
               <textarea
                 {...register("message", { required: "Message is required" })}
                 rows="4"
                 placeholder="Enter your message."
-                className="w-full px-4 py-2 border rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.message && (
                 <p className="text-red-500 text-base">
@@ -136,7 +136,7 @@ const GetInTouch = () => {
                   required: "You must agree before submitting.",
                 })}
               />
-              <span className="text-base text-gray-600">
+              <span className="text-base text-gray-600 dark:text-white">
                 I agree to the terms of service and privacy policy
               </span>
             </div>

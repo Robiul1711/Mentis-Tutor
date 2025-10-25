@@ -87,7 +87,7 @@ const Quiz = () => {
         <div className="w-[40%]">
           <Topic />
         </div>
-        <div className="w-[60%] bg-white rounded-2xl shadow-lg p-8 max-w-3xl mx-auto">
+        <div className="w-[60%] bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
           <h2 className="text-lg mb-6">Q{currentQuestion + 1}. {questions[currentQuestion].question}</h2>
 
           <div className="space-y-3 mb-6">
