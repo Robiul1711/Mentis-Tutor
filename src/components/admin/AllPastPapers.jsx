@@ -9,7 +9,7 @@ const PastPapers = () => {
   const years = [2017, 2018, 2019, 2020, 2021, 2022, 2023];
   
   return (
-    <div className="bg-Secondary rounded-lg p-6">
+    <div className="bg-Secondary dark:bg-[#0B1120] dark:border rounded-lg p-6">
       <h2 className="text-white text-xl font-semibold mb-4">Past Papers</h2>
       
       {/* Exam Board Tabs */}
@@ -18,7 +18,7 @@ const PastPapers = () => {
           onClick={() => setSelectedExamBoard('Edexcel')}
           className={`px-6 py-2 rounded-full font-medium transition-colors ${
             selectedExamBoard === 'Edexcel'
-              ? 'bg-white text-slate-800'
+              ? 'bg-white  text-slate-800'
               : 'bg-slate-600 text-white hover:bg-slate-500'
           }`}
         >
@@ -51,9 +51,9 @@ const PastPapers = () => {
         {years.map((year) => (
           <div
             key={year}
-            className="flex items-center justify-between bg-white rounded-lg p-4"
+            className="flex items-center justify-between bg-white dark:bg-[#0B1120] dark:border rounded-lg p-4"
           >
-            <span className="text-slate-800 font-semibold">{year}</span>
+            <span className="text-slate-800 dark:text-white font-semibold">{year}</span>
             <div className="flex gap-2">
               <button className="bg-Secondary text-white px-4 py-1.5 rounded font-medium text-sm">
                 P1
@@ -79,31 +79,35 @@ const QuestionGrid = () => {
   const questions = Array.from({ length: 20 }, (_, i) => i + 1);
   
   return (
-    <div className="bg-white rounded-lg p-6">
-      <h2 className="text-slate-800 text-xl font-semibold mb-2">
+    <div className="bg-white dark:bg-[#0B1120] dark:border rounded-lg p-6">
+      <h2 className="text-slate-800 dark:text-white text-xl font-semibold mb-2">
         Edexcel AS LEVEL PAPER P1 2017
       </h2>
-      <p className="text-slate-600 text-sm mb-6">
+      <p className="text-slate-600 dark:text-gray-400 text-sm mb-6">
         For game-changing, fast, dependable grade improvement, use THE TT REVISION METHOD to study this paper
       </p>
       
       {/* Questions Grid */}
       <div className="grid grid-cols-2 gap-x-8 gap-y-3">
         {questions.map((num) => (
-          <label
-            key={num}
-            className="flex items-center gap-3 cursor-pointer hover:bg-slate-50 p-2 rounded transition-colors"
-          >
-            <input
-              type="radio"
-              name="question"
-              value={num}
-              checked={selectedQuestion === num}
-              onChange={() => setSelectedQuestion(num)}
-              className="w-4 h-4 text-blue-600"
-            />
-            <span className="text-slate-700 font-medium">QUESTION {num}</span>
-          </label>
+  <label
+  key={num}
+  className="flex items-center gap-3 cursor-pointer p-2 rounded transition-colors
+             hover:bg-slate-100 dark:hover:bg-slate-800 dark:text-gray-200"
+>
+  <input
+    type="radio"
+    name="question"
+    value={num}
+    checked={selectedQuestion === num}
+    onChange={() => setSelectedQuestion(num)}
+    className="w-4 h-4 text-blue-600 dark:accent-blue-500"
+  />
+  <span className="text-slate-700 dark:text-gray-200 font-medium">
+    QUESTION {num}
+  </span>
+</label>
+
         ))}
       </div>
     </div>
@@ -113,8 +117,8 @@ const QuestionGrid = () => {
 // Paper Documents Component
 const PaperDocuments = () => {
   return (
-    <div className="bg-white rounded-lg p-6">
-      <h2 className="text-slate-800 text-xl font-semibold mb-4">
+    <div className="bg-white dark:bg-[#0B1120] dark:border rounded-lg p-6">
+      <h2 className="text-slate-800 text-xl font-semibold mb-4 dark:text-white">
         PAPER DOCUMENTS
       </h2>
       
@@ -139,7 +143,7 @@ export default function MyQuiz() {
     
   <div className=''>
 
-    <div className="grid grid-cols-1 lg:grid-cols-3 gap-6">
+    <div className="grid grid-cols-1 lg:grid-cols-2 xl:grid-cols-3 gap-6">
       {/* Past Papers - Takes 1 column */}
       <div className="lg:col-span-1">
         <PastPapers />

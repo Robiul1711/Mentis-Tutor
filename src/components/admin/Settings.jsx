@@ -48,13 +48,13 @@ export default function Settings() {
   <div className="w-full">
   <div className="flex flex-col sm:flex-row gap-4 md:gap-6 rounded-xl overflow-hidden">
     {/* Sidebar Tabs */}
-    <div className="flex sm:w-82 sm:flex-col overflow-x-auto sm:overflow-visible bg-white rounded-xl shadow-sm">
+    <div className="flex sm:w-82 sm:flex-col overflow-x-auto sm:overflow-visible bg-white dark:bg-[#0B1120] dark:border rounded-xl shadow-sm">
       {tabs.map((tab) => (
         <button
           key={tab.id}
           onClick={() => setActiveTab(tab.id)}
           className={`relative flex items-center px-4 py-3 sm:py-4 transition-all flex-shrink-0 sm:flex-shrink-none
-            ${activeTab === tab.id ? "text-white" : "text-gray-500 hover:text-gray-800"}
+            ${activeTab === tab.id ? "text-white" : "text-gray-500 dark:text-gray-400 hover:text-gray-800"}
           `}
         >
           {activeTab === tab.id && (
@@ -99,7 +99,7 @@ export default function Settings() {
           transition={{ duration: 0.3 }}
           className="p-4 md:p-6 h-[calc(100vh-150px)] overflow-y-auto"
         >
-          <h3 className="text-lg font-semibold flex items-center gap-2 mb-4 text-gray-900">
+          <h3 className="text-lg font-semibold flex items-center gap-2 mb-4 text-gray-900 dark:text-white">
             <span>{tabs.find((t) => t.id === activeTab)?.icon}</span>
             <span>{tabs.find((t) => t.id === activeTab)?.name}</span>
           </h3>

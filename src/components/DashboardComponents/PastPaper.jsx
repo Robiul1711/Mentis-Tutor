@@ -37,7 +37,7 @@ const PastPaper = () => {
       {pastPapersData.map((item, index) => (
         <div
           key={index}
-          className="p-4 bg-white dark:bg-[#0B1120] dark:text-white rounded-2xl flex items-center justify-between shadow-sm hover:shadow-md transition"
+          className="p-4 bg-white dark:border dark:bg-[#0B1120] dark:text-white rounded-2xl flex items-center justify-between shadow-sm hover:shadow-md transition"
         >
           {/* Year */}
           <h1 className="text-xl font-semibold">{item.year}</h1>
