@@ -37,7 +37,7 @@ export default function HelpAndSupport() {
       {}
       <div className="flex flex-col sm:flex-row gap-6 rounded-xl overflow-hidden">
         {}
-        <div className="sm:w-72 flex sm:flex-col rounded-xl bg-white  backdrop-filter backdrop-blur-lg">
+        <div className="sm:w-72 flex sm:flex-col rounded-xl bg-white dark:bg-[#0B1120] dark:border backdrop-filter backdrop-blur-lg">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -151,7 +151,7 @@ export default function HelpAndSupport() {
               transition={{ duration: 0.3 }}
               className="p-4 md:p-6 h-[calc(100vh-150px)] overflow-y-auto"
             >
-              <h3 className="text-lg font-semibold flex items-center gap-2 mb-4 text-gray-900">
+              <h3 className="text-lg font-semibold flex items-center gap-2 mb-4 text-gray-900 dark:text-white">
                 <span>{tabs.find((t) => t.id === activeTab)?.icon}</span>
                 <span>{tabs.find((t) => t.id === activeTab)?.name}</span>
               </h3>

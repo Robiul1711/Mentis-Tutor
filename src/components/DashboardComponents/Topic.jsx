@@ -153,12 +153,13 @@ const Topic = () => {
     <div className="flex w-full">
       <Accordion className="space-y-2 w-full" type="single" collapsible>
         {AllTopics.map((topics, index) => (
+          <div  key={index} className="border rounded-lg md:rounded-xl overflow-hidden ">
           <AccordionItem
             key={index}
             value={`item-${index}`}
-            className="border rounded-lg md:rounded-2xl px-4 bg-white dark:bg-[#0B1120] dark:text-white"
+            className="border-none px-4 bg-white dark:bg-[#0B1120] dark:text-white"
           >
-            <AccordionTrigger className="font-medium md:text-lg lg:text-xl flex items-center gap-5 no-underline hover:no-underline">
+            <AccordionTrigger className="font-medium md:text-lg xl:text-xl flex items-center gap-5 no-underline hover:no-underline">
               <span>{topics.topic}</span>
               <span className="ml-auto  bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">
                 {topics.numberOfchapter}
@@ -177,6 +178,8 @@ const Topic = () => {
               ))}
             </AccordionContent>
           </AccordionItem>
+
+          </div>
         ))}
       </Accordion>
     </div>

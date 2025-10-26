@@ -55,8 +55,8 @@ const Quiz = () => {
 
   if (showResult) {
     return (
-      <div className="bg-white shadow-lg p-8 rounded-2xl space-y-6">
-        <h2 className="text-2xl font-bold text-gray-800">Quiz Result</h2>
+      <div className="bg-white dark:bg-[#0B1120] shadow-lg p-8 rounded-2xl space-y-6">
+        <h2 className="text-2xl font-bold text-gray-800 dark:text-white">Quiz Result</h2>
         <p className="text-lg">You scored <b>{calculateScore()}</b> out of <b>{questions.length}</b></p>
 
         <div className="space-y-4">
@@ -82,12 +82,10 @@ const Quiz = () => {
 
   return (
     <div className='space-y-4 '>
-      <Title level="title24">Take a Quick Quiz</Title>
-      <div className="flex gap-10 mt-8">
-        <div className="w-[40%]">
-          <Topic />
-        </div>
-        <div className="w-[60%] bg-white rounded-2xl shadow-lg p-8 max-w-4xl mx-auto">
+      {/* <Title level="title32" className=" dark:text-white ">Take a Quick Quiz</Title> */}
+   
+    
+        <div className=" bg-white dark:bg-[#0B1120] dark:border rounded-2xl shadow-lg p-6">
           <h2 className="text-lg mb-6">Q{currentQuestion + 1}. {questions[currentQuestion].question}</h2>
 
           <div className="space-y-3 mb-6">
@@ -96,7 +94,7 @@ const Quiz = () => {
                 key={i}
                 onClick={() => setSelected(option)}
                 className={`w-full p-4 border rounded-lg text-left transition ${
-                  selected === option ? "bg-blue-50 border-blue-500" : "bg-white"
+                  selected === option ? "bg-blue-50 border-blue-500 dark:text-black" : "bg-white dark:border   dark:bg-[#0B1120]"
                 }`}
               >
                 {option}
@@ -121,7 +119,7 @@ const Quiz = () => {
             </button>
           </div>
         </div>
-      </div>
+     
     </div>
   );
 };

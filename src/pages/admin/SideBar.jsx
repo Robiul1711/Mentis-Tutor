@@ -53,7 +53,7 @@ const SideBar = ({ sidebar, open, setOpen }) => {
             ? "left-0 top-0 w-[280px] z-[220] shadow-lg bg-Secondary overflow-y-auto"
             : "-left-full xl:w-[300px] w-[280px]"
         }
-        bg-Secondary  backdrop-blur-md  flex flex-col gap-8 shadow-md xlg:static fixed transition-all duration-300`}
+        bg-Secondary dark:bg-[#0B1120] dark:border-r dark:border-gray-700  backdrop-blur-md  flex flex-col gap-8 shadow-md xlg:static fixed transition-all duration-300`}
       >
         {/* Logo */}
         <Link to={"/"} className="lg:px-8 px-4">

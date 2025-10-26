@@ -45,7 +45,7 @@ const GetRecognized = () => {
   ];
 
   return (
-    <div className="section-padding-x py-16 bg-bg-custom1">
+    <div className="section-padding-x py-16 bg-bg-custom1 dark:bg-[#0B1120]">
       {/* Top Title */}
       <div className="flex flex-col gap-4 max-w-[1200px] mx-auto text-center">
         <Title level="title48">Get Recognized With Your Achievements</Title>

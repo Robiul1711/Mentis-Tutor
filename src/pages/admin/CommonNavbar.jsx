@@ -4,11 +4,12 @@ import { useLocation } from "react-router-dom";
 import profile from "@/assets/images/avatar.png";
 import { IoNotificationsOutline } from "react-icons/io5";
 import UserDropdown from "@/shared/navbar/UserDropdown";
+import ThemeToggleButton from "@/components/common/ThemeToggleButton";
 
 const CommonNavbar = ({ open, setOpen }) => {
   const { pathname } = useLocation();
   return (
-    <div className="flex items-center gap-5 justify-between w-full py-3 md:py-5 px-6 shadow dark:bg-[#0B1120] bg-bg-custom1">
+    <div className="flex items-center gap-5 justify-between w-full py-3 md:py-5 px-6 dark:border-b shadow dark:bg-[#0B1120] bg-bg-custom1">
       <div className="flex items-center gap-4">
         <span
           onClick={() => setOpen(!open)}
@@ -25,7 +26,7 @@ const CommonNavbar = ({ open, setOpen }) => {
 
       <div className="flex items-center md:gap-6 gap-3 w-30 sm:w-32 justify-end">
         <span>
-          {/* <IoNotificationsOutline className="text-black dark:text-white" size={24} /> */}
+          <ThemeToggleButton/>
         </span>
         <span>
           <UserDropdown />

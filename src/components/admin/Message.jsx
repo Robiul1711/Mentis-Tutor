@@ -84,7 +84,7 @@ const Message = () => {
       <div
         className={`${
           selectedConversation ? "hidden md:flex" : "flex"
-        } flex-col w-full md:w-1/3 p-4 border rounded-lg bg-white`}
+        } flex-col w-full md:w-1/3 p-4 border rounded-lg bg-white dark:bg-[#0B1120] dark:border-slate-700`}
       >
         {/* Search box */}
         <div className="relative mb-4">
@@ -126,8 +126,8 @@ const Message = () => {
                 onClick={() => setSelectedConversation(conversation)}
                 className={`flex items-center gap-3 p-3 rounded-lg hover:bg-[#E6EAEE] dark:hover:bg-slate-800 cursor-pointer ${
                   selectedConversation?.id === conversation.id
-                    ? "bg-[#E6EAEE] dark:bg-slate-800"
-                    : ""
+                    ? "bg-[#E6EAEE] dark:bg-slate-800 dark:border"
+                    : "dark:border"
                 }`}
               >
                 <img
@@ -169,7 +169,7 @@ const Message = () => {
             onBack={() => setSelectedConversation(null)}
           />
         ) : (
-          <div className="border rounded-lg p-5 bg-white h-full flex items-center justify-center">
+          <div className="border rounded-lg p-5 bg-white dark:bg-[#0B1120] h-full flex items-center justify-center">
             <div className="text-center">
               <svg
                 xmlns="http://www.w3.org/2000/svg"

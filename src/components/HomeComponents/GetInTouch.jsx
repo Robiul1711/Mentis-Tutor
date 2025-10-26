@@ -30,9 +30,9 @@ const GetInTouch = () => {
           we’ll respond quickly to help you succeed in your GCSE Maths journey.
         </Title>
       </div>
-      <div className="flex flex-col lg:flex-row gap-10 mt-14">
+      <div className="flex flex-col md:flex-row gap-10 mt-14">
         {/* Left: Contact Info */}
-        <div className="w-[40%] space-y-4">
+        <div className="md:w-[40%] space-y-4">
           <h2 className="text-2xl lg:text-3xl font-semibold">Contact Info</h2>
           <div className="space-y-4 ">
             <div className="flex items-center gap-3 mt-4">
@@ -63,7 +63,7 @@ const GetInTouch = () => {
         </div>
 
         {/* Right: Contact Form */}
-        <div className="w-[60%]">
+        <div className="md:w-[60%]">
           <h2 className="text-2xl font-semibold mb-4">Contact Form</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
             <div>

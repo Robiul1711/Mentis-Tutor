@@ -48,7 +48,7 @@ const onSubmit = (data) => {
 };
 
   return (
-    <div className="w-full max-w-lg bg-bg-custom rounded-xl p-5 sm:p-8 border border-Primary/20">
+    <div className="w-full max-w-lg bg-bg-custom1 rounded-xl p-5 sm:p-8 border border-Primary/20">
       {/* Header */}
               <Link to="/" className="">
         <img src={logo} alt="" className="" />

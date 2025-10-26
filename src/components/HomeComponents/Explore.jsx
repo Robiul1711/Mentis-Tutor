@@ -13,7 +13,7 @@ import { MdArrowOutward } from "react-icons/md";
 
 const Explore = () => {
   return (
-    <div className="section-padding-x py-16">
+    <div className="section-padding-x py-8 sm:py-10 md:py-16">
       {/* Top Title */}
       <div className="flex flex-col gap-4 max-w-[800px] mx-auto text-center">
         <Title level="title48">Explore Our GCSE Maths Course</Title>
@@ -29,7 +29,7 @@ const Explore = () => {
           <img
             src={explore}
             alt="explore"
-            className="w-full h-auto max-w-[400px] lg:max-w-full object-cover rounded-2xl"
+            className="w-full h-auto max-w-[400px] sm:max-w-full object-cover rounded-2xl"
           />
         </div>
 
@@ -41,7 +41,7 @@ const Explore = () => {
               $25 <span className="text-base font-normal">/ month</span>
             </p>
             <p className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
-              <RattingIcon /> <span>(4.8 Reviews)</span>
+              <RattingIcon /> <span className="font-semibold dark:text-white">(4.8 Reviews)</span>
             </p>
           </div>
 
@@ -53,7 +53,7 @@ const Explore = () => {
           {/* Features */}
           <div className="flex flex-col gap-4 mt-5">
             <p className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
-              <MsgIcon />
+              <MsgIcon className={"!dark:text-white"}/>
               24/7 one-to-one support
             </p>
             <p className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">

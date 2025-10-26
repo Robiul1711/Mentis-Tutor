@@ -386,7 +386,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
   };
 
   return (
-    <div className="border rounded-lg p-4 bg-white h-full flex flex-col">
+    <div className="border rounded-lg p-4 bg-white dark:bg-[#0B1120] h-full flex flex-col">
       {/* Header */}
       <div className="flex flex-col lg:flex-row justify-between lg:items-center border-b pb-3 mb-4 gap-4">
         <div className="flex items-center gap-2">
@@ -427,7 +427,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
                 4.3
               </p>
             </div>
-            <p className="text-sm text-gray-700">jaannecooper@gmail.com</p>
+            <p className="text-sm text-gray-700 dark:text-gray-400">jaannecooper@gmail.com</p>
           </div>
         </div>
   
