@@ -84,12 +84,12 @@ const AllChaptes = () => {
             <AccordionItem
               key={item.id}
               value={`item-${item.id}`}
-              className="rounded-lg bg-[#fff] px-4 text-black border-l-4 border-Primary"
+              className="rounded-lg bg-[#fff] dark:bg-[#0B1120] dark:border px-4 text-black border-l-4 border-Primary"
             >
-              <AccordionTrigger className="text-sm sm:text-base md:text-xl lg:text-2xl text-Secondary">
+              <AccordionTrigger className="text-sm sm:text-base md:text-xl lg:text-2xl dark:text-white text-Secondary">
                 {item.question}
               </AccordionTrigger>
-              <AccordionContent className={"text-sm sm:text-base "}>{item.answer}</AccordionContent>
+              <AccordionContent className={"text-sm sm:text-base dark:text-white "}>{item.answer}</AccordionContent>
             </AccordionItem>
           ))}
         </Accordion>

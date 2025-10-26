@@ -37,7 +37,7 @@ const CourseDetail = () => {
           {/* Course Description */}
           <div className="mt-10 border p-6 rounded-xl shadow-md">
             <h2 className="text-xl font-semibold mb-4">Course Description</h2>
-            <p className="text-gray-600 mb-4">
+            <p className="text-gray-600 dark:text-gray-300 mb-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua. Quis
               ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas
@@ -59,7 +59,7 @@ const CourseDetail = () => {
               </li>
             </ul>
 
-            <p className="text-gray-600 mt-4">
+            <p className="text-gray-600 dark:text-gray-300 mt-4">
               Lorem ipsum dolor sit amet, consectetur adipiscing elit, sed do
               eiusmod tempor incididunt ut labore et dolore magna aliqua.
             </p>
