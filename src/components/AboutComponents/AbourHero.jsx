@@ -16,7 +16,7 @@ const AbourHero = () => {
 
       {/* Right Text Section */}
       <div className="w-full lg:w-1/2 flex flex-col space-y-6 text-center lg:text-left mt-8 lg:mt-0">
-        <Title level="title56">Unlock Your Potential, Master GCSE Maths</Title>
+        <Title level="title48">Unlock Your Potential, Master GCSE Maths</Title>
         <Title level="title20" className="text-gray-600 leading-relaxed dark:text-white">
           At Mentis, we make learning engaging, effective, and fun. Our courses
           are designed to help students conquer challenges, boost confidence,

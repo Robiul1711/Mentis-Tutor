@@ -13,7 +13,7 @@ import { MdArrowOutward } from "react-icons/md";
 
 const Explore = () => {
   return (
-    <div className="section-padding-x py-8 sm:py-10 md:py-16">
+    <div className="section-padding-x section-padding-y">
       {/* Top Title */}
       <div className="flex flex-col gap-4 max-w-[800px] mx-auto text-center">
         <Title level="title48">Explore Our GCSE Maths Course</Title>

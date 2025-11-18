@@ -14,6 +14,7 @@ import NewPasswordSet from "@/pages/AuthPages/NewPasswordSet";
 import SignIn from "@/pages/AuthPages/SignIn";
 import SignUp from "@/pages/AuthPages/SignUp";
 import VerifyOtp from "@/pages/AuthPages/VerifyOtp";
+import Blog from "@/pages/Blog/Blog";
 import Contact from "@/pages/Contact/Contact";
 import Course from "@/pages/Course/Course";
 import CourseDetais from "@/pages/CourseDetails/CourseDetais";
@@ -74,6 +75,10 @@ const router = createBrowserRouter([
       {
         path: "/contact",
         element: <Contact />,
+      },
+      {
+        path: "/blog",
+        element: <Blog />,
       },
       {
         path: "/tearms-and-conditions",

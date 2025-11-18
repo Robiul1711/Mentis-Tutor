@@ -10,7 +10,7 @@ import { Link } from "react-router-dom";
 
 const Footer = () => {
   return (
-    <footer className="section-padding-x section-padding-y bg-bg-custom1 dark:bg-[#0B1120]">
+    <footer className="section-padding-x section-padding-y dark:border-t bg-[#FFF] dark:bg-[#0B1120]">
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-8 pb-8 border-b border-black">
         {/* Logo */}

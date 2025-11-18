@@ -15,6 +15,7 @@ const Navbar = () => {
     { name: "About", link: "/about" },
     { name: "Courses", link: "/courses" },
     { name: "Contact", link: "/contact" },
+    // { name: "Blog", link: "/blog" },
   ];
 
   useEffect(() => {
@@ -39,7 +40,7 @@ const Navbar = () => {
 
   return (
     <nav
-      className={`w-full flex items-center justify-between py-3 px-4 sm:px-6 lg:px-8 z-50 sticky top-0 transition-all duration-300 ${
+      className={`w-full flex items-center justify-between py-3 section-padding-x z-50 sticky top-0 transition-all duration-300 ${
         scrolled
           ? "bg-white/90 dark:bg-[#0B1120]/90 backdrop-blur-md shadow-lg"
           : "bg-transparent"

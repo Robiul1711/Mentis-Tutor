@@ -46,8 +46,8 @@ const AboutBanner = () => {
         <div className="w-full lg:w-1/2 flex flex-col space-y-4 sm:space-y-6 text-center lg:text-left">
           {/* Title with responsive sizing */}
           <Title 
-            level="title56" 
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tight sm:leading-tight lg:leading-tight"
+            level="title48" 
+            className="leading-tight sm:leading-tight lg:leading-tight"
           >
             Shaping the Future of GCSE Maths Learning
           </Title>

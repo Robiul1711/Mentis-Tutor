@@ -6,7 +6,7 @@ const variants = {
   primary:
     "px-4 py-2 sm:px-5 sm:py-2 md:px-7 border  rounded-full text-white text-sm sm:text-base",
   secondary:
-  "text-white text-black bg-Primary hover:bg-Secondary hover:text-white transition-colors duration-300 rounded-full px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base md:px-7 md:py-3 md:text-base",
+  "text-white text-black bg-Primary hover:bg-Secondary hover:text-white transition-colors duration-300 rounded-xl px-4 py-2 text-sm sm:px-6 sm:py-2.5 sm:text-base md:px-7 md:py-3 md:text-base",
 
   danger: "bg-red-500 hover:bg-red-600 text-white",
 };
