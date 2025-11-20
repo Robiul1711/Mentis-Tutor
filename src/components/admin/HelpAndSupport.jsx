@@ -37,7 +37,7 @@ export default function HelpAndSupport() {
       {}
       <div className="flex flex-col sm:flex-row gap-6 rounded-xl overflow-hidden">
         {}
-        <div className="sm:w-72 flex sm:flex-col rounded-xl bg-white dark:bg-[#0B1120] dark:border backdrop-filter backdrop-blur-lg">
+        <div className="sm:w-72 flex sm:flex-col rounded-xl bg-white border dark:bg-[#0B1120] dark:border backdrop-filter backdrop-blur-lg">
           {tabs.map((tab) => (
             <button
               key={tab.id}
@@ -97,7 +97,7 @@ export default function HelpAndSupport() {
         </div>
 
         {}
-        <div className="flex-1 relative rounded-xl bg-white dark:bg-gray-900/80 backdrop-filter backdrop-blur-lg shadow-lg overflow-hidden">
+        <div className="flex-1 relative rounded-xl bg-white border dark:bg-gray-900/80 backdrop-filter backdrop-blur-lg shadow-lg overflow-hidden">
           {}
           <AnimatePresence>
             {isLoading && (

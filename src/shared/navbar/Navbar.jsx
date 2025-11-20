@@ -14,8 +14,9 @@ const Navbar = () => {
     { name: "Home", link: "/" },
     { name: "About", link: "/about" },
     { name: "Courses", link: "/courses" },
+    { name: "Blog", link: "/blog" },
+    { name: "FAQ", link: "/faq" },
     { name: "Contact", link: "/contact" },
-    // { name: "Blog", link: "/blog" },
   ];
 
   useEffect(() => {

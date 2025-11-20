@@ -1,65 +1,52 @@
-function chekingInventory() {
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("checking Inventory....");
-      let stock = 4;
-      resolve(stock);
-      // reject(new Error("Out of stock"));
-    }, 2000);
-  });
-  return promise;
-}
-
-function creatingOrder() {
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("Creating Order....");
-      resolve();
-      // reject(new Error("Payment failed"));
-    }, 1000);
-  });
-  return promise;
-}
-
-function chargePayment() {
-  const promise = new Promise((resolve, reject) => {
-    setTimeout(() => {
-      console.log("Charging Payment....");
-      resolve();
-      // reject(new Error("Payment failed"));
-    }, 1500);
-  });
-  return promise;
-}
-
-async function main() {
-  try {
-    await chekingInventory();
-    await creatingOrder();
-    await chargePayment();
-  } catch (error) {
-    console.log("Err", error);
-  }
-
-  //   chekinhInventory().catch((error) => {
-  //     console.log(error);
-  //   })
-  //   .then(creatingOrder).catch((error) => {
-  //     console.log(error);
-  //   })
-  //   .then(chargePayment).catch((error) => {
-  //     console.log(error);
-  //   })
-
-  console.log("Other request processing");
-}
-main();
-
-// Component code
-import React from "react";
-
+import { BlogCard } from '@/components/BlogCard/BlogCard';
+import Title from '@/components/common/Title'
+import React from 'react'
+import blog from '../../assets/images/blog.jpg'
+ const posts = [
+    {
+      image: blog,
+      title: "How to revise GCSE Maths effectively (UK-specific)",
+      description:
+        "Revising for GCSE Maths can feel overwhelming especially when you're balancing school, homework, and other subjects...",
+      date: "December 16, 2024",
+    },
+    {
+      image: blog,
+      title: "How many past papers should a student do?",
+      description:
+        "Revising for GCSE Maths can feel overwhelming… Maths isn’t about memorising. It’s about practising the right topics.",
+      date: "December 16, 2024",
+    },
+    {
+      image: blog,
+      title: "The Grade 7 barrier & how to break it",
+      description:
+        "Revising for GCSE Maths can feel overwhelming especially when you're balancing school, homework…",
+      date: "December 16, 2024",
+    },
+  ];
 const Blog = () => {
-  return <div>Blog</div>;
-};
+  return (
+    <div className='section-padding-x section-padding-y'>
+      {/* Top Title */}
+      <div className="flex flex-col gap-4 max-w-[800px] mx-auto text-center">
+        <div >
+          <Title level="title48">Blog</Title>
+        </div>
 
-export default Blog;
+        <div >
+          <Title level="title20">
+     Insights, tips, and strategies to help you master GCSE Maths and study smarter.
+          </Title>
+        </div>
+      </div>
+      <div className="grid grid-cols-1 md:grid-cols-2 xl:grid-cols-3 gap-6 mt-12">
+      {posts.map((post, i) => (
+        <BlogCard key={i} {...post} />
+      ))}
+    </div>
+    </div>
+  )
+}
+
+export default Blog

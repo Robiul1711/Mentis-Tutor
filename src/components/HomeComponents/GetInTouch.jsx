@@ -71,7 +71,7 @@ const GetInTouch = () => {
               <input
                 {...register("name", { required: "Name is required" })}
                 placeholder="Enter your name."
-                className="w-full px-4 py-2 border border-[#64B5F6] rounded-md text-base dark:border-white bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-[#64B5F6] rounded-md text-base dark:border-white bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.name && (
                 <p className="text-red-500 text-base">{errors.name.message}</p>
@@ -90,7 +90,7 @@ const GetInTouch = () => {
                   },
                 })}
                 placeholder="Enter your email."
-                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.email && (
                 <p className="text-red-500 text-base">{errors.email.message}</p>
@@ -103,7 +103,7 @@ const GetInTouch = () => {
               <input
                 {...register("subject", { required: "Subject is required" })}
                 placeholder="Enter your subject."
-                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.subject && (
                 <p className="text-red-500 text-base">
@@ -119,7 +119,7 @@ const GetInTouch = () => {
                 {...register("message", { required: "Message is required" })}
                 rows="4"
                 placeholder="Enter your message."
-                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-bg-custom1 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
               />
               {errors.message && (
                 <p className="text-red-500 text-base">

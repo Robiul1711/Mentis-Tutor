@@ -9,6 +9,7 @@ import img2 from "@/assets/images/s1.png";
 import img3 from "@/assets/images/tutor.png";
 import img4 from "@/assets/images/s1.png";
 import img5 from "@/assets/images/tutor.png";
+import Title from "../common/Title";
 
 const testimonials = [
   {
@@ -55,15 +56,15 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="w-full dark:bg-[#0B1120] py-20 section-padding-x relative">
+    <section className="w-full dark:bg-[#0B1120] section-padding-x ">
       {/* Title */}
       <div className="text-center mb-16">
-        <h2 className="text-3xl md:text-4xl font-bold dark:text-white">
+       <Title level="title48" className="">
           What Our Students & Parents Say
-        </h2>
-        <p className="mt-4 text-lg text-gray-600 dark:text-gray-300 max-w-2xl mx-auto">
-          Don't just take our word for it - hear from the Mentis community
-        </p>
+        </Title>
+       <Title level="title20" className="text-gray-700 dark:text-gray-300 max-w-[1020px] mx-auto mt-4">
+         Hear From Our Happy students & parents
+        </Title>
       </div>
 
       <div className="relative max-w-6xl mx-auto">
@@ -130,14 +131,7 @@ const Testimonials = () => {
         </Swiper>
 
         {/* Progress Dots */}
-        <div className="flex justify-center gap-2 mt-8">
-          {testimonials.map((_, index) => (
-            <div
-              key={index}
-              className="swiper-pagination-bullet w-2 h-2 rounded-full bg-gray-300 dark:bg-gray-600 transition-all duration-300"
-            />
-          ))}
-        </div>
+
       </div>
 
       {/* Background Decoration */}

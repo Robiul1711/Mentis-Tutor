@@ -17,7 +17,7 @@ import Testimonials from '@/components/HomeComponents/Testimonials'
 
 const Home = () => {
   return (
-    <div >
+    <div className='section-padding-y space-y-28'>
       <Banner />
       <WhyMentisExgist />
       <States />

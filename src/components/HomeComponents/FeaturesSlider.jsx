@@ -54,11 +54,11 @@ const data = [
 
 const FeaturesSlider = () => {
   return (
-    <section className="section-padding-x section-padding-y relative">
+    <section className="section-padding-x  relative">
       {/* Heading */}
       <div className="text-center mb-10">
         <Title level="title48" className="dark:text-white">
-          WHY INSIDE MENTIS
+          WHAT INSIDE MENTIS
         </Title>
         <Title
           level="title20"

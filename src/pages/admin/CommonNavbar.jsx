@@ -9,7 +9,7 @@ import ThemeToggleButton from "@/components/common/ThemeToggleButton";
 const CommonNavbar = ({ open, setOpen }) => {
   const { pathname } = useLocation();
   return (
-    <div className="flex items-center gap-5 justify-between w-full py-3 md:py-5 px-6 dark:border-b shadow dark:bg-[#0B1120] bg-bg-custom1">
+    <div className="flex items-center gap-5 justify-between w-full py-3 md:py-5 px-6 dark:border-b shadow dark:bg-[#0B1120] bg-white">
       <div className="flex items-center gap-4">
         <span
           onClick={() => setOpen(!open)}

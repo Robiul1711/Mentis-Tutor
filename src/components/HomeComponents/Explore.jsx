@@ -1,4 +1,4 @@
-import React from "react";
+import React, { useEffect, useRef } from "react";
 import Title from "../common/Title";
 import explore from "../../assets/images/explore.png";
 import {
@@ -11,22 +11,126 @@ import {
 import CommonButton from "../common/CommonButton";
 import { MdArrowOutward } from "react-icons/md";
 
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
+
 const Explore = () => {
+  const sectionRef = useRef(null);
+  const headingRef = useRef(null);
+  const subHeadingRef = useRef(null);
+  const imageRef = useRef(null);
+  const contentRef = useRef(null);
+  const featureRefs = useRef([]);
+  const buttonRef = useRef(null);
+
+  const addToFeatureRefs = (el) => {
+    if (el && !featureRefs.current.includes(el)) {
+      featureRefs.current.push(el);
+    }
+  };
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+          toggleActions: "play none none none", // no reverse
+        },
+      });
+
+      // Top Heading
+      tl.from(headingRef.current, {
+        opacity: 0,
+        y: 40,
+        duration: 0.6,
+        ease: "power2.out",
+      });
+
+      tl.from(
+        subHeadingRef.current,
+        {
+          opacity: 0,
+          y: 30,
+          duration: 0.5,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
+
+      // Image
+      tl.from(
+        imageRef.current,
+        {
+          opacity: 0,
+          scale: 0.85,
+          y: 40,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.2"
+      );
+
+      // Right Content intro
+      tl.from(
+        contentRef.current,
+        {
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
+
+      // Features stagger
+      tl.from(
+        featureRefs.current,
+        {
+          opacity: 0,
+          x: -30,
+          duration: 0.4,
+          stagger: 0.15,
+          ease: "power2.out",
+        },
+        "-=0.3"
+      );
+
+      // Button
+      tl.from(buttonRef.current, {
+        opacity: 0,
+        scale: 0.8,
+        duration: 0.5,
+        ease: "back.out(1.6)",
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="section-padding-x section-padding-y">
+    <div ref={sectionRef} className="section-padding-x">
       {/* Top Title */}
       <div className="flex flex-col gap-4 max-w-[800px] mx-auto text-center">
-        <Title level="title48">Explore Our GCSE Maths Course</Title>
-        <Title level="title20">
-          Everything you need to master GCSE Maths, all in one place.
-        </Title>
+        <div ref={headingRef}>
+          <Title level="title48">Explore Our GCSE Maths Course</Title>
+        </div>
+
+        <div ref={subHeadingRef}>
+          <Title level="title20">
+            Everything you need to master GCSE Maths, all in one place.
+          </Title>
+        </div>
       </div>
 
       {/* Content Box */}
-      <div className="mt-14 p-6 sm:p-10 border bg-bg-custom1 dark:bg-[#0B1120] rounded-2xl flex flex-col lg:flex-row gap-10">
+      <div className="mt-14 p-6 sm:p-10 border bg-[#FFF] dark:bg-[#0B1120] rounded-2xl flex flex-col lg:flex-row gap-10">
         {/* Left Image */}
         <div className="w-full lg:w-1/2 max-h-[416px] flex justify-center">
           <img
+            ref={imageRef}
             src={explore}
             alt="explore"
             className="w-full h-auto max-w-[400px] sm:max-w-full object-cover rounded-2xl"
@@ -34,14 +138,15 @@ const Explore = () => {
         </div>
 
         {/* Right Content */}
-        <div className="w-full lg:w-1/2 flex flex-col justify-between">
+        <div ref={contentRef} className="w-full lg:w-1/2 flex flex-col justify-between">
           {/* Price & Rating */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <p className="text-secondaryColor text-3xl lg:text-5xl font-semibold">
               $25 <span className="text-base font-normal">/ month</span>
             </p>
             <p className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
-              <RattingIcon /> <span className="font-semibold dark:text-white">(4.8 Reviews)</span>
+              <RattingIcon />{" "}
+              <span className="font-semibold dark:text-white">(4.8 Reviews)</span>
             </p>
           </div>
 
@@ -52,31 +157,33 @@ const Explore = () => {
 
           {/* Features */}
           <div className="flex flex-col gap-4 mt-5">
-            <p className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
-              <MsgIcon className={"!dark:text-white"}/>
-              24/7 one-to-one support
+            <p ref={addToFeatureRefs} className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
+              <MsgIcon className={"!dark:text-white"} /> 24/7 one-to-one support
             </p>
-            <p className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
-              <LeasonsIcon />
-              80+ Video Lessons
+            <p ref={addToFeatureRefs} className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
+              <LeasonsIcon /> 80+ Video Lessons
             </p>
-            <p className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
-              <ProgressIcon />
-              Progress trackers
+            <p ref={addToFeatureRefs} className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
+              <ProgressIcon /> Progress trackers
             </p>
-            <p className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
-              <ExamIcon />
-              Exam techniques
+            <p ref={addToFeatureRefs} className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
+              <ExamIcon /> Exam techniques
             </p>
           </div>
 
           {/* Button */}
-          <CommonButton link={"/course-details"} variant="secondary" className="mt-6 group w-full sm:w-auto">
-            Start Your 2 Day Free Trial
-            <span className="rounded-full p-1 bg-black group-hover:bg-secondaryColor ml-2">
-              <MdArrowOutward className="text-primaryColor text-2xl group-hover:text-white text-white" />
-            </span>
-          </CommonButton>
+          <div ref={buttonRef}>
+            <CommonButton
+              link={"/course-details"}
+              variant="secondary"
+              className="mt-6 group w-full sm:w-auto"
+            >
+              Start Your 2 Day Free Trial
+              <span className="rounded-full p-1 bg-black group-hover:bg-secondaryColor ml-2">
+                <MdArrowOutward className="text-primaryColor text-2xl group-hover:text-white text-white" />
+              </span>
+            </CommonButton>
+          </div>
         </div>
       </div>
     </div>

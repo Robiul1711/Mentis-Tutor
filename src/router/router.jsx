@@ -4,7 +4,9 @@ import HelpAndSupport from "@/components/admin/HelpAndSupport";
 import Message from "@/components/admin/Message";
 import MyCourses from "@/components/admin/MyCourses";
 import MyQuiz from "@/components/admin/MyQuiz";
+import PastPaperProgressTracker from "@/components/admin/PastPaperProgressTracker";
 import Settinngs from "@/components/admin/Settings";
+import BlogDetails from "@/components/BlogCard/BlogDetails";
 import AdminLayout from "@/layout/AdminLayout";
 import AuthLayout from "@/layout/AuthLayout";
 import Layout from "@/layout/Layout";
@@ -18,6 +20,7 @@ import Blog from "@/pages/Blog/Blog";
 import Contact from "@/pages/Contact/Contact";
 import Course from "@/pages/Course/Course";
 import CourseDetais from "@/pages/CourseDetails/CourseDetais";
+import FAQsPage from "@/pages/FaqsPage/FAQsPage";
 import Home from "@/pages/home/Home";
 import TearmsAndConditions from "@/pages/TearmAndConditions/TearmsAndConditions";
 
@@ -81,6 +84,14 @@ const router = createBrowserRouter([
         element: <Blog />,
       },
       {
+        path: "/blog-details/:id",
+        element: <BlogDetails />,
+      },
+      {
+        path: "/faq",
+        element: <FAQsPage />,
+      },
+      {
         path: "/tearms-and-conditions",
         element: <TearmsAndConditions />,
       },
@@ -110,6 +121,10 @@ const router = createBrowserRouter([
       {
         path: "/dashboard/past-papers",
         element: <AllPastPapers />, 
+      },
+      {
+        path: "/dashboard/past-paper-progress-tracker",
+        element: <PastPaperProgressTracker />, 
       },
       {
         path: "/dashboard/help-and-support",
