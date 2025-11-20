@@ -50,10 +50,10 @@ const SideBar = ({ sidebar, open, setOpen }) => {
       <div
         className={`h-full py-6 ${
           open
-            ? "left-0 top-0 w-[280px] z-[220] shadow-lg bg-Secondary overflow-y-auto"
+            ? "left-0 top-0 w-[280px] z-[220] shadow-lg bg-[#F0F8FE] overflow-y-auto"
             : "-left-full xl:w-[300px] w-[280px]"
         }
-        bg-Secondary dark:bg-[#0B1120] dark:border-r dark:border-gray-700  backdrop-blur-md  flex flex-col gap-8 shadow-md xlg:static fixed transition-all duration-300`}
+        bg-[#F0F8FE] dark:bg-[#0B1120] dark:border-r dark:border-gray-700  backdrop-blur-md  flex flex-col gap-8 shadow-md xlg:static fixed transition-all duration-300`}
       >
         {/* Logo */}
         <Link to={"/"} className="lg:px-8 px-4">
@@ -74,10 +74,10 @@ const SideBar = ({ sidebar, open, setOpen }) => {
                   setActiveParentIndex(null);
                   setOpen(false);
                 }}
-                className={`flex items-center gap-3 lg:px-8 px-4 py-2 rounded-lg text-base font-medium transition-colors duration-200 relative ${
+                className={`flex items-center gap-3 lg:px-8 px-4 py-2 rounded-r-full text-base font-medium transition-colors duration-200 relative ${
                   isActive(item?.activePaths)
-                    ? "text-white before:content-[''] before:absolute before:left-0 before:top-0 before:h-full before:w-[4px] before:bg-white before:rounded-r-md"
-                    : "text-[#ABABAB] hover:text-white"
+                    ? "text-white  bg-Secondary  "
+                    : "text-[#656565] dark:text-white hover:text-white hover:bg-Secondary/90"
                 }`}
               >
                 <span className="text-lg">{item?.icon}</span>
@@ -89,7 +89,7 @@ const SideBar = ({ sidebar, open, setOpen }) => {
                 <div
                   className={`flex items-center justify-between  py-2 cursor-pointer w-full rounded-lg transition-all duration-200 ${
                     parentActive
-                      ? "bg-[#253E8E] text-white"
+                      ? "bg-[#253E8E] text-white "
                       : "text-gray-700 hover:bg-[#E3ECFF] hover:text-[#253E8E]"
                   }`}
                   onClick={() => toggleSubmenu(index)}

@@ -3,7 +3,7 @@ import React from 'react'
 
 const Course = () => {
   return (
-    <div>
+    <div className='section-padding-y'>
         <Explore/>
     </div>
   )

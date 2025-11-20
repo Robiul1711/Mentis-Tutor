@@ -1,82 +1,148 @@
-import React from "react";
-import about1 from "../../assets/images/about1.png";
-import about2 from "../../assets/images/about2.png";
+import React, { useEffect, useRef } from "react";
 import Title from "../common/Title";
 import CommonButton from "../common/CommonButton";
 import { MdArrowOutward } from "react-icons/md";
+import dashboardImg from "@/assets/images/about.png";
+import { FaPlay } from "react-icons/fa";
+
+import gsap from "gsap";
+import { ScrollTrigger } from "gsap/ScrollTrigger";
+
+gsap.registerPlugin(ScrollTrigger);
 
 const AboutBanner = () => {
+  const sectionRef = useRef(null);
+  const titleRef = useRef(null);
+  const descRef = useRef(null);
+  const buttonRef = useRef(null);
+  const imageRef = useRef(null);
+  const playRef = useRef(null);
+
+  useEffect(() => {
+    const ctx = gsap.context(() => {
+      const tl = gsap.timeline({
+        scrollTrigger: {
+          trigger: sectionRef.current,
+          start: "top 70%",
+          toggleActions: "play none none none", // Play once, no reverse
+        },
+      });
+
+      // Title
+      tl.from(titleRef.current, {
+        opacity: 0,
+        y: 40,
+        duration: 0.7,
+        ease: "power2.out",
+      });
+
+      // Description
+      tl.from(
+        descRef.current,
+        {
+          opacity: 0,
+          y: 30,
+          duration: 0.6,
+          ease: "power2.out",
+        },
+        "-=0.4"
+      );
+
+      // Button
+      tl.from(
+        buttonRef.current,
+        {
+          opacity: 0,
+          scale: 0.85,
+          duration: 0.6,
+          ease: "back.out(1.6)",
+        },
+        "-=0.3"
+      );
+
+      // Image
+      tl.from(
+        imageRef.current,
+        {
+          opacity: 0,
+          scale: 0.9,
+          y: 35,
+          duration: 0.7,
+          ease: "power2.out",
+        },
+        "-=0.2"
+      );
+
+      // Play Button
+      tl.from(playRef.current, {
+        opacity: 0,
+        scale: 0.3,
+        duration: 0.5,
+        ease: "back.out(1.8)",
+      });
+    }, sectionRef);
+
+    return () => ctx.revert();
+  }, []);
+
   return (
-    <div className="w-full section-padding-x py-8 sm:py-12 lg:py-16">
-      <div className="flex flex-col lg:flex-row gap-8 lg:gap-12 xl:gap-16 items-center">
-        {/* Left Image Section */}
-        <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
-          <div className="relative max-w-2xl">
-            {/* Image Container with responsive sizing */}
-            <div className="flex gap-4 sm:gap-6 lg:gap-7 relative">
-              {/* First Image - slides down on hover */}
-              <div className="relative group">
-                <img
-                  src={about2}
-                  alt="Student learning GCSE maths"
-                  className="w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[345px] h-auto rounded-xl transform translate-y-3 lg:translate-y-4 transition-all duration-500 ease-out group-hover:translate-y-4 lg:group-hover:translate-y-6 shadow-lg"
-                />
-                {/* Optional decorative element */}
-                <div className="absolute -bottom-3 -left-3 w-6 h-6 bg-Primary rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </div>
-              
-              {/* Second Image - slides up on hover */}
-              <div className="relative group self-end">
-                <img
-                  src={about1}
-                  alt="GCSE maths tutoring session"
-                  className="w-full max-w-[280px] sm:max-w-[320px] lg:max-w-[345px] h-auto rounded-xl transform -translate-y-3 lg:-translate-y-4 transition-all duration-500 ease-out group-hover:-translate-y-4 lg:group-hover:-translate-y-6 shadow-lg"
-                />
-                {/* Optional decorative element */}
-                <div className="absolute -top-3 -right-3 w-6 h-6 bg-Secondary rounded-full opacity-0 group-hover:opacity-100 transition-opacity duration-500"></div>
-              </div>
-            </div>
-            
-            {/* Background decorative element for larger screens */}
-            <div className="hidden lg:block absolute -z-10 -bottom-6 -right-6 w-32 h-32 bg-Primary/10 rounded-full blur-xl"></div>
-          </div>
+    <section ref={sectionRef} className="section-padding-x">
+      {/* Heading */}
+      <div className="text-center max-w-3xl mx-auto">
+        <div ref={titleRef}>
+          <Title level="title48" className="">
+            About Mentis Learning
+          </Title>
         </div>
 
-        {/* Right Text Section */}
-        <div className="w-full lg:w-1/2 flex flex-col space-y-4 sm:space-y-6 text-center lg:text-left">
-          {/* Title with responsive sizing */}
-          <Title 
-            level="title56" 
-            className="text-3xl sm:text-4xl lg:text-5xl xl:text-6xl leading-tight sm:leading-tight lg:leading-tight"
+        <p
+          ref={descRef}
+          className="text-lg mt-4 leading-relaxed"
+        >
+          About Mentis Learning Modern tutoring with a mission helping every student unlock the
+          confidence and results they deserve. No ceilings. No limits. No student left behind.
+        </p>
+
+        {/* Button */}
+        <div
+          ref={buttonRef}
+          className="flex justify-center pt-2 sm:pt-4 lg:pt-6"
+        >
+          <CommonButton
+            variant="secondary"
+            className="mt-2 sm:mt-4 lg:mt-6 rounded-full group px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base lg:text-lg font-semibold"
           >
-            Shaping the Future of GCSE Maths Learning
-          </Title>
-          
-          {/* Description with responsive text sizing */}
-          <Title 
-            level="title20" 
-            className="text-base sm:text-lg lg:text-xl text-gray-600 leading-relaxed sm:leading-relaxed dark:text-gray-300"
-          >
-            Mentis combines expert tutors, smart tools, and personalized study plans to help every student achieve exam success with confidence.
-          </Title>
-          
-          {/* Button with responsive sizing */}
-          <div className="flex justify-center lg:justify-start pt-2 sm:pt-4 lg:pt-6">
-            <CommonButton 
-              variant="secondary" 
-              className="mt-2 sm:mt-4 lg:mt-6 group px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base lg:text-lg font-semibold"
-            >
-              <span className="flex items-center gap-2 sm:gap-3">
-                Start Your 2 Day Free Trial
-                <span className="rounded-full p-1 sm:p-1.5 bg-black dark:bg-white group-hover:bg-Secondary transition-colors duration-300">
-                  <MdArrowOutward className="text-Primary dark:text-black text-xl sm:text-2xl group-hover:text-white transition-colors duration-300" />
-                </span>
+            <span className="flex items-center gap-2 sm:gap-3">
+              Start Your 2 Day Free Trial
+              <span className="rounded-full p-1 sm:p-1.5 bg-black dark:bg-white group-hover:bg-Secondary transition-colors duration-300">
+                <MdArrowOutward className="text-Primary dark:text-black text-xl sm:text-2xl group-hover:text-white transition-colors duration-300" />
               </span>
-            </CommonButton>
-          </div>
+            </span>
+          </CommonButton>
         </div>
       </div>
-    </div>
+
+      {/* Video Preview Box */}
+      <div className="max-w-5xl mx-auto mt-14">
+        <div className="relative rounded-2xl overflow-hidden shadow-lg">
+          <img
+            ref={imageRef}
+            src={dashboardImg}
+            alt="Mentis Dashboard"
+            className="w-full h-auto"
+          />
+
+          {/* Play Button */}
+          <button
+            ref={playRef}
+            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
+            bg-white shadow-lg w-16 h-16 rounded-full flex items-center justify-center hover:scale-105 transition"
+          >
+            <FaPlay className="text-black text-xl ml-1" />
+          </button>
+        </div>
+      </div>
+    </section>
   );
 };
 

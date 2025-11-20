@@ -50,7 +50,7 @@ export default function SignUp() {
     // SignupMutation.mutate(data);
   };
   return (
-    <div className="w-full max-w-lg bg-bg-custom1  rounded-xl p-4 sm:p-8 border border-Primary/20">
+    <div className="w-full max-w-lg bg-bg-custom1 dark:bg-[#0B1120] dark:border  rounded-xl p-4 sm:p-8 border border-Primary/20">
       {/* Header */}
       <Link to="/" className=" ">
         <img src={logo} alt="" className="" />
@@ -84,7 +84,7 @@ export default function SignUp() {
                 required: "Name is required",
               })}
               placeholder="Enter your name"
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm bg-white focus:ring-2 focus:outline-none transition ${
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm bg-white dark:bg-transparent focus:ring-2 focus:outline-none transition ${
                 errors.name
                   ? "border-red-500 focus:ring-red-300"
                   : "border-gray-300 focus:ring-blue-500"
@@ -113,7 +113,7 @@ export default function SignUp() {
                 },
               })}
               placeholder="you@example.com"
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm bg-white focus:ring-2 focus:outline-none transition ${
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm bg-white dark:bg-transparent focus:ring-2 focus:outline-none transition ${
                 errors.email
                   ? "border-red-500 focus:ring-red-300"
                   : "border-gray-300 focus:ring-blue-500"
@@ -143,7 +143,7 @@ export default function SignUp() {
                 },
               })}
               placeholder="••••••••"
-              className={`w-full pl-10 pr-12 py-3 border rounded-lg text-sm bg-white focus:ring-2 focus:outline-none transition ${
+              className={`w-full pl-10 pr-12 py-3 border rounded-lg text-sm bg-white dark:bg-transparent focus:ring-2 focus:outline-none transition ${
                 errors.password
                   ? "border-red-500 focus:ring-red-300"
                   : "border-gray-300 focus:ring-blue-500"
@@ -187,7 +187,7 @@ export default function SignUp() {
                   value === password || "Passwords do not match",
               })}
               placeholder="••••••••"
-              className={`w-full pl-10 pr-12 py-3 border rounded-lg text-sm bg-white focus:ring-2 focus:outline-none transition ${
+              className={`w-full pl-10 pr-12 py-3 border rounded-lg text-sm bg-white dark:bg-transparent focus:ring-2 focus:outline-none transition ${
                 errors.confirm_password
                   ? "border-red-500 focus:ring-red-300"
                   : "border-gray-300 focus:ring-blue-500"

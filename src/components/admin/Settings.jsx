@@ -48,7 +48,7 @@ export default function Settings() {
   <div className="w-full">
   <div className="flex flex-col sm:flex-row gap-4 md:gap-6 rounded-xl overflow-hidden">
     {/* Sidebar Tabs */}
-    <div className="flex sm:w-82 sm:flex-col overflow-x-auto sm:overflow-visible bg-white dark:bg-[#0B1120] dark:border rounded-xl shadow-sm">
+    <div className="flex sm:w-82 sm:flex-col overflow-x-auto sm:overflow-visible bg-white border dark:bg-[#0B1120] dark:border rounded-xl shadow-sm">
       {tabs.map((tab) => (
         <button
           key={tab.id}
@@ -89,7 +89,7 @@ export default function Settings() {
     </div>
 
     {/* Tab Content */}
-    <div className="flex-1 relative rounded-xl bg-white dark:bg-gray-900/80 backdrop-filter backdrop-blur-lg shadow-lg overflow-hidden">
+    <div className="flex-1 relative rounded-xl bg-white dark:bg-gray-900/80 backdrop-filter backdrop-blur-lg shadow-sm border overflow-hidden">
       <AnimatePresence mode="wait">
         <motion.div
           key={activeTab}

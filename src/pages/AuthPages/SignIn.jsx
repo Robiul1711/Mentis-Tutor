@@ -58,7 +58,7 @@ export default function SignIn() {
     LoginMutation.mutate(data);
   };
   return (
-    <div className="w-full max-w-lg bg-bg-custom1  rounded-xl p-4 sm:p-8 border border-Primary/20">
+    <div className="w-full max-w-lg bg-bg-custom1 dark:bg-[#0B1120]   rounded-xl p-4 sm:p-8 border border-Primary/20">
       {/* Header */}
       <Link to="/" className="">
         <img src={logo} alt="" className="" />
@@ -93,7 +93,7 @@ export default function SignIn() {
                 },
               })}
               placeholder="you@example.com"
-              className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm bg-white focus:ring-2 focus:outline-none transition ${
+              className={`w-full pl-10 pr-4 py-3 border rounded-lg text-sm bg-white dark:bg-transparent focus:ring-2 focus:outline-none transition ${
                 errors.email
                   ? "border-red-500 focus:ring-red-300"
                   : "border-gray-300 focus:ring-blue-500"
@@ -123,7 +123,7 @@ export default function SignIn() {
                 },
               })}
               placeholder="••••••••"
-              className={`w-full pl-10 pr-12 py-3 border rounded-lg text-sm bg-white focus:ring-2 focus:outline-none transition ${
+              className={`w-full pl-10 pr-12 py-3 border rounded-lg text-sm bg-white dark:bg-transparent focus:ring-2 focus:outline-none transition ${
                 errors.password
                   ? "border-red-500 focus:ring-red-300"
                   : "border-gray-300 focus:ring-blue-500"
