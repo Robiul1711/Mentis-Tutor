@@ -6,6 +6,7 @@ import { MdArrowOutward } from "react-icons/md";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { Switch } from "@/components/ui/switch"
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -194,9 +195,10 @@ const PricingComparison = () => {
             </p>
 
             <label className="flex items-center gap-2 text-[14px] text-gray-600 cursor-pointer">
-              <div className="w-10 h-5 bg-gray-300 rounded-full relative">
-                <div className="absolute top-1 left-1 w-3.5 h-3.5 rounded-full bg-white shadow"></div>
-              </div>
+           
+               <Switch />
+
+             
               Yearly saves 2 months
             </label>
           </div>
