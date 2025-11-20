@@ -26,18 +26,24 @@ const Footer = () => {
 
         {/* Navigation Links */}
         <ul className="flex flex-wrap justify-center gap-6 text-sm sm:text-base md:text-lg font-medium">
-          <li className="hover:text-Primary duration-300 cursor-pointer">
+          <Link to="/" className="hover:text-Primary duration-300 cursor-pointer">
             Home
-          </li>
-          <li className="hover:text-Primary duration-300 cursor-pointer">
+          </Link>
+          <Link to={"/about"} className="hover:text-Primary duration-300 cursor-pointer">
             About{" "}
-          </li>
-          <li className="hover:text-Primary duration-300 cursor-pointer">
+          </Link>
+          <Link to="/courses" className="hover:text-Primary duration-300 cursor-pointer">
             Courses
-          </li>
-          <li className="hover:text-Primary duration-300 cursor-pointer">
+          </Link>
+          <Link to="/blog" className="hover:text-Primary duration-300 cursor-pointer">
+           Blog
+          </Link>
+          <Link to="/faq" className="hover:text-Primary duration-300 cursor-pointer">
+            Faqs
+          </Link>
+          <Link to="/contact"  className="hover:text-Primary duration-300 cursor-pointer">
             Contact Us
-          </li>
+          </Link>
         </ul>
 
         {/* Social Links */}
