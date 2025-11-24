@@ -145,7 +145,6 @@ const Navbar = () => {
               </Link>
             </li>
           ))}
-
           <CommonButton
             link={"/auth/sign-in"}
             variant="secondary"
