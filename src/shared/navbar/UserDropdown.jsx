@@ -95,7 +95,7 @@ const UserDropdown = () => {
         onClick={toggleDropdown}
         className="flex items-center gap-2 "
       >
-     <img className="w-12 h-12 p-2 bg-white rounded-full object-cover" src={profile} alt="image" />
+     <img className="lg:size-12 md:size-10  size-8  bg-white rounded-full object-cover" src={profile} alt="image" />
       </button>
 
       {isOpen && (
