@@ -3,7 +3,7 @@ import Title from "../common/Title";
 
 const Guarantee = () => {
   return (
-    <section className="w-full bg-[#e7f3e7] dark:bg-[#0B1120] dark:border-t dark:border-b py-12 px-4">
+    <section className="w-full bg-[#e7f3e7] dark:bg-[#0B1120] dark:border-t dark:border-b py-12 px-4 py-12 md:py-20">
       <div className="text-center max-w-3xl mx-auto">
 
         {/* Title */}

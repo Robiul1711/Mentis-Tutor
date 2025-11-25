@@ -58,7 +58,7 @@ export default function SignIn() {
     LoginMutation.mutate(data);
   };
   return (
-    <div className="w-full max-w-lg bg-bg-custom1 dark:bg-[#0B1120]   rounded-xl p-4 sm:p-8 border border-Primary/20">
+    <div className="w-full max-w-xl bg-white dark:bg-[#0B1120]   rounded-xl p-4 sm:p-8 border border-Primary/20">
       {/* Header */}
       <Link to="/" className="">
         <img src={logo} alt="" className="" />

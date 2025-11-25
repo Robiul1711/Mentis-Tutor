@@ -118,7 +118,7 @@ const PricingComparison = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding-x">
+    <section ref={sectionRef} className="section-padding-x py-12 md:py-20">
       {/* Heading */}
       <div className="text-center mb-10">
         <div ref={headingRef}>

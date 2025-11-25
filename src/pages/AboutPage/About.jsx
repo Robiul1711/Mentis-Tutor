@@ -1,3 +1,4 @@
+import React from "react";
 import AbourHero from "@/components/AboutComponents/AbourHero";
 import AboutBanner from "@/components/AboutComponents/AboutBanner";
 import CurriculumTable from "@/components/AboutComponents/CurriculumTable";
@@ -11,11 +12,10 @@ import OurGrade from "@/components/HomeComponents/OurGrade";
 import States from "@/components/HomeComponents/States";
 import Testimonials from "@/components/HomeComponents/Testimonials";
 
-import React from "react";
 
 const About = () => {
   return (
-    <div className="section-padding-y space-y-28">
+    <div className="section-padding-y space-y-12 sm:space-y-20 lg:space-y-28">
       <AboutBanner />
       <AbourHero />
       {/* <MeetYourTutor/>

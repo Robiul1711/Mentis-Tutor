@@ -52,74 +52,105 @@ const GradeCards = () => {
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const subtitleRef = useRef(null);
-  const cardsRef = useRef([]);
   const containerRef = useRef(null);
-
-  // helper: collect card refs
-  const addToCardsRef = (el) => {
-    if (el && !cardsRef.current.includes(el)) {
-      cardsRef.current.push(el);
-    }
-  };
+  
+  // Create individual refs for each card
+  const cardRefs = useRef([]);
+  cardRefs.current = gradeData.map((_, i) => cardRefs.current[i] ?? React.createRef());
 
   useEffect(() => {
     const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: containerRef.current,
-          start: "top 100%",
-          end: "bottom 30%",
-          toggleActions: "play none none none", // <-- No reverse, no vanish
+      ScrollTrigger.matchMedia({
+        // Desktop Animation (large screens)
+        "(min-width: 768px)": function () {
+          console.log("Desktop animation setup");
+          const tl = gsap.timeline({
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 85%",
+              end: "bottom 60%",
+              toggleActions: "play none none none",
+              markers: false, // Set to true to debug trigger zones
+            },
+          });
+
+          tl.from(headingRef.current, {
+            y: 40,
+            opacity: 0,
+            duration: 0.6,
+            ease: "power2.out",
+          });
+
+          tl.from(
+            subtitleRef.current,
+            {
+              y: 30,
+              opacity: 0,
+              duration: 0.5,
+              ease: "power2.out",
+            },
+            "-=0.3"
+          );
+
+          tl.from(
+            cardRefs.current.map(ref => ref.current),
+            {
+              y: 80,
+              opacity: 0,
+              scale: 0.95,
+              stagger: 0.25,
+              duration: 0.8,
+              ease: "power2.out",
+            },
+            "-=0.2"
+          );
+        },
+
+        // Mobile Animation
+        "(max-width: 767px)": function () {
+          console.log("Mobile animation setup");
+          
+          gsap.from([headingRef.current, subtitleRef.current], {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 90%",
+              end: "bottom 70%",
+              toggleActions: "play none none none",
+              markers: false, // Set to true to debug trigger zones
+            },
+            y: 30,
+            opacity: 0,
+            duration: 0.5,
+            stagger: 0.2,
+            ease: "power2.out",
+          });
+
+          gsap.from(cardRefs.current.map(ref => ref.current), {
+            scrollTrigger: {
+              trigger: containerRef.current,
+              start: "top 85%",
+              end: "bottom 60%",
+              toggleActions: "play none none none",
+              markers: false, // Set to true to debug trigger zones
+            },
+            y: 60,
+            opacity: 0,
+            scale: 0.97,
+            stagger: 0.2,
+            duration: 0.6,
+            ease: "power2.out",
+          });
         },
       });
-
-      // Heading
-      tl.fromTo(
-        headingRef.current,
-        { y: 40, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.5, ease: "power2.out" }
-      );
-
-      // Subtitle
-      tl.fromTo(
-        subtitleRef.current,
-        { y: 30, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.45, ease: "power2.out" },
-        "-=0.35"
-      );
-
-      // Card 1
-      tl.fromTo(
-        cardsRef.current[0],
-        { y: 120, x: -80, opacity: 0, scale: 0.9, rotation: -4 },
-        { y: 20, x: 0, opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "power2.out" },
-        "+=0.2"
-      );
-
-      // Card 2
-      tl.fromTo(
-        cardsRef.current[1],
-        { y: 140, opacity: 0, scale: 0.9 },
-        { y: 0, opacity: 1, scale: 1, duration: 0.55, ease: "power2.out" },
-        "-=0.4"
-      );
-
-      // Card 3
-      tl.fromTo(
-        cardsRef.current[2],
-        { y: 120, x: 80, opacity: 0, scale: 0.9, rotation: 4 },
-        { y: -20, x: 0, opacity: 1, scale: 1, rotation: 0, duration: 0.55, ease: "power2.out" },
-        "-=0.4"
-      );
     }, sectionRef);
 
     return () => ctx.revert();
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding-x">
+    <section ref={sectionRef} className="section-padding-x bg-white dark:bg-[#0B1120] py-12 md:py-20  ">
       {/* Heading */}
-      <div className="text-center mb-44">
+      <div className="text-center ">
         <div ref={headingRef}>
           <Title level="title48" className="dark:text-white">
             Everyone Can Reach Grade 9
@@ -135,19 +166,23 @@ const GradeCards = () => {
         </div>
       </div>
 
-      {/* Cards */}
-      <div ref={containerRef} className="flex flex-col md:flex-row justify-center gap-10 py-12">
+      {/* Cards Container */}
+      <div ref={containerRef} className="flex flex-col md:flex-row justify-center items-center gap-10 py-12">
         {gradeData.map((card, index) => (
           <div
             key={card.id}
-            ref={addToCardsRef}
+            ref={cardRefs.current[index]}
             className={`
               ${card.bg} ${card.border} ${card.shadow}
-              border rounded-3xl p-6 w-full md:w-[380px]
-              transition-all duration-300 cursor-pointer
+              border rounded-3xl p-6 w-full md:w-[380px] min-h-[220px]
+              transition-all duration-300 cursor-pointer hover:scale-105
               ${card.offset}
-              relative z-${index + 1}
+              relative
             `}
+            style={{ 
+              opacity: 1, // Ensure cards are visible initially
+              transform: 'translateY(0)' // Override any initial transform
+            }}
           >
             {/* Top Row */}
             <div className="flex justify-between items-center">
@@ -162,7 +197,7 @@ const GradeCards = () => {
               </span>
             </div>
 
-            {/* Text */}
+            {/* Text Content */}
             <div className="mt-5">
               <Title level="title24" className="text-black font-semibold">
                 {card.title}

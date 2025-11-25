@@ -191,8 +191,7 @@
   }
 }
 .dark body {
-  background: #0B1120; /* Dark mode background */
- 
+  background: #0B1120 ; /* Dark mode background */
 }
 .section-padding-x {
   padding-left: 16px;
