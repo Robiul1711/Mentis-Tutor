@@ -186,7 +186,7 @@ const  HowMentisWork = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding-x dark:bg-[#0B1120] ">
+    <section ref={sectionRef} className="section-padding-x py-12 md:py-20 bg-white dark:bg-[#0B1120]">
       {/* Heading */}
       <div className="text-center mb-10">
         <div ref={headingRef}>

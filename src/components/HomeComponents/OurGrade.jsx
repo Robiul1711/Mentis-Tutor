@@ -61,7 +61,7 @@ const OurGrade = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full section-padding-x">
+    <section ref={sectionRef} className="w-full section-padding-x py-12 md:py-20">
       <div className="text-center max-w-3xl mx-auto">
         {/* Title */}
         <div ref={titleRef}>

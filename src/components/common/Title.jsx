@@ -5,7 +5,7 @@ const sizeMap = {
   title64: "text-[32px] sm:text-[44px] md:text-[56px] xl:text-[64px] font-extrabold",
   title48: "text-[28px] sm:text-[40px] md:text-[48px] xl:text-[56px] font-bold",
   title48: "text-[24px] sm:text-[32px] md:text-[40px] xl:text-[48px] font-bold",
-  title40: "text-[20px] sm:text-[28px] md:text-[34px] xl:text-[40px] font-semibold",
+  title40: "text-[20px] sm:text-[28px] md:text-[34px] xl:text-[40px] font-semibold tracking-tight leading-tight md:font-bold",
   title32: "text-[18px] sm:text-[22px] md:text-[28px] xl:text-[32px] font-semibold",
   title28: "text-[16px] sm:text-[20px] md:text-[24px] xl:text-[28px] font-medium",
   title24: "text-[14px] sm:text-[18px] md:text-[20px] xl:text-[24px] font-medium",

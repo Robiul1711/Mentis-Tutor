@@ -148,7 +148,7 @@ const GradeCards = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding-x bg-white dark:bg-gray-900 min-h-screen py-20">
+    <section ref={sectionRef} className="section-padding-x bg-white dark:bg-[#0B1120] py-12 md:py-20  ">
       {/* Heading */}
       <div className="text-center ">
         <div ref={headingRef}>

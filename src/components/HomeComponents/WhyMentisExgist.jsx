@@ -8,7 +8,7 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 
 gsap.registerPlugin(ScrollTrigger);
 
-const WhyMentisExgist = () => {
+const WhyMentisExist = () => {
   const sectionRef = useRef(null);
   const img1Ref = useRef(null);
   const img2Ref = useRef(null);
@@ -18,149 +18,126 @@ const WhyMentisExgist = () => {
   const subtitleRef = useRef(null);
 
   useEffect(() => {
-      // Heading animation
-      gsap.fromTo(titleRef.current,
-        {
-          y: 50,
-          opacity: 0
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 1,
-          ease: "power3.out",
-          scrollTrigger: {
-            trigger: titleRef.current,
-            start: "top 80%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
+    const elements = [
+      titleRef.current,
+      subtitleRef.current,
+      img1Ref.current,
+      img2Ref.current,
+      img3Ref.current,
+      textRef.current,
+    ];
 
-      // Subtitle animation
-      gsap.fromTo(subtitleRef.current,
-        {
-          y: 30,
-          opacity: 0
-        },
-        {
-          y: 0,
-          opacity: 1,
-          duration: 0.8,
-          delay: 0.2,
-          ease: "power2.out",
-          scrollTrigger: {
-            trigger: subtitleRef.current,
-            start: "top 85%",
-            end: "bottom 20%",
-            toggleActions: "play none none reverse"
-          }
-        }
-      );
-
-
-    const ctx = gsap.context(() => {
-
-      const tl = gsap.timeline({
+    gsap.fromTo(
+      elements,
+      { y: 30, opacity: 0 },
+      {
+        y: 0,
+        opacity: 1,
+        duration: 0.6,
+        stagger: 0.12,
+        ease: "power2.out",
         scrollTrigger: {
           trigger: sectionRef.current,
-          start: "top 80%",   // when section is visible
+          start: "top 85%",
         },
-        defaults: { ease: "power3.out" }
-      });
-
-      // Animate images one by one
-      tl.from(img1Ref.current, {
-        y: 60,
-        opacity: 0,
-        duration: 0.6
-      })
-      .from(img2Ref.current, {
-        y: 80,
-        opacity: 0,
-        duration: 0.6
-      }, "-=0.4")
-      .from(img3Ref.current, {
-        y: 60,
-        opacity: 0,
-        duration: 0.6
-      }, "-=0.4");
-
-      // Animate text block
-      tl.from(textRef.current, {
-        y: 40,
-        opacity: 0,
-        duration: 0.8
-      }, "-=0.3");
-
-    }, sectionRef);
-
-    return () => ctx.revert();  
+      }
+    );
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding-x">
+    <section ref={sectionRef} className="section-padding-x py-12 md:py-20 bg-white dark:bg-[#0B1120]">
       {/* Heading */}
-      <div className="text-center mb-10">
+      <div className="text-center mb-12">
         <div ref={titleRef}>
-        <Title level="title48" className="dark:text-white">
-          WHY MENTIS EXISTS – <span>“Tutoring for Everyone”</span>
-        </Title>
-
+          <Title level="title48" className="dark:text-white">
+            WHY MENTIS EXISTS
+          </Title>
         </div>
-        <div ref={subtitleRef}>
-        <Title
-          level="title20"
-          className="dark:text-gray-300 max-w-[1020px] mx-auto mt-4"
-        >
-          We built Mentis to make high-quality GCSE tutoring accessible,
-          affordable, and achievable for every student no matter where they start.
-        </Title>
 
+        <div ref={subtitleRef}>
+          <Title
+            level="title20"
+            className="dark:text-gray-300 max-w-[900px] mx-auto mt-4 leading-relaxed"
+          >
+            We built Mentis to make high-quality GCSE tutoring accessible,
+            affordable, and achievable for every student—no matter where they
+            start.
+          </Title>
         </div>
       </div>
 
-      <div className="grid grid-cols-1 md:grid-cols-2 gap-12 items-center py-14">
+      {/* Content */}
+      <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-14 items-center">
         {/* Images */}
-        <div className="flex gap-6 justify-center">
-          <img
-            ref={img1Ref}
-            src={s1}
-            alt="Student"
-            className="rounded-lg w-[32%] object-cover h-[350px]"
-          />
+        <div className="flex justify-center gap-4 md:gap-6">
+          <div className="flex flex-col gap-4 md:gap-6">
+            <img
+              ref={img1Ref}
+              src={s1}
+              alt="Student learning"
+              className="rounded-xl w-[180px] sm:w-[220px] md:w-[240px] h-[250px] sm:h-[300px] object-cover shadow-md"
+            />
+            <img
+              ref={img3Ref}
+              src={s3}
+              alt="Student progress"
+              className="rounded-xl w-[180px] sm:w-[220px] md:w-[240px] h-[220px] sm:h-[260px] object-cover shadow-md"
+            />
+          </div>
 
           <img
             ref={img2Ref}
             src={s2}
-            alt="Student"
-            className="rounded-lg w-[32%] object-cover h-[350px] -translate-y-10"
-          />
-
-          <img
-            ref={img3Ref}
-            src={s3}
-            alt="Student"
-            className="rounded-lg w-[32%] object-cover h-[350px]"
+            alt="Student success"
+            className="rounded-xl w-[190px] sm:w-[240px] md:w-[260px] h-[320px] sm:h-[380px] object-cover shadow-lg mt-10"
           />
         </div>
 
-        {/* Text */}
-        <div ref={textRef} className="text-center flex flex-col gap-4 md:text-left">
-          <Title level="title32" className="font-semibold dark:text-white">
-            Traditional tutoring costs hundreds a month and limits learning
-            to one hour a week.
-          </Title>
+        {/* Text Content */}
+        <div ref={textRef} className="space-y-6 text-center lg:text-left">
+          {/* Problem block */}
+          <div className="bg-blue-50 dark:bg-blue-900/20 rounded-2xl p-6">
+            <Title level="title24" className="font-semibold dark:text-white mb-3">
+              The Problem
+            </Title>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base md:text-lg">
+              Traditional tutoring costs hundreds per month and limits learning 
+              to just one hour a week — making it inaccessible for many families.
+            </p>
+          </div>
 
-          <Title level="title32" className="font-semibold dark:text-white">
-            Mentis gives every student access to real help — anytime, anywhere —
-            for just <span className="font-bold">£25 a month.</span>
-          </Title>
+          {/* Solution block */}
+          <div className="bg-green-50 dark:bg-green-900/20 rounded-2xl p-6">
+            <Title level="title24" className="font-semibold dark:text-white mb-3">
+              Our Solution
+            </Title>
+            <p className="text-gray-700 dark:text-gray-300 leading-relaxed text-base md:text-lg">
+              Mentis gives every student access to real help — anytime, anywhere — for just{" "}
+              <span className="font-bold text-green-600 dark:text-green-400">£25 a month</span>.
+            </p>
+          </div>
+
+          {/* Key Benefits */}
+          <div className="grid grid-cols-2 sm:grid-cols-3 gap-6 mt-6">
+            <div className="text-center">
+              <div className="text-2xl font-bold text-blue-600 dark:text-blue-400">24/7</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Access</div>
+            </div>
+
+            <div className="text-center">
+              <div className="text-2xl font-bold text-green-600 dark:text-green-400">£25</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Per Month</div>
+            </div>
+
+            <div className="text-center col-span-2 sm:col-span-1">
+              <div className="text-2xl font-bold text-purple-600 dark:text-purple-400">100%</div>
+              <div className="text-sm text-gray-600 dark:text-gray-400">Accessible</div>
+            </div>
+          </div>
         </div>
       </div>
     </section>
   );
 };
 
-export default WhyMentisExgist;
+export default WhyMentisExist;

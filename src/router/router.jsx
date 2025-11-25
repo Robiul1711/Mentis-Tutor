@@ -61,15 +61,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />,
+        element: <Home />
       },
       {
         path: "/about",
-        element: <About />,
+        element: <About />
       },
       {
         path: "/courses",
-        element: <Course />,
+        element: <Course />
       },
       {
         path: "/course-details",

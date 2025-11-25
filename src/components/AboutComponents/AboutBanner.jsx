@@ -86,7 +86,7 @@ const AboutBanner = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="section-padding-x">
+    <section ref={sectionRef} className="section-padding-x  ">
       {/* Heading */}
       <div className="text-center max-w-3xl mx-auto">
         <div ref={titleRef}>
@@ -124,7 +124,7 @@ const AboutBanner = () => {
 
       {/* Video Preview Box */}
       <div className="max-w-5xl mx-auto mt-14">
-        <div className="relative rounded-2xl overflow-hidden shadow-lg">
+        <div className="relative rounded-2xl overflow-hidden ">
           <img
             ref={imageRef}
             src={dashboardImg}

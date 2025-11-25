@@ -67,7 +67,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <section className="section-padding-x  dark:bg-[#0B1120]  overflow-hidden">
+    <section className="section-padding-x py-12 md:py-20  overflow-hidden ">
       <div
         ref={bannerRef}
         className="flex flex-col-reverse lg:flex-row items-center justify-between"
@@ -78,14 +78,14 @@ const Banner = () => {
           className="w-full lg:w-1/2 flex flex-col space-y-6 text-center lg:text-left mt-8 lg:mt-0"
         >
           <div ref={titleRef}>
-            <Title level="title48">
+            <Title level="title40">
               Real Tutor. Real Progress. Real Results.
             </Title>
           </div>
 
           <Title
             ref={extraTitleRef}
-            level="title32"
+            level="title20"
             className="dark:text-white !font-bold"
           >
             Affordable hybrid tutoring - 24/7 real support for every CCSE

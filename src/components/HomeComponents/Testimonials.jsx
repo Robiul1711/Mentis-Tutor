@@ -56,7 +56,7 @@ const testimonials = [
 
 const Testimonials = () => {
   return (
-    <section className="w-full dark:bg-[#0B1120] section-padding-x ">
+    <section className="w-full dark:bg-[#0B1120] py-12 md:py-20 section-padding-x ">
       {/* Title */}
       <div className="text-center mb-16">
        <Title level="title48" className="">
@@ -135,7 +135,7 @@ const Testimonials = () => {
       </div>
 
       {/* Background Decoration */}
-      <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-blue-50/50 to-transparent dark:from-blue-900/10 pointer-events-none" />
+      {/* <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-blue-50/50 to-transparent dark:from-blue-900/10 pointer-events-none" /> */}
     </section>
   );
 };

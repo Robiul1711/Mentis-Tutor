@@ -17,15 +17,16 @@ import Testimonials from '@/components/HomeComponents/Testimonials'
 
 const Home = () => {
   return (
-    <div className='section-padding-y space-y-20 lg:space-y-28'>
+   <div className="section-padding-y ">
+
       <Banner />
       <WhyMentisExgist />
       <States />
       <WhyMentisWork />
       <HowMentisWork />
-      <GradeCards />
-      <Explore />
       <PricingComparison />
+      <GradeCards />
+      {/* <Explore /> */}
       <FeaturesSlider />
       <Testimonials />
       <Guarantee />

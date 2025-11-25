@@ -119,7 +119,7 @@ const WhyMentisWork = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full section-padding-x">
+    <section ref={sectionRef} className="w-full section-padding-x py-12 md:py-20">
       {/* Heading */}
       <div className="text-center mb-14">
         <div ref={headingRef}>
