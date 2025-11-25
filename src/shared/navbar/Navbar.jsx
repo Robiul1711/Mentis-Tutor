@@ -121,7 +121,7 @@ const Navbar = () => {
 
         {/* Sidebar Panel */}
         <div
-          className={`absolute top-0 right-0 h-full w-80 max-w-full bg-white dark:bg-[#0B1120] shadow-2xl transform transition-transform duration-300 ease-in-out ${
+          className={`absolute top-0 right-0 h-full w-70 z-50 max-w-full bg-white dark:bg-[#0B1120] shadow-2xl transform transition-transform duration-300 ease-in-out ${
             isOpen ? "translate-x-0" : "translate-x-full"
           }`}
         >
