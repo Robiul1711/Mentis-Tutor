@@ -141,22 +141,22 @@ const PricingComparison = () => {
         {/* PRIVATE TUTOR CARD */}
         <div
           ref={leftCardRef}
-          className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm"
+          className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-8 shadow-sm"
         >
-          <h2 className="text-[22px] font-semibold text-black">
+          <h2 className="text-[22px] font-semibold text-black dark:text-white">
             Private Tutor
           </h2>
 
           <div className="mt-4">
-            <p className="text-[32px] font-bold text-[#0047ab]">
+            <p className="text-[32px] font-bold text-[#0047ab] dark:text-white">
               £ 200–400{" "}
-              <span className="text-[14px] font-medium text-gray-500">
+              <span className="text-[14px] font-medium text-gray-500 dark:text-gray-400">
                 / per month
               </span>
             </p>
           </div>
 
-          <div className="mt-6 space-y-4 text-[16px] text-black">
+          <div className="mt-6 space-y-4 text-[16px] text-black dark:text-white">
             <div ref={addLeftFeature} className="flex justify-between">
               <span>Total learning</span>
               <span>: 4–8 hrs</span>
@@ -182,19 +182,19 @@ const PricingComparison = () => {
         {/* MENTIS CARD */}
         <div
           ref={rightCardRef}
-          className="bg-white border border-gray-200 rounded-3xl p-8 shadow-sm"
+          className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-8 shadow-sm"
         >
-          <h2 className="text-[22px] font-semibold text-black">Mentis</h2>
+          <h2 className="text-[22px] font-semibold text-black dark:text-white">Mentis</h2>
 
           <div className="mt-4 flex items-center gap-3">
-            <p className="text-[32px] font-bold text-[#0047ab]">
+            <p className="text-[32px] font-bold text-[#0047ab] dark:text-white">
               £ 25{" "}
-              <span className="text-[14px] font-medium text-gray-500">
+              <span className="text-[14px] font-medium text-gray-500 dark:text-gray-400">
                 / per month
               </span>
             </p>
 
-            <label className="flex items-center gap-2 text-[14px] text-gray-600 cursor-pointer">
+            <label className="flex items-center gap-2 text-[14px] text-gray-600 dark:text-gray-400 cursor-pointer">
            
                <Switch />
 
@@ -203,7 +203,7 @@ const PricingComparison = () => {
             </label>
           </div>
 
-          <div className="mt-6 space-y-4 text-[16px] text-black">
+          <div className="mt-6 space-y-4 text-[16px] text-black dark:text-white">
             <div ref={addRightFeature} className="flex justify-between">
               <span>Total learning</span>
               <span>: Unlimited</span>

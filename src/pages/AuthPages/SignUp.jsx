@@ -5,13 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/images/logo.png";
 import { BeatLoader } from "react-spinners";
 import CommonButton from "@/components/common/CommonButton";
-// import useAxiosPublic from "@/hooks/useAxiosPublic";
-// import { useMutation } from "@tanstack/react-query";
-// import { showLoadingToast, updateToastError, updateToastSuccess } from "@/lib/utils";
+import { useApiMutation } from "@/hooks/apiMutation";
+import { useEmail } from "@/hooks/useEmail";
+
 export default function SignUp() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
-  // const axiosPublic = useAxiosPublic();
+  const { setEmail} = useEmail(); 
   const navigate = useNavigate();
 
   const {
@@ -21,33 +21,25 @@ export default function SignUp() {
     watch,
   } = useForm();
 
-  const password = watch("password");
+  const password = watch("password_confirmation");
 
-  //  const SignupMutation = useMutation({
-  //     mutationFn: async (data) => {
-  //       const response = await axiosPublic.post("/account/register/", data);
-  //       return response?.data;
-  //     },
-  //     onMutate: () => {
-  //       const toastId = showLoadingToast("Registering...");
-  //       return { toastId };
-  //     },
-  //     onSuccess: (response, _variables, context) => {
-  //       updateToastSuccess(context.toastId, response?.message || "Sign-up successful");
 
-  //       navigate("/auth/sign-in");
-  //     },
-  //     onError: (error, _variables, context) => {
-  //       console.log(error);
-  //       const errorMessage =
-  //         error.response?.data?.message ||
-  //         "Something went wrong, try again later!!";
-  //       updateToastError(context.toastId, errorMessage);
-  //     },
-  //   });
+const { mutate, isPending } = useApiMutation({
+  url: "/register",
+  method: "POST",
+  secure: false,
+  successMessage: "Welcome back!",
+  // ✅ This now works because we passed it in the hook above
+  onSuccess: (data) => {
+    localStorage.setItem('token', data.token);
+    navigate('/auth/verify-otp'); 
+  }
+});
+
   const onSubmit = (data) => {
-    console.log(data);
-    // SignupMutation.mutate(data);
+    // console.log(data);
+    setEmail(data.email);
+    mutate(data);
   };
   return (
     <div className="w-full max-w-xl bg-white dark:bg-[#0B1120] dark:border  rounded-xl p-4 sm:p-8 border border-Primary/20">
@@ -171,7 +163,7 @@ export default function SignUp() {
         {/* Confirm Password */}
         <div>
           <label
-            htmlFor="confirmPassword"
+            htmlFor="password_confirmation"
             className="block text-sm font-medium  mb-2"
           >
             Confirm Password
@@ -179,16 +171,16 @@ export default function SignUp() {
           <div className="relative">
             <Lock className="absolute left-3 top-3.5 h-5 w-5 text-gray-400" />
             <input
-              id="confirm_password"
+              id="password_confirmation"
               type={showConfirm ? "text" : "password"}
-              {...register("confirm_password", {
+              {...register("password_confirmation", {
                 required: "Confirm your password",
                 validate: (value) =>
                   value === password || "Passwords do not match",
               })}
               placeholder="••••••••"
               className={`w-full pl-10 pr-12 py-3 border rounded-lg text-sm bg-white dark:bg-transparent focus:ring-2 focus:outline-none transition ${
-                errors.confirm_password
+                errors.password_confirmation
                   ? "border-red-500 focus:ring-red-300"
                   : "border-gray-300 focus:ring-blue-500"
               }`}
@@ -205,9 +197,9 @@ export default function SignUp() {
               )}
             </button>
           </div>
-          {errors.confirm_password && (
+          {errors.password_confirmation && (
             <p className="mt-1 text-sm text-red-600">
-              {errors.confirm_password.message}
+              {errors.password_confirmation.message}
             </p>
           )}
         </div>
@@ -218,9 +210,9 @@ export default function SignUp() {
           variant="secondary"
           className="w-full h-[44px] flex items-center justify-center "
         >
-          {/* {SignupMutation?.isPending ? (
+          {isPending ? (
               <BeatLoader
-                loading={SignupMutation?.isPending}
+                loading={isPending}
                 color="white"
                 size={12}
                 aria-label="Loading Spinner"
@@ -228,8 +220,8 @@ export default function SignUp() {
               />
             ) : (
               "Sign Up"
-            )} */}
-          Sign Up
+            )}
+     
         </CommonButton>
       </form>
 

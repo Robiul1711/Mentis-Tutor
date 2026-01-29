@@ -14,6 +14,8 @@ import { FaRegSmile } from "react-icons/fa";
 import { FiImage } from "react-icons/fi";
 import { Loader } from "lucide-react";
 import { TiStarFullOutline } from "react-icons/ti";
+import { useApiMutation } from "@/hooks/apiMutation";
+import { useApiQuery } from "@/hooks/apiQuery";
 
 const Message = ({
   message,
@@ -168,7 +170,6 @@ const Message = ({
     </div>
   </motion.div>
 );
-
 const MessageInbox = ({ selectedConversation, onBack }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
@@ -176,119 +177,108 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
   const [attachments, setAttachments] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [totalAttachments, setTotalAttachments] = useState(0);
-  const [isLoading, setIsLoading] = useState(false);
 
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
 
-  // Mock API function
-  const fetchMessages = (conversationId) => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          {
-            id: 1,
-            text: "Hey there! How's it going?",
-            sender: "other",
-            senderProfile: {
-              name: selectedConversation?.name || "User",
-              avatar:
-                selectedConversation?.avatar ||
-                "https://i.pravatar.cc/40?img=3",
-            },
-            timestamp: new Date(Date.now() - 3600000).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            reaction: null,
-            attachments: [],
-          },
-          {
-            id: 2,
-            text: "I was wondering about the project timeline",
-            sender: "other",
-            senderProfile: {
-              name: selectedConversation?.name || "User",
-              avatar:
-                selectedConversation?.avatar ||
-                "https://i.pravatar.cc/40?img=3",
-            },
-            timestamp: new Date(Date.now() - 1800000).toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            reaction: null,
-            attachments: [],
-          },
-          {
-            id: 3,
-            text: "Everything is on track! We should be done by Friday",
-            sender: "me",
-            senderProfile: {
-              name: "You",
-              avatar: "https://i.pravatar.cc/40?img=1",
-            },
-            timestamp: new Date().toLocaleTimeString([], {
-              hour: "2-digit",
-              minute: "2-digit",
-            }),
-            reaction: null,
-            attachments: [],
-          },
-        ]);
-      }, 500);
-    });
-  };
+  const { data, isLoading: isQueryLoading } = useApiQuery({
+    queryKey: ["conversation", selectedConversation?.id],
+    url: `/chat/conversation/${selectedConversation?.id}`,
+    secure: true,
+    enabled: !!selectedConversation?.id,
+  });
 
-  // Fetch messages when conversation changes
+  const { mutate, isPending } = useApiMutation({
+    url: `/chat/send/${selectedConversation?.id}`,
+    method: "POST",
+    secure: true,
+    successMessage: "Message sent successfully!",
+    onSuccess: (res) => {
+      if (res?.success || res?.data) {
+        // Map the new message to our local format before adding to state
+        const newMsg = res.data;
+        const mappedNewMsg = {
+          id: newMsg.id,
+          text: newMsg.text,
+          sender: "me",
+          senderProfile: {
+            name: newMsg.sender?.name,
+            avatar: newMsg.sender?.avatar || "https://i.pravatar.cc/40?img=1",
+          },
+          timestamp: newMsg.humanize_date || "Just now",
+          reaction: null,
+          attachments: newMsg.file
+            ? [
+                {
+                  id: newMsg.id,
+                  url: newMsg.file,
+                  type: newMsg.file.match(/\.(jpg|jpeg|png|gif)$/i)
+                    ? "image/png"
+                    : "file",
+                  name: "Attachment",
+                  size: 0,
+                },
+              ]
+            : [],
+        };
+        setMessages((prev) => [...prev, mappedNewMsg]);
+        setNewMessage("");
+        setAttachments([]);
+        inputRef.current?.focus();
+      }
+    },
+  });
+
+  // Sync API data to messages state
   useEffect(() => {
-    if (selectedConversation) {
-      setIsLoading(true);
-      fetchMessages(selectedConversation.id)
-        .then((data) => {
-          setMessages(data);
-          setIsLoading(false);
-        })
-        .catch((error) => {
-          console.error("Error fetching messages:", error);
-          setIsLoading(false);
-        });
+    if (data?.data?.chat?.data) {
+      const mappedMessages = data.data.chat.data.map((m) => ({
+        id: m.id,
+        text: m.text,
+        sender: m.type === "sent" ? "me" : "other",
+        senderProfile: {
+          name: m.sender?.name,
+          avatar: m.sender?.avatar || "https://i.pravatar.cc/40?img=3",
+        },
+        timestamp: m.humanize_date,
+        reaction: null,
+        attachments: m.file
+          ? [
+              {
+                id: m.id,
+                url: m.file,
+                type: m.file.match(/\.(jpg|jpeg|png|gif)$/i)
+                  ? "image/png"
+                  : "file",
+                name: "Attachment",
+                size: 0,
+              },
+            ]
+          : [],
+      }));
+      setMessages(mappedMessages);
     }
-  }, [selectedConversation]);
+  }, [data]);
 
   // Auto-scroll to bottom when messages change
-  //   useEffect(() => {
-  //     messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
-  //   }, [messages]);
+  useEffect(() => {
+    messagesEndRef.current?.scrollIntoView({ behavior: "smooth" });
+  }, [messages]);
 
   const handleSendMessage = async () => {
     if (newMessage.trim() === "" && attachments.length === 0) return;
 
-    const newId = messages.length
-      ? Math.max(...messages.map((m) => m.id)) + 1
-      : 1;
+    const formData = new FormData();
+    formData.append("text", newMessage);
 
-    const message = {
-      id: newId,
-      text: newMessage,
-      sender: "me",
-      senderProfile: {
-        name: "You",
-        avatar: "https://i.pravatar.cc/40?img=1",
-      },
-      timestamp: new Date().toLocaleTimeString([], {
-        hour: "2-digit",
-        minute: "2-digit",
-      }),
-      reaction: null,
-      attachments: [...attachments],
-    };
+    if (attachments.length > 0) {
+      attachments.forEach((file) => {
+        formData.append("file", file.file);
+      });
+    }
 
-    setMessages([...messages, message]);
-    setNewMessage("");
-    setAttachments([]);
-    inputRef.current?.focus();
+    mutate(formData);
   };
 
   const handleKeyPress = (e) => {
@@ -312,6 +302,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
         size: file.size,
         type: file.type,
         url: URL.createObjectURL(file),
+        file: file, // Keep the original file object for sending to the API
       }));
 
       setAttachments([...attachments, ...newAttachments]);
@@ -325,7 +316,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
 
   const handleRemoveAttachment = (attachmentId) => {
     setAttachments(
-      attachments.filter((attachment) => attachment.id !== attachmentId)
+      attachments.filter((attachment) => attachment.id !== attachmentId),
     );
   };
 
@@ -338,7 +329,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
           return { ...message, reaction: updatedReaction };
         }
         return message;
-      })
+      }),
     );
     setReactingTo(null);
   };
@@ -427,16 +418,17 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
                 4.3
               </p>
             </div>
-            <p className="text-sm text-gray-700 dark:text-gray-400">jaannecooper@gmail.com</p>
+            <p className="text-sm text-gray-700 dark:text-gray-400">
+              jaannecooper@gmail.com
+            </p>
           </div>
         </div>
-  
       </div>
 
       {/* Messages */}
       <div className="flex-1 overflow-hidden flex flex-col">
         <div className="flex-1 p-2 md:p-4 overflow-y-auto">
-          {isLoading ? (
+          {isQueryLoading ? (
             <div className="flex justify-center items-center h-full">
               <Loader className="animate-spin" size={24} />
             </div>
@@ -510,7 +502,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
                       <LuX size={14} />
                     </button>
                   </div>
-                )
+                ),
               )}
             </div>
           )}

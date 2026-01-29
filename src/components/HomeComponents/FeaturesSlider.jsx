@@ -85,7 +85,7 @@ const FeaturesSlider = () => {
 
       <Swiper
         spaceBetween={30}
-        slidesPerView={4}
+        slidesPerView={3}
         modules={[Navigation]}
         navigation={{
           nextEl: ".features-slider-next",
@@ -101,19 +101,22 @@ const FeaturesSlider = () => {
       >
         {data.map((item) => (
           <SwiperSlide key={item.id}>
-            <div className="bg-white border border-[#d7e8f9] rounded-3xl p-6 h-full transition">
+            <div className="bg-white dark:bg-gray-800 dark:border-gray-700 border border-[#d7e8f9] rounded-3xl p-6 h-full transition">
               {/* ICON */}
-              <div className="w-16 h-16 rounded-full bg-Primary flex items-center justify-center mb-4">
-                {<item.icon />}
+              <div className="xl:w-16 xl:h-16 size-12 rounded-full bg-Primary flex items-center justify-center mb-4">
+                <p>
+                  <item.icon className="text-white w-6 h-6 sm:w-8 sm:h-8  xl:w-auto xl:h-auto" />
+                </p>
+              
               </div>
 
               {/* Title */}
-              <h3 className="text-[20px] font-semibold text-gray-900">
+              <h3 className="text-[20px] font-semibold text-gray-900 dark:text-white">
                 {item.title}
               </h3>
 
               {/* Description */}
-              <p className="text-gray-600 text-[15px] mt-2 leading-relaxed line-clamp-2">
+              <p className="text-gray-600 dark:text-gray-400 text-[15px] mt-2 leading-relaxed line-clamp-2">
                 {item.desc}
               </p>
 

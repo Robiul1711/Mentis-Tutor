@@ -13,6 +13,7 @@ import Layout from "@/layout/Layout";
 import About from "@/pages/AboutPage/About";
 import ForgetPassword from "@/pages/AuthPages/ForgetPassword";
 import NewPasswordSet from "@/pages/AuthPages/NewPasswordSet";
+import ResetVerifyOtp from "@/pages/AuthPages/ResetVerifyOtp";
 import SignIn from "@/pages/AuthPages/SignIn";
 import SignUp from "@/pages/AuthPages/SignUp";
 import VerifyOtp from "@/pages/AuthPages/VerifyOtp";
@@ -48,6 +49,10 @@ const router = createBrowserRouter([
       {
         path: "verify-otp",
         element: <VerifyOtp />,
+      },
+      {
+        path: "reset-verify-otp",
+        element: <ResetVerifyOtp />,
       },
       {
         path: "new-password-set",

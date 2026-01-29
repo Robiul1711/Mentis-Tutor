@@ -13,6 +13,7 @@ import { MdArrowOutward } from "react-icons/md";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useApiQuery } from "@/hooks/apiQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -24,6 +25,10 @@ const Explore = () => {
   const contentRef = useRef(null);
   const featureRefs = useRef([]);
   const buttonRef = useRef(null);
+
+
+
+
 
   const addToFeatureRefs = (el) => {
     if (el && !featureRefs.current.includes(el)) {
@@ -110,17 +115,25 @@ const Explore = () => {
     return () => ctx.revert();
   }, []);
 
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["courses-all"],
+    url: "/courses/all",
+    secure:true
+  });
+
+const courseData=data?.data?.[0] || []
+console.log(courseData)
   return (
     <div ref={sectionRef} className="section-padding-x">
       {/* Top Title */}
       <div className="flex flex-col gap-4 max-w-[800px] mx-auto text-center">
         <div ref={headingRef}>
-          <Title level="title48">Explore Our GCSE Maths Course</Title>
+          <Title level="title48">{courseData?.title}</Title>
         </div>
 
         <div ref={subHeadingRef}>
           <Title level="title20">
-            Everything you need to master GCSE Maths, all in one place.
+            <span dangerouslySetInnerHTML={{__html:courseData?.description}}></span>
           </Title>
         </div>
       </div>
@@ -131,7 +144,7 @@ const Explore = () => {
         <div className="w-full lg:w-1/2 max-h-[416px] flex justify-center">
           <img
             ref={imageRef}
-            src={explore}
+            src={courseData?.thumbnail}
             alt="explore"
             className="w-full h-auto max-w-[400px] sm:max-w-full object-cover rounded-2xl"
           />
@@ -142,7 +155,7 @@ const Explore = () => {
           {/* Price & Rating */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
             <p className="text-secondaryColor text-3xl lg:text-5xl font-semibold">
-              $25 <span className="text-base font-normal">/ month</span>
+              ${courseData?.price} <span className="text-base font-normal">/ {courseData?.duration} months</span>
             </p>
             <p className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
               <RattingIcon />{" "}
@@ -152,7 +165,7 @@ const Explore = () => {
 
           {/* Title */}
           <Title level="title24" className="mt-5">
-            Master Algebra with Confidence — Build Strong Foundations for Exams
+            {courseData?.category}
           </Title>
 
           {/* Features */}

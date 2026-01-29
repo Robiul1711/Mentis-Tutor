@@ -5,14 +5,13 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/images/logo.png";
 import { BeatLoader } from "react-spinners";
 import CommonButton from "@/components/common/CommonButton";
-import { useMutation } from "@tanstack/react-query";
-import useAxiosPublic from "@/hooks/useAxiosPublic";
-// import { showLoadingToast, updateToastError, updateToastSuccess } from "@/lib/utils";
-// import { useEmail } from "@/hooks/useEmail";
+
+import { useApiMutation } from "@/hooks/apiMutation";
+import { useEmail } from "@/hooks/useEmail";
+
 export default function ForgetPassword() {
-const axiosPublic = useAxiosPublic();
+    const { setEmail} = useEmail(); 
   const navigate = useNavigate();
-  // const {setEmail} = useEmail();
   const {
     register,
     handleSubmit,
@@ -20,33 +19,20 @@ const axiosPublic = useAxiosPublic();
     watch,
   } = useForm();
 
-//  const ForgotPassMutation = useMutation({
-//     mutationFn: async (data) => {
-//       const response = await axiosPublic.post("/account/reset-password/request-otp/", data);
-//       return response?.data;
-//     },
-//     onMutate: () => {
-//       const toastId = showLoadingToast("Sending OTP to your email...");
-//       return { toastId };
-//     },
-//     onSuccess: (response, _variables, context) => {
-//       updateToastSuccess(context.toastId, response?.message || "OTP sent successfully");
-//       console.log(response);
-  
-//       navigate("/auth/verify-otp");
-//     },
-//     onError: (error, _variables, context) => {
-//       console.log(error);
-//       const errorMessage =
-//         error.response?.data?.message ||
-//         "Something went wrong, try again later!!";
-//       updateToastError(context.toastId, errorMessage);
-//     },
-//   });
+  const { mutate, isPending } = useApiMutation({
+    url: "/forgot-password",
+    method: "POST",
+    secure: false,
+    successMessage: "OTP sent successfully!",
+    // ✅ This now works because we passed it in the hook above
+    onSuccess: (data) => {
+      navigate("/auth/reset-verify-otp");
+    },
+  });
 
   const onSubmit = (data) => {
-    setEmail(data);
-    ForgotPassMutation.mutate(data);
+     setEmail(data.email);
+    mutate(data);
   };
   return (
     <div className="w-full max-w-xl bg-white dark:bg-[#0B1120]   rounded-xl p-4 sm:p-8 border border-Primary/20">
@@ -105,9 +91,9 @@ const axiosPublic = useAxiosPublic();
           variant="secondary"
           className="w-full h-[44px] flex items-center justify-center "
         >
-          {/* {ForgotPassMutation?.isPending ? (
+          {isPending ? (
               <BeatLoader
-                loading={ForgotPassMutation?.isPending}
+                loading={isPending}
                 color="white"
                 size={12}
                 aria-label="Loading Spinner"
@@ -115,8 +101,8 @@ const axiosPublic = useAxiosPublic();
               />
             ) : (
               "Send OTP"
-            )} */}
-          Send OTP
+            )}
+
         </CommonButton>
       </form>
     </div>

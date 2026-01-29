@@ -5,6 +5,7 @@ import bannerthumbnail from "../../assets/images/bannerthumb.png";
 import { MdArrowOutward } from "react-icons/md";
 import VideoButton from "../common/VideoButton";
 import { gsap } from "gsap";
+import { useApiQuery } from "@/hooks/apiQuery";
 
 const Banner = () => {
   const bannerRef = useRef(null);
@@ -16,7 +17,12 @@ const Banner = () => {
   const imageRef = useRef(null);
   const descriptionRef = useRef(null);
   const extraTitleRef = useRef(null);
-
+const { data, isLoading } = useApiQuery({
+  queryKey: ["banner"], // Just the base key
+  url: "/cms/home_page/banner_section",
+});
+const bannerData = data?.data?.banner_section
+// console.log(bannerData)
   useEffect(() => {
     const ctx = gsap.context(() => {
       // Main timeline
@@ -79,7 +85,7 @@ const Banner = () => {
         >
           <div ref={titleRef}>
             <Title level="title40">
-              Real Tutor. Real Progress. Real Results.
+            {bannerData?.title}
             </Title>
           </div>
 
@@ -88,16 +94,15 @@ const Banner = () => {
             level="title20"
             className="dark:text-white !font-bold"
           >
-            Affordable hybrid tutoring - 24/7 real support for every CCSE
-            student - add this
+     <span dangerouslySetInnerHTML={{ __html: bannerData?.description }}></span>
           </Title>
           <div ref={subtitleRef}>
             <Title
               level="title20"
               className="text-gray-600 dark:text-[#BABABA] leading-relaxed"
             >
-              No matter your age you can get a grade 9 with me here at{" "}
-              <span className="text-Primary">Mentis.</span>
+             <span dangerouslySetInnerHTML={{ __html: bannerData?.sub_description }}></span>{" "}
+     
             </Title>
           </div>
 
@@ -111,7 +116,7 @@ const Banner = () => {
               className=" group "
             >
               {" "}
-              Start Your 2 Day Free Trial{" "}
+            {bannerData?.button_text}
               <span className="rounded-full p-1 bg-black group-hover:bg-Secondary">
                 {" "}
                 <MdArrowOutward className="text-Primary text-2xl group-hover:text-white" />{" "}
@@ -123,7 +128,7 @@ const Banner = () => {
               className=" group bg-transparent border border-Primary hover:bg-Primary dark:!text-white dark:hover:!text-black !text-black "
             >
               {" "}
-              Start your journey{" "}
+            {bannerData?.sub_button_text}
               <span className="rounded-full p-1 border border-Secondary group-hover:bg-Secondary ">
                 {" "}
                 <MdArrowOutward className="text-Secondary text-2xl group-hover:text-white" />{" "}
@@ -132,32 +137,46 @@ const Banner = () => {
           </div>
         </div>
 
-        {/* Right Image Section */}
-        <div
-          ref={rightSectionRef}
-          className="w-full lg:w-1/2 flex flex-col items-center lg:items-end gap-4"
-        >
-          <div className="relative max-w-[550px] w-full">
-            <div ref={imageRef}>
-              <img
-                src={bannerthumbnail}
-                alt="bannerthumbnail"
-                className="w-full h-auto rounded-xl"
-              />
-            </div>
-            {/* Centered Play Button */}
+   {/* Right Image/Video Section */}
+<div
+  ref={rightSectionRef}
+  className="w-full lg:w-1/2 flex flex-col items-center lg:items-end gap-4"
+>
+  <div className="relative max-w-[550px] w-full">
+    <div ref={imageRef}>
+      {/* Check if video exists, otherwise show thumbnail */}
+      {bannerData?.video ? (
+        <video
+          src={bannerData.video}
+          poster={bannerData?.image || bannerthumbnail} // Use API image as poster
+          controls
+          className="w-full h-auto rounded-xl shadow-lg"
+        />
+      ) : (
+        <img
+          src={bannerData?.image || bannerthumbnail}
+          alt="bannerthumbnail"
+          className="w-full h-auto rounded-xl"
+        />
+      )}
+    </div>
 
-            <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
-              <VideoButton />
-            </div>
-            <div ref={descriptionRef}>
-              <p className="text-Tertiary dark:text-white text-sm text-center mt-2 lg:text-base">
-                Bite-sized videos that teach you the ins and outs of every topic
-                in....
-              </p>
-            </div>
-          </div>
-        </div>
+    {/* Only show the separate Play Button if you aren't using native video controls */}
+    {!bannerData?.video && (
+      <div className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2">
+        <VideoButton />
+      </div>
+    )}
+
+    <div ref={descriptionRef}>
+      {/* Use dangerouslySetInnerHTML because your API returns <p> tags */}
+      <div 
+        className="text-Tertiary dark:text-white text-sm text-center mt-4 lg:text-base"
+        dangerouslySetInnerHTML={{ __html: bannerData?.description }}
+      />
+    </div>
+  </div>
+</div>
       </div>
     </section>
   );

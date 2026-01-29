@@ -10,6 +10,7 @@ import img3 from "@/assets/images/tutor.png";
 import img4 from "@/assets/images/s1.png";
 import img5 from "@/assets/images/tutor.png";
 import Title from "../common/Title";
+import { useApiQuery } from "@/hooks/apiQuery";
 
 const testimonials = [
   {
@@ -55,6 +56,11 @@ const testimonials = [
 ];
 
 const Testimonials = () => {
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["testimonials"], // Just the base key
+    url: "/testimonials",
+  });
+  console.log(data?.data)
   return (
     <section className="w-full dark:bg-[#0B1120] py-12 md:py-20 section-padding-x ">
       {/* Title */}
@@ -93,7 +99,7 @@ const Testimonials = () => {
           loop={true}
           className="pb-12"
         >
-          {testimonials.map((item) => (
+          {data?.data?.map((item) => (
             <SwiperSlide key={item.id}>
               <div className="flex flex-col items-center px-4">
                 {/* Main Testimonial Card */}
@@ -101,15 +107,10 @@ const Testimonials = () => {
 
 
 
-                  {/* Testimonial Text */}
-                  <blockquote className="text-gray-700 dark:text-gray-300 text-lg md:text-xl leading-relaxed mb-6 font-light italic">
-                    "{item.msg}"
-                  </blockquote>
-
                   {/* Author Info */}
                   <div className="flex items-center justify-center gap-4">
                     <img
-                      src={item.avatar}
+                      src={item.image}
                       alt={item.name}
                       className="w-14 h-14 rounded-full border-4 border-blue-100 dark:border-blue-900 shadow-md"
                     />
@@ -118,10 +119,15 @@ const Testimonials = () => {
                         {item.name}
                       </h4>
                       <p className="text-gray-500 dark:text-gray-400 text-sm">
-                        {item.role}
+                        {item.title}
                       </p>
                     </div>
                   </div>
+
+                  {/* Testimonial Text */}
+                  <blockquote className="text-gray-700 dark:text-gray-300 text-lg md:text-xl leading-relaxed mb-6 font-light italic" dangerouslySetInnerHTML={{__html:item.description}}>
+
+                  </blockquote>
                 </div>
 
 

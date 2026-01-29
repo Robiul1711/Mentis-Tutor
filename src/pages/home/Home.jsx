@@ -21,10 +21,10 @@ const Home = () => {
 
       <Banner />
       <WhyMentisExgist />
+      <PricingComparison />
       <States />
       <WhyMentisWork />
       <HowMentisWork />
-      <PricingComparison />
       <GradeCards />
       {/* <Explore /> */}
       <FeaturesSlider />
