@@ -4,6 +4,7 @@ import { FaQuestionCircle } from "react-icons/fa";
 import { BiMessageRoundedDots } from "react-icons/bi";
 import Faq from "./Faq";
 import ContactUs from "./ContactUs";
+import FaqSection from "../FaqComponent/FaqSection";
 export default function HelpAndSupport() {
   const [activeTab, setActiveTab] = useState(1);
   const [isLoading, setIsLoading] = useState(false);
@@ -22,7 +23,7 @@ export default function HelpAndSupport() {
       name: "FAQ",
       icon: <FaQuestionCircle />,
       type: "content",
-      content: <Faq />,
+      content: <FaqSection />,
     },
     {
       id: 2,

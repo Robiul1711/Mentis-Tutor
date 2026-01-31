@@ -82,7 +82,7 @@ const UserDropdown = () => {
       <button onClick={toggleDropdown} className="flex items-center gap-2 focus:outline-none">
         <img
           className=" size-8 sm:size-9 md:size-10  bg-white rounded-full object-cover border border-gray-200"
-          src={profile}
+          src={userDetails?.userdata?.avatar || profile}
           alt="User Profile"
         />
       </button>

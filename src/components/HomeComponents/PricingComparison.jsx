@@ -7,6 +7,7 @@ import { MdArrowOutward } from "react-icons/md";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { Switch } from "@/components/ui/switch"
+import { useApiQuery } from "@/hooks/apiQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -19,6 +20,7 @@ const PricingComparison = () => {
   const leftFeaturesRef = useRef([]);
   const rightFeaturesRef = useRef([]);
   const buttonRef = useRef(null);
+
 
   const addLeftFeature = (el) => {
     if (el && !leftFeaturesRef.current.includes(el)) {

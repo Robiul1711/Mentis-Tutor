@@ -14,6 +14,7 @@ import { MdArrowOutward } from "react-icons/md";
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
 import { useApiQuery } from "@/hooks/apiQuery";
+import { useApiMutation } from "@/hooks/apiMutation";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -25,10 +26,6 @@ const Explore = () => {
   const contentRef = useRef(null);
   const featureRefs = useRef([]);
   const buttonRef = useRef(null);
-
-
-
-
 
   const addToFeatureRefs = (el) => {
     if (el && !featureRefs.current.includes(el)) {
@@ -62,7 +59,7 @@ const Explore = () => {
           duration: 0.5,
           ease: "power2.out",
         },
-        "-=0.4"
+        "-=0.4",
       );
 
       // Image
@@ -75,7 +72,7 @@ const Explore = () => {
           duration: 0.6,
           ease: "power2.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
 
       // Right Content intro
@@ -87,7 +84,7 @@ const Explore = () => {
           duration: 0.6,
           ease: "power2.out",
         },
-        "-=0.4"
+        "-=0.4",
       );
 
       // Features stagger
@@ -100,7 +97,7 @@ const Explore = () => {
           stagger: 0.15,
           ease: "power2.out",
         },
-        "-=0.3"
+        "-=0.3",
       );
 
       // Button
@@ -115,14 +112,48 @@ const Explore = () => {
     return () => ctx.revert();
   }, []);
 
+  const [isTrialActive, setIsTrialActive] = React.useState(false);
+  const [billingCycle, setBillingCycle] = React.useState("monthly");
+
   const { data, isLoading } = useApiQuery({
     queryKey: ["courses-all"],
     url: "/courses/all",
-    secure:true
+    secure: true,
   });
 
-const courseData=data?.data?.[0] || []
-console.log(courseData)
+  const courseData = data?.data?.[0] || {};
+
+  const { mutate, isPending } = useApiMutation({
+    url: "/course/checkout",
+    method: "POST",
+    secure: true,
+    onSuccess: (response) => {
+// If we received a redirect URL (Stripe), open in a new tab
+if (response?.data?.url) {
+  window.open(response.data.url, "_blank", "noopener,noreferrer");
+  return;
+}
+      // If we just clicked trial, switch to purchase mode
+      if (!isTrialActive) {
+        setIsTrialActive(true);
+      }
+    },
+  });
+
+  const handleAction = () => {
+    if (!isTrialActive) {
+      mutate({
+        course_id: courseData?.id,
+        is_trial: true,
+      });
+    } else {
+      mutate({
+        course_id: courseData?.id,
+        billing_cycle: billingCycle,
+      });
+    }
+  };
+
   return (
     <div ref={sectionRef} className="section-padding-x">
       {/* Top Title */}
@@ -133,7 +164,9 @@ console.log(courseData)
 
         <div ref={subHeadingRef}>
           <Title level="title20">
-            <span dangerouslySetInnerHTML={{__html:courseData?.description}}></span>
+            <span
+              dangerouslySetInnerHTML={{ __html: courseData?.description }}
+            ></span>
           </Title>
         </div>
       </div>
@@ -151,15 +184,42 @@ console.log(courseData)
         </div>
 
         {/* Right Content */}
-        <div ref={contentRef} className="w-full lg:w-1/2 flex flex-col justify-between">
+        <div
+          ref={contentRef}
+          className="w-full lg:w-1/2 flex flex-col justify-between"
+        >
           {/* Price & Rating */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <p className="text-secondaryColor text-3xl lg:text-5xl font-semibold">
-              ${courseData?.price} <span className="text-base font-normal">/ {courseData?.duration} months</span>
-            </p>
+            <div className="flex flex-col gap-1">
+              <p className="text-secondaryColor text-3xl lg:text-5xl font-semibold">
+                $
+                {billingCycle === "monthly"
+                  ? courseData?.price
+                  : (courseData?.price * 10).toFixed(2)}
+                <span className="text-base font-normal">/ {billingCycle}</span>
+              </p>
+              {isTrialActive && (
+                <div className="flex items-center gap-2 mt-2">
+                  <button
+                    onClick={() => setBillingCycle("monthly")}
+                    className={`px-3 py-1 text-xs rounded-full border ${billingCycle === "monthly" ? "bg-secondaryColor text-white border-secondaryColor" : "text-gray-500 border-gray-300"}`}
+                  >
+                    Monthly
+                  </button>
+                  <button
+                    onClick={() => setBillingCycle("yearly")}
+                    className={`px-3 py-1 text-xs rounded-full border ${billingCycle === "yearly" ? "bg-secondaryColor text-white border-secondaryColor" : "text-gray-500 border-gray-300"}`}
+                  >
+                    Yearly (Save 20%)
+                  </button>
+                </div>
+              )}
+            </div>
             <p className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
               <RattingIcon />{" "}
-              <span className="font-semibold dark:text-white">(4.8 Reviews)</span>
+              <span className="font-semibold dark:text-white">
+                (4.8 Reviews)
+              </span>
             </p>
           </div>
 
@@ -170,16 +230,28 @@ console.log(courseData)
 
           {/* Features */}
           <div className="flex flex-col gap-4 mt-5">
-            <p ref={addToFeatureRefs} className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
+            <p
+              ref={addToFeatureRefs}
+              className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
+            >
               <MsgIcon className={"!dark:text-white"} /> 24/7 one-to-one support
             </p>
-            <p ref={addToFeatureRefs} className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
+            <p
+              ref={addToFeatureRefs}
+              className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
+            >
               <LeasonsIcon /> 80+ Video Lessons
             </p>
-            <p ref={addToFeatureRefs} className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
+            <p
+              ref={addToFeatureRefs}
+              className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
+            >
               <ProgressIcon /> Progress trackers
             </p>
-            <p ref={addToFeatureRefs} className="flex items-center gap-2 text-tertiaryColor text-lg font-medium">
+            <p
+              ref={addToFeatureRefs}
+              className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
+            >
               <ExamIcon /> Exam techniques
             </p>
           </div>
@@ -187,11 +259,14 @@ console.log(courseData)
           {/* Button */}
           <div ref={buttonRef}>
             <CommonButton
-              link={"/course-details"}
+              onClick={handleAction}
+              disabled={isLoading || isPending || !courseData?.id}
               variant="secondary"
               className="mt-6 group w-full sm:w-auto"
             >
-              Start Your 2 Day Free Trial
+              {isTrialActive
+                ? "Purchase Course Now"
+                : "Start Your 2 Day Free Trial"}
               <span className="rounded-full p-1 bg-black group-hover:bg-secondaryColor ml-2">
                 <MdArrowOutward className="text-primaryColor text-2xl group-hover:text-white text-white" />
               </span>
