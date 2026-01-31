@@ -1,13 +1,5 @@
-import React, { useEffect, useRef } from "react";
-import { gsap } from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
 import Title from "../common/Title";
-
 import { Grade1Icon, Grade2Icon, Grade3Icon } from "../SVG/Icons";
-
-if (typeof window !== "undefined") {
-  gsap.registerPlugin(ScrollTrigger);
-}
 
 const gradeData = [
   {
@@ -20,7 +12,8 @@ const gradeData = [
     grade: "Grade 2–4",
     title: "Build Strong Foundations",
     desc: "Regain your confidence and strengthen your basics with guided video lessons.",
-    offset: "translate-y-20",
+    // Fixed: Only apply offset on medium screens and up
+    desktopOffset: "md:translate-y-20", 
   },
   {
     id: 2,
@@ -32,7 +25,7 @@ const gradeData = [
     grade: "Grade 5–6",
     title: "Break the Grade 7 Barrier",
     desc: "Master problem solving skills and move from understanding to application.",
-    offset: "",
+    desktopOffset: "md:translate-y-0",
   },
   {
     id: 3,
@@ -44,166 +37,59 @@ const gradeData = [
     grade: "Grade 7–8+",
     title: "Achieve Grade 9 Mastery",
     desc: "Push beyond limits and refine your exam technique with advanced practice.",
-    offset: "-translate-y-20",
+    desktopOffset: "md:-translate-y-20",
   },
 ];
 
 const GradeCards = () => {
-  const sectionRef = useRef(null);
-  const headingRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const containerRef = useRef(null);
-  
-  // Create individual refs for each card
-  const cardRefs = useRef([]);
-  cardRefs.current = gradeData.map((_, i) => cardRefs.current[i] ?? React.createRef());
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      ScrollTrigger.matchMedia({
-        // Desktop Animation (large screens)
-        "(min-width: 768px)": function () {
-          console.log("Desktop animation setup");
-          const tl = gsap.timeline({
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 85%",
-              end: "bottom 60%",
-              toggleActions: "play none none none",
-              markers: false, // Set to true to debug trigger zones
-            },
-          });
-
-          tl.from(headingRef.current, {
-            y: 40,
-            opacity: 0,
-            duration: 0.6,
-            ease: "power2.out",
-          });
-
-          tl.from(
-            subtitleRef.current,
-            {
-              y: 30,
-              opacity: 0,
-              duration: 0.5,
-              ease: "power2.out",
-            },
-            "-=0.3"
-          );
-
-          tl.from(
-            cardRefs.current.map(ref => ref.current),
-            {
-              y: 80,
-              opacity: 0,
-              scale: 0.95,
-              stagger: 0.25,
-              duration: 0.8,
-              ease: "power2.out",
-            },
-            "-=0.2"
-          );
-        },
-
-        // Mobile Animation
-        "(max-width: 767px)": function () {
-          console.log("Mobile animation setup");
-          
-          gsap.from([headingRef.current, subtitleRef.current], {
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 90%",
-              end: "bottom 70%",
-              toggleActions: "play none none none",
-              markers: false, // Set to true to debug trigger zones
-            },
-            y: 30,
-            opacity: 0,
-            duration: 0.5,
-            stagger: 0.2,
-            ease: "power2.out",
-          });
-
-          gsap.from(cardRefs.current.map(ref => ref.current), {
-            scrollTrigger: {
-              trigger: containerRef.current,
-              start: "top 85%",
-              end: "bottom 60%",
-              toggleActions: "play none none none",
-              markers: false, // Set to true to debug trigger zones
-            },
-            y: 60,
-            opacity: 0,
-            scale: 0.97,
-            stagger: 0.2,
-            duration: 0.6,
-            ease: "power2.out",
-          });
-        },
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} className="section-padding-x bg-white dark:bg-[#0B1120] py-12 md:py-20  ">
+    <section className="section-padding-x bg-white dark:bg-[#0B1120] py-16 md:py-24 overflow-hidden">
       {/* Heading */}
-      <div className="text-center ">
-        <div ref={headingRef}>
-          <Title level="title48" className="dark:text-white">
-            Everyone Can Reach Grade 9
-          </Title>
-        </div>
-        <div ref={subtitleRef}>
-          <Title
-            level="title20"
-            className="text-gray-700 dark:text-gray-300 max-w-[1020px] mx-auto mt-4"
-          >
-            Wherever you start, Mentis helps you climb higher step by step.
-          </Title>
-        </div>
+      <div className="text-center mb-10 md:mb-16">
+        <Title level="title48" className="dark:text-white">
+          Everyone Can Reach Grade 9
+        </Title>
+        <Title
+          level="title20"
+          className="text-gray-700 dark:text-gray-300 max-w-[800px] mx-auto mt-4 px-4"
+        >
+          Wherever you start, Mentis helps you climb higher step by step.
+        </Title>
       </div>
 
       {/* Cards Container */}
-      <div ref={containerRef} className="flex flex-col md:flex-row justify-center items-center gap-10 py-12">
-        {gradeData.map((card, index) => (
+      {/* Fixed: Added padding top/bottom to prevent the staggered cards from cutting off */}
+      <div className="flex flex-col md:flex-row justify-center items-stretch md:items-center gap-6 md:gap-8 lg:gap-10 md:py-16 md:mt-40">
+        {gradeData.map((card) => (
           <div
             key={card.id}
-            ref={cardRefs.current[index]}
             className={`
-              ${card.bg} ${card.border} ${card.shadow}
-              border rounded-3xl p-6 w-full md:w-[380px] min-h-[220px]
-              transition-all duration-300 cursor-pointer hover:scale-105
-              ${card.offset}
-              relative
+              ${card.bg} ${card.border} ${card.shadow} ${card.desktopOffset}
+              border rounded-3xl p-8 w-full md:w-[350px] lg:w-[380px]
+              transition-all duration-500 cursor-pointer hover:scale-[1.03]
+              relative flex flex-col justify-between
             `}
-            style={{ 
-              opacity: 1, // Ensure cards are visible initially
-              transform: 'translateY(0)' // Override any initial transform
-            }}
           >
             {/* Top Row */}
-            <div className="flex justify-between items-center">
-              <div className="w-12 h-12 rounded-full bg-black flex items-center justify-center">
-                <card.icon />
+            <div className="flex justify-between items-start">
+              <div className="w-14 h-14 rounded-full bg-slate-900 flex items-center justify-center shadow-lg">
+                <card.icon className="text-white" />
               </div>
 
               <span
-                className={`px-4 py-1 rounded-full text-sm font-semibold text-black ${card.gradeBg}`}
+                className={`px-4 py-1.5 rounded-full text-xs lg:text-sm font-bold text-black uppercase tracking-wider ${card.gradeBg}`}
               >
                 {card.grade}
               </span>
             </div>
 
             {/* Text Content */}
-            <div className="mt-5">
-              <Title level="title24" className="text-black font-semibold">
+            <div className="mt-8">
+              <Title level="title24" className="text-black font-bold leading-tight">
                 {card.title}
               </Title>
 
-              <p className="text-gray-700 mt-2 text-[15px] leading-relaxed">
+              <p className="text-gray-800 mt-3 text-[16px] leading-relaxed opacity-90">
                 {card.desc}
               </p>
             </div>

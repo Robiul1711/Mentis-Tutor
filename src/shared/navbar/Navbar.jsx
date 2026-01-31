@@ -4,11 +4,14 @@ import logo from "../../assets/images/logo.png";
 import CommonButton from "@/components/common/CommonButton";
 import { Menu, X } from "lucide-react";
 import ThemeToggleButton from "@/components/common/ThemeToggleButton";
+import UserDropdown from "./UserDropdown";
+import { useAuth } from "@/hooks/useAuth";
 
 const Navbar = () => {
   const [isOpen, setIsOpen] = useState(false);
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
+  const {user} = useAuth();
 
   const navLinks = [
     { name: "Home", link: "/" },
@@ -84,6 +87,7 @@ const Navbar = () => {
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
           <ThemeToggleButton />
+          {user ? <UserDropdown /> : 
           <CommonButton
             link={"/auth/sign-in"}
             variant="secondary"
@@ -91,6 +95,7 @@ const Navbar = () => {
           >
             Sign In
           </CommonButton>
+          }
         </div>
 
         {/* Mobile Actions */}

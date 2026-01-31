@@ -1,22 +1,24 @@
-import React from 'react'
-import Title from '../common/Title'
-import Topic from '../DashboardComponents/Topic'
+import React from "react";
+import Title from "../common/Title";
+import Topic from "../DashboardComponents/Topic";
 
-const Overview = () => {
+const Overview = ({ data, onVideoSelect }) => {
   return (
     <div>
-    <div className='space-y-4'>
-        <Title level="title24">Master Algebra with Confidence Build Strong Foundations for Exams</Title>
-        <Title level="title18">Dorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod tempor incididunt ut labore et dolore magna aliqua Quis ipsum suspendisse ultrices gravida. Risus commodo viverra maecenas accumsan lacus vel facilisis.dolor sit amet, consectetur adipiscing elited do eiusmod tempor incididunt ut labore et dolore magna aliqua.</Title>
-    </div>
-      <div className='w-full flex flex-col gap-10 mt-8'>
-      <div className=' '>
-        <Topic />
+      <div className="space-y-4">
+        <Title level="title24">{data?.title}</Title>
+        <div className="text-gray-600 dark:text-gray-400">
+          <span dangerouslySetInnerHTML={{ __html: data?.description }}></span>
+        </div>
       </div>
-      {/* <div className=' md:w-[60%]'></div> */}
+      <div className="w-full flex flex-col gap-10 mt-8">
+        <div className=" ">
+          <Topic data={data?.sections} onVideoSelect={onVideoSelect} />
+        </div>
+        {/* <div className=' md:w-[60%]'></div> */}
       </div>
     </div>
-  )
-}
+  );
+};
 
-export default Overview
+export default Overview;

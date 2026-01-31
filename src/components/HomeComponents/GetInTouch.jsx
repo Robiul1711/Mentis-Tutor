@@ -7,19 +7,30 @@ import { BeatLoader } from "react-spinners";
 import { MdEmail } from "react-icons/md";
 import CommonButton from "../common/CommonButton";
 import Title from "../common/Title";
+import { useApiMutation } from "@/hooks/apiMutation";
 
 const GetInTouch = () => {
-  const {
+const {
     register,
     handleSubmit,
     formState: { errors },
     reset,
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log(data);
-  };
+  const { mutate, isPending } = useApiMutation({
+    url: "/contact",
+    method: "POST",
+    secure: false,
+    successMessage: "Message sent successfully!",
+    onSuccess: () => {
+      reset();
+    },
+  });
 
+  const onSubmit = (data) => {
+    // This will only run if all validations (including checkbox) pass
+    mutate(data);
+  };
   return (
     <div className="py-14   section-padding-x">
       {/* Top Title */}
@@ -62,92 +73,94 @@ const GetInTouch = () => {
           </div>
         </div>
 
-        {/* Right: Contact Form */}
+    {/* Right: Contact Form */}
         <div className="md:w-[60%]">
           <h2 className="text-2xl font-semibold mb-4">Contact Form</h2>
           <form onSubmit={handleSubmit(onSubmit)} className="space-y-4">
+            
+            {/* Name Input */}
             <div>
               <label className="block mb-1 dark:text-white text-base">Name</label>
               <input
                 {...register("name", { required: "Name is required" })}
                 placeholder="Enter your name."
-                className="w-full px-4 py-2 border border-[#64B5F6] rounded-md text-base dark:border-white bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full px-4 py-2 border rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500 ${errors.name ? 'border-red-500' : 'border-[#64B5F6] dark:border-white'}`}
               />
-              {errors.name && (
-                <p className="text-red-500 text-base">{errors.name.message}</p>
-              )}
+              {errors.name && <p className="text-red-500 text-sm mt-1">{errors.name.message}</p>}
             </div>
+
+            {/* Email Input */}
             <div>
-              <label className="block mb-1 dark:text-white text-base">
-                Email
-              </label>
+              <label className="block mb-1 dark:text-white text-base">Email</label>
               <input
                 {...register("email", {
                   required: "Email is required",
-                  pattern: {
-                    value: /^\S+@\S+$/i,
-                    message: "Invalid email format",
-                  },
+                  pattern: { value: /^\S+@\S+$/i, message: "Invalid email format" },
                 })}
                 placeholder="Enter your email."
-                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full px-4 py-2 border rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500 ${errors.email ? 'border-red-500' : 'border-[#64B5F6] dark:border-white'}`}
               />
-              {errors.email && (
-                <p className="text-red-500 text-base">{errors.email.message}</p>
-              )}
+              {errors.email && <p className="text-red-500 text-sm mt-1">{errors.email.message}</p>}
             </div>
+
+            {/* Subject Input */}
             <div>
-              <label className="block mb-1 dark:text-white text-base">
-                Subject
-              </label>
+              <label className="block mb-1 dark:text-white text-base">Subject</label>
               <input
                 {...register("subject", { required: "Subject is required" })}
                 placeholder="Enter your subject."
-                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full px-4 py-2 border rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500 ${errors.subject ? 'border-red-500' : 'border-[#64B5F6] dark:border-white'}`}
               />
-              {errors.subject && (
-                <p className="text-red-500 text-base">
-                  {errors.subject.message}
-                </p>
-              )}
+              {errors.subject && <p className="text-red-500 text-sm mt-1">{errors.subject.message}</p>}
             </div>
+
+            {/* Message Input */}
             <div>
-              <label className="block mb-1 dark:text-white text-base">
-                Message
-              </label>
+              <label className="block mb-1 dark:text-white text-base">Message</label>
               <textarea
                 {...register("message", { required: "Message is required" })}
                 rows="4"
                 placeholder="Enter your message."
-                className="w-full px-4 py-2 border border-[#64B5F6] dark:border-white rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500"
+                className={`w-full px-4 py-2 border rounded-md text-base bg-[#64B5F6]/10 dark:bg-[#0B1120] outline-none focus:ring-2 focus:ring-blue-500 ${errors.message ? 'border-red-500' : 'border-[#64B5F6] dark:border-white'}`}
               />
-              {errors.message && (
-                <p className="text-red-500 text-base">
-                  {errors.message.message}
-                </p>
-              )}
+              {errors.message && <p className="text-red-500 text-sm mt-1">{errors.message.message}</p>}
             </div>
 
             {/* Terms Checkbox */}
-            <div className="flex items-center gap-2">
-              <input
-                type="checkbox"
-                {...register("terms", {
-                  required: "You must agree before submitting.",
-                })}
-              />
-              <span className="text-base text-gray-600 dark:text-white">
-                I agree to the terms of service and privacy policy
-              </span>
+            <div className="space-y-1">
+              <div className="flex items-center gap-2">
+                <input
+                  type="checkbox"
+                  id="terms"
+                  {...register("terms_accepted", {
+                    required: "You must agree to the terms.",
+                  })}
+                />
+                <label htmlFor="terms" className="text-base text-gray-600 dark:text-white cursor-pointer">
+                  I agree to the terms of service and privacy policy
+                </label>
+              </div>
+              {errors.terms_accepted && (
+                <p className="text-red-500 text-sm">{errors.terms_accepted.message}</p>
+              )}
             </div>
-            {/* {errors.terms && <p className="text-red-500 text-base">{errors.terms.message}</p>} */}
 
-            <CommonButton variant="secondary" className="mt-6 w-full ">
-              {" "}
-              Send Message{" "}
+            {/* Submit Button with Loading State */}
+            <CommonButton 
+              variant="secondary" 
+              className="mt-6 w-full flex items-center justify-center" 
+              type="submit"
+              disabled={isPending} // Prevent double submission
+            >
+              {isPending ? (
+                <BeatLoader size={8} color="#ffffff" />
+              ) : (
+                "Send Message"
+              )}
             </CommonButton>
           </form>
         </div>
+   
       </div>
     </div>
   );

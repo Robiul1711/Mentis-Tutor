@@ -5,57 +5,35 @@ import { Link, useNavigate } from "react-router-dom";
 import logo from "@/assets/images/logo.png";
 import { BeatLoader } from "react-spinners";
 import CommonButton from "@/components/common/CommonButton";
-import useAxiosPublic from "@/hooks/useAxiosPublic";
-import { useMutation } from "@tanstack/react-query";
-// import {
-//   showLoadingToast,
-//   updateToastError,
-//   updateToastSuccess,
-// } from "@/lib/utils";
-// import { useEmail } from "@/hooks/useEmail";
+import { useApiMutation } from "@/hooks/apiMutation";
+import { useAuth } from "@/hooks/useAuth";
+
 export default function SignIn() {
+  const {setUser} = useAuth();
   const [showPassword, setShowPassword] = useState(false);
-  const axiosPublic = useAxiosPublic();
   const navigate = useNavigate();
-  // const { setToken } = useEmail();
 
   const {
     register,
     handleSubmit,
     formState: { errors },
-    watch,
   } = useForm();
 
-  // const LoginMutation = useMutation({
-  //   mutationFn: async (data) => {
-  //     const response = await axiosPublic.post("/account/login/", data);
-  //     return response?.data;
-  //   },
-  //   onMutate: () => {
-  //     const toastId = showLoadingToast("Login...");
-  //     return { toastId };
-  //   },
-  //   onSuccess: (response, _variables, context) => {
-  //     updateToastSuccess(
-  //       context.toastId,
-  //       response?.message || "Login successful"
-  //     );
-
-  //     setToken(response?.access);
-
-  //     navigate("/");
-  //   },
-  //   onError: (error, _variables, context) => {
-  //     const errorMessage =
-  //       error.response?.data?.message ||
-  //       "Something went wrong, try again later!!";
-  //     updateToastError(context.toastId, errorMessage);
-  //   },
-  // });
+  const { mutate, isPending } = useApiMutation({
+    url: "/login",
+    method: "POST",
+    secure: false,
+    successMessage: "Welcome back!",
+    // ✅ This now works because we passed it in the hook above
+    onSuccess: (data) => {
+      localStorage.setItem("token", data.token);
+      setUser(data?.userData);
+      navigate("/");
+    },
+  });
 
   const onSubmit = (data) => {
-    console.log(data);
-    LoginMutation.mutate(data);
+    mutate(data);
   };
   return (
     <div className="w-full max-w-xl bg-white dark:bg-[#0B1120]   rounded-xl p-4 sm:p-8 border border-Primary/20">
@@ -64,10 +42,10 @@ export default function SignIn() {
         <img src={logo} alt="" className="" />
       </Link>
       <div className=" mb-4 sm:mb-8">
-        <h1 className="text-2xl font-semibold  mb-2">
-          Welcome Back, Mentis
-        </h1>
-        <p className=" text-sm">Access your lessons, quizzes, and progress anytime, anywhere.</p>
+        <h1 className="text-2xl font-semibold  mb-2">Welcome Back, Mentis</h1>
+        <p className=" text-sm">
+          Access your lessons, quizzes, and progress anytime, anywhere.
+        </p>
       </div>
 
       {/* Form */}
@@ -161,9 +139,9 @@ export default function SignIn() {
           variant="secondary"
           className="w-full h-[44px] flex items-center justify-center "
         >
-          {/* {LoginMutation?.isPending ? (
+          {isPending ? (
             <BeatLoader
-              loading={LoginMutation?.isPending}
+              loading={isPending}
               color="white"
               size={12}
               aria-label="Loading Spinner"
@@ -171,8 +149,7 @@ export default function SignIn() {
             />
           ) : (
             "Sign In"
-          )} */}
-          Sign In
+          )}
         </CommonButton>
       </form>
 

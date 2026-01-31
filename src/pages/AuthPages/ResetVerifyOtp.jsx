@@ -7,8 +7,9 @@ import { Link, useNavigate } from "react-router-dom";
 import { useApiMutation } from "@/hooks/apiMutation";
 import { useEmail } from "@/hooks/useEmail";
 
-export default function VerifyOtp() {
-const {email} = useEmail();
+export default function ResetVerifyOtp() {
+const {email,setResetToken} = useEmail();
+
 const navigate = useNavigate();
 console.log(email);
   const {
@@ -18,14 +19,14 @@ console.log(email);
   } = useForm();
 
 const { mutate, isPending } = useApiMutation({
-  url: "/verify/registration",
+  url: "/verify-otp",
   method: "POST",
   secure: false,
   successMessage: "Welcome back!",
   // ✅ This now works because we passed it in the hook above
   onSuccess: (data) => {
-
-    navigate('/auth/sign-in'); 
+    setResetToken(data.reset_token);
+    navigate('/auth/new-password-set'); 
   }
 });
 
@@ -59,8 +60,8 @@ const { mutate, isPending } = useApiMutation({
           name="otp"
           rules={{
             required: "OTP is required",
-            minLength: { value: 6, message: "OTP must be 6 digits" },
-            maxLength: { value: 6, message: "OTP must be 6 digits" },
+            minLength: { value: 5, message: "OTP must be 5 digits" },
+            maxLength: { value: 5, message: "OTP must be 5 digits" },
           }}
           render={({ field }) => (
             <div className="flex justify-center">
@@ -68,7 +69,7 @@ const { mutate, isPending } = useApiMutation({
                 value={field.value}
                 onChange={field.onChange}
                 autoFocus
-                OTPLength={6}
+                OTPLength={5}
                 otpType="number"
                 disabled={false}
                 inputStyles={{

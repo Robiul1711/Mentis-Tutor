@@ -1,171 +1,100 @@
 import React from "react";
-import blog from '../../assets/images/blog.jpg'
+import { useApiQuery } from "@/hooks/apiQuery";
+import { useParams } from "react-router-dom";
+
 export default function BlogDetails() {
+  const { id } = useParams();
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["blogs-details", id],
+    url: `/blogs/details/${id}`,
+  });
+
+  // --- LOADING STATE ---
+  if (isLoading) {
+    return (
+      <div className="section-padding-y section-padding-x animate-pulse">
+        <div className="max-w-7xl mx-auto">
+          {/* Breadcrumb Skeleton */}
+          <div className="h-4 bg-gray-200 dark:bg-gray-700 w-32 mb-6 rounded"></div>
+          
+          {/* Title Skeleton */}
+          <div className="h-10 bg-gray-200 dark:bg-gray-700 w-3/4 mb-8 rounded"></div>
+
+          {/* Main Image Skeleton */}
+          <div className="w-full h-[380px] bg-gray-200 dark:bg-gray-700 rounded-2xl mb-8"></div>
+
+          {/* Content Card Skeleton */}
+          <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl border border-slate-200 dark:border-gray-700">
+            <div className="space-y-4">
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-full"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-5/6"></div>
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded w-2/3"></div>
+            </div>
+          </div>
+
+          {/* Gallery Skeleton */}
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            {[1, 2, 3].map((i) => (
+              <div key={i} className="w-full h-[380px] bg-gray-200 dark:bg-gray-700 rounded-2xl"></div>
+            ))}
+          </div>
+        </div>
+      </div>
+    );
+  }
+
+  // --- MAIN UI ---
   return (
     <div className="section-padding-y section-padding-x">
-      
-      {/* Container */}
       <div className="max-w-7xl mx-auto">
-
         {/* Breadcrumb */}
-        <p className="text-sm  mb-3">
+        <p className="text-sm text-slate-500 mb-3">
           Blog <span className="mx-1">›</span> Blog Details
         </p>
 
         {/* Title */}
-        <h1 className="text-3xl font-semibold  mb-6 leading-snug">
-          How to revise GCSE Maths effectively (UK-specific)
+        <h1 className="text-3xl md:text-4xl font-bold text-slate-900 dark:text-white mb-6 leading-tight">
+          {data?.data?.title}
         </h1>
 
-        {/* Blog Image */}
-        <div className="w-full h-[380px] rounded-2xl overflow-hidden mb-8">
+        {/* Blog Main Image */}
+        <div className="w-full h-[380px] rounded-2xl overflow-hidden mb-8 shadow-md">
           <img
-            src={blog}
+            src={data?.data?.image}
             className="w-full h-full object-cover"
-            alt="Blog"
+            alt={data?.data?.title}
           />
         </div>
 
         {/* Content Card */}
-        <div className="bg-white p-8 rounded-2xl shadow-sm border border-slate-200">
-
-          {/* Description */}
-          <h2 className="text-xl font-semibold text-slate-900 mb-3">
-            Description:
-          </h2>
-
-          <p className="text-slate-700 leading-relaxed mb-6">
-            Revising for GCSE Maths can feel overwhelming especially when you’re balancing school,
-            homework, and other subjects. But the truth is simple: Maths isn’t about memorising.
-            It’s about practising the right topics in the right way.
-            <br /><br />
-            This guide breaks down exactly how students in the UK can revise GCSE Maths effectively
-            and steadily build their grades toward a 7–9.
-          </p>
-
-          {/* SECTION 1 */}
-          <h2 className="text-xl font-semibold text-slate-900 mb-3">
-            1. Start by Knowing Your Exam Board (AQA, Edexcel, OCR)
-          </h2>
-          <p className="text-slate-700 leading-relaxed mb-4">
-            In the UK, your exam format matches your exam board.  
-            Each board tests differently:
-          </p>
-
-          <ul className="list-disc list-inside text-slate-700 mb-6 space-y-1">
-            <li>Style of questions</li>
-            <li>Working marks</li>
-            <li>Topic differences</li>
-            <li>Mark schemes</li>
-            <li>Topic difficulty</li>
-            <li>Past paper layout</li>
-          </ul>
-
-          <h3 className="font-semibold text-slate-800 mb-2">What to do:</h3>
-          <ul className="list-disc list-inside text-slate-700 mb-6 space-y-1">
-            <li>Check your school's exam board</li>
-            <li>Download the specification</li>
-            <li>Build your revision plan based on your board's topics</li>
-          </ul>
-
-          <p className="text-slate-700 italic mb-10">
-            Pro Tip: Maths automatically organises lessons and quizzes by topic so you never revise the wrong content.
-          </p>
-
-          {/* SECTION 2 */}
-          <h2 className="text-xl font-semibold text-slate-900 mb-3">
-            2. Build Your Foundation First
-          </h2>
-
-          <p className="text-slate-700 leading-relaxed mb-4">
-            Most students struggle with basic topics, not advanced ones.
-            Grade 8–9 students are simply stronger in foundation skills.
-          </p>
-
-          <p className="text-slate-700 leading-relaxed mb-3">Focus on:</p>
-
-          <ul className="list-disc list-inside text-slate-700 mb-6 space-y-1">
-            <li>Number skills</li>
-            <li>Fractions, decimals, percentages</li>
-            <li>Ratio and proportion</li>
-            <li>Basic algebra</li>
-            <li>Negative numbers</li>
-            <li>Indices</li>
-          </ul>
-
-          <p className="text-slate-700 leading-relaxed mb-10">
-            If your foundation is weak, your higher-tier topics will collapse.
-            Fixing the basics often jumps students from Grade 3 → Grade 5 quickly.
-          </p>
-
-          {/* SECTION 3 */}
-          <h2 className="text-xl font-semibold text-slate-900 mb-3">
-            3. Use Active Revision Not Passive Learning
-          </h2>
-
-          <p className="text-slate-700 leading-relaxed mb-4">
-            Active revision = solving questions.  
-            Passive revision = watching videos only.
-          </p>
-
-          <p className="text-slate-700 leading-relaxed mb-3">
-            You need both, but the balance should be 20% watching + 80% practice.
-          </p>
-
-          <h3 className="font-semibold text-slate-800 mb-2">Active revision includes:</h3>
-
-          <ul className="list-disc list-inside text-slate-700 mb-6 space-y-1">
-            <li>Solving exam questions</li>
-            <li>Checking mark schemes</li>
-            <li>Reviewing mistakes</li>
-            <li>Re-doing incorrect questions</li>
-            <li>Using traffic-light confidence rating (Green, Amber, Red)</li>
-          </ul>
-
-          <p className="text-slate-700 leading-relaxed mb-10">
-            In Maths, every lesson has a quiz underneath so you instantly practise what you learned.
-          </p>
-
-          {/* SECTION 4 */}
-          <h2 className="text-xl font-semibold text-slate-900 mb-3">
-            4. Break Your Revision into Small, Daily Sessions
-          </h2>
-
-          <p className="text-slate-700 leading-relaxed mb-4">
-            1–2 hours every few days is far less effective than 20–40 minutes daily.
-          </p>
-
-          <h3 className="font-semibold text-slate-800 mb-2">Why?</h3>
-
-          <p className="text-slate-700 leading-relaxed mb-3">
-            Because maths requires repetition and spaced practice.
-          </p>
-
-          <h3 className="font-semibold text-slate-800 mb-3">A sample daily plan:</h3>
-
-          <ul className="list-disc list-inside text-slate-700 space-y-1 mb-10">
-            <li>10 mins: Recap notes</li>
-            <li>15–20 mins: Past paper questions</li>
-            <li>5–10 mins: Complete the quiz</li>
-            <li>5 mins: Review mistakes</li>
-            <li>5 mins: Update your confidence tracker</li>
-          </ul>
-
-          <p className="text-slate-700 leading-relaxed">
-            Small steps → big progress.
-          </p>
-
-        </div>
-
-        {/* SECOND IMAGE */}
-        <div className="w-full h-[380px] rounded-2xl overflow-hidden mt-10">
-          <img
-            src={blog}
-            className="w-full h-full object-cover"
-            alt="Blog"
+        <div className="bg-white dark:bg-gray-800 p-8 rounded-2xl shadow-sm border border-slate-200 dark:border-gray-700">
+          {/* Description - Organized with Prose for better HTML rendering */}
+          <div
+            className="prose prose-slate dark:prose-invert max-w-none 
+                       text-slate-700 dark:text-gray-300 
+                       leading-relaxed text-lg"
+            dangerouslySetInnerHTML={{ __html: data?.data?.description }}
           />
         </div>
 
+        {/* Gallery Section */}
+        {data?.data?.gallery?.length > 0 && (
+          <div className="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6 mt-10">
+            {data?.data?.gallery?.map((imgSrc, index) => (
+              <div
+                key={index}
+                className="w-full h-[380px] rounded-2xl overflow-hidden hover:shadow-lg transition-shadow duration-300"
+              >
+                <img
+                  src={imgSrc}
+                  className="w-full h-full object-cover"
+                  alt={`Gallery item ${index + 1}`}
+                />
+              </div>
+            ))}
+          </div>
+        )}
       </div>
     </div>
   );

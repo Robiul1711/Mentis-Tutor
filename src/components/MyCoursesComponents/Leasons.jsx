@@ -10,10 +10,14 @@ import {
   SelectTrigger,
   SelectValue,
 } from "@/components/ui/select";
-import { ConfidentIcon, NeedWoekIcon, OKIcon } from "../DashboardIcons/DashIcons";
+import {
+  ConfidentIcon,
+  NeedWoekIcon,
+  OKIcon,
+} from "../DashboardIcons/DashIcons";
 import Quiz from "./Quiz";
 
-const Lessons = () => {
+const Lessons = ({ currentVideo }) => {
   const [showQuiz, setShowQuiz] = useState(false);
 
   const handleDownload = (fileUrl) => {
@@ -84,11 +88,17 @@ const Lessons = () => {
             </SelectTrigger>
             <SelectContent className="bg-Secondary text-white">
               <SelectGroup>
-                <SelectItem value="practice" className="flex items-center gap-2 text-sm sm:text-base">
+                <SelectItem
+                  value="practice"
+                  className="flex items-center gap-2 text-sm sm:text-base"
+                >
                   <BsDownload />
                   Practice Questions Set
                 </SelectItem>
-                <SelectItem value="extra" className="flex items-center gap-2 text-sm sm:text-base">
+                <SelectItem
+                  value="extra"
+                  className="flex items-center gap-2 text-sm sm:text-base"
+                >
                   <BsDownload />
                   Extra Question Pack
                 </SelectItem>
@@ -102,40 +112,70 @@ const Lessons = () => {
       <div className="w-full rounded-xl sm:rounded-2xl overflow-hidden bg-gray-200 dark:bg-gray-800 transition-all duration-300">
         {showQuiz ? (
           <div className="p-4 sm:p-6">
-            <Quiz />
+            <Quiz quizData={currentVideo?.quizzes || []} />
           </div>
         ) : (
-          <div className="w-full h-[200px] sm:h-[300px] md:h-[400px] lg:h-[500px] xl:h-[600px] flex items-center justify-center text-gray-600 dark:text-gray-300 text-lg sm:text-xl font-medium">
-            Lesson Video / Content Preview
+          <div className="w-full h-auto min-h-[200px] flex items-center justify-center text-gray-600 dark:text-gray-300 text-lg sm:text-xl font-medium">
+            {currentVideo?.url ? (
+              <video
+                src={currentVideo.url}
+                controls
+                className="w-full h-full max-h-[600px] object-contain"
+                poster={currentVideo.thumbnail || ""}
+              >
+                Your browser does not support the video tag.
+              </video>
+            ) : (
+              <div className="py-20">Select a lesson to view content</div>
+            )}
           </div>
         )}
       </div>
 
       {/* Feedback Section */}
       <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6 py-4 sm:py-6">
-        <Title level="title24" className="text-lg sm:text-xl lg:text-2xl text-center lg:text-left">
+        <Title
+          level="title24"
+          className="text-lg sm:text-xl lg:text-2xl text-center lg:text-left"
+        >
           How do you feel about this lesson?
         </Title>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start">
           {/* Confident Option */}
           <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-            <input type="radio" name="lesson-feeling" className="w-4 h-4 text-Secondary focus:ring-Secondary" />
-            <span className="text-sm sm:text-base whitespace-nowrap">Confident</span>
+            <input
+              type="radio"
+              name="lesson-feeling"
+              className="w-4 h-4 text-Secondary focus:ring-Secondary"
+            />
+            <span className="text-sm sm:text-base whitespace-nowrap">
+              Confident
+            </span>
             <ConfidentIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </label>
 
           {/* Okay Option */}
           <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-            <input type="radio" name="lesson-feeling" className="w-4 h-4 text-Secondary focus:ring-Secondary" />
+            <input
+              type="radio"
+              name="lesson-feeling"
+              className="w-4 h-4 text-Secondary focus:ring-Secondary"
+            />
             <span className="text-sm sm:text-base whitespace-nowrap">Okay</span>
             <OKIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </label>
 
           {/* Needs Work Option */}
           <label className="flex items-center gap-2 cursor-pointer p-2 rounded-lg hover:bg-gray-100 dark:hover:bg-gray-800 transition-colors">
-            <input type="radio" name="lesson-feeling" className="w-4 h-4 text-Secondary focus:ring-Secondary" />
-            <span className="text-sm sm:text-base whitespace-nowrap">Needs Work</span>
+            <input
+              type="radio"
+              name="lesson-feeling"
+              className="w-4 h-4 text-Secondary focus:ring-Secondary"
+            />
+            <span className="text-sm sm:text-base whitespace-nowrap">
+              Needs Work
+            </span>
             <NeedWoekIcon className="w-5 h-5 sm:w-6 sm:h-6" />
           </label>
         </div>

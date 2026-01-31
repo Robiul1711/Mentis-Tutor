@@ -5,20 +5,16 @@ import { Link, useNavigate } from "react-router-dom";
 import CommonButton from "@/components/common/CommonButton";
 import logo from "@/assets/images/logo.png";
 import { useMutation } from "@tanstack/react-query";
-// import {
-//   showLoadingToast,
-//   updateToastError,
-//   updateToastSuccess,
-// } from "@/lib/utils";
-// import { useEmail } from "@/hooks/useEmail";
+
 import useAxiosPublic from "@/hooks/useAxiosPublic";
+import { useApiMutation } from "@/hooks/apiMutation";
+import { useEmail } from "@/hooks/useEmail";
 export default function NewPasswordSet() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
+  const { resetToken } = useEmail();  
+  console.log(resetToken);
   const navigate = useNavigate();
-  // const { resetToken } = useEmail();
-  const axiosPublic = useAxiosPublic();
-  // console.log(resetToken);
   const {
     register,
     handleSubmit,
@@ -28,38 +24,23 @@ export default function NewPasswordSet() {
 
   const newPassword = watch("new_password"); // 👈 watch the right field
 
-  // const ResetPassMutation = useMutation({
-  //   mutationFn: async (data) => {
-  //     const response = await axiosPublic.post(
-  //       "/account/reset-password/reset/",
-  //       data
-  //     );
-  //     return response?.data;
-  //   },
-  //   onMutate: () => {
-  //     const toastId = showLoadingToast("Changing password...");
-  //     return { toastId };
-  //   },
-  //   onSuccess: (response, _variables, context) => {
-  //     console.log(response);
-  //     updateToastSuccess(
-  //       context.toastId,
-  //       response?.message || "Password changed successfully"
-  //     );
+  const { mutate, isPending } = useApiMutation({
+    url: "/reset-password",
+    method: "POST",
+    secure: false,
+    successMessage: "Password Set Successfully!",
+    // ✅ This now works because we passed it in the hook above
+    onSuccess: (data) => {
+      navigate("/auth/sign-in");
+    },
+  });
 
-  //     navigate("/auth/sign-in");
-  //   },
-  //   onError: (error, _variables, context) => {
-  //     console.log(error);
-  //     const errorMessage =
-  //       error.response?.data?.message ||
-  //       "Something went wrong. Please try again.";
-  //     updateToastError(context.toastId, errorMessage);
-  //   },
-  // });
   const onSubmit = (data) => {
-    console.log(data);
-    // ResetPassMutation.mutate({ ...data, reset_token: resetToken });
+    data.reset_token = resetToken;
+    mutate({
+      ...data,
+      reset_token: resetToken,
+    });
   };
 
   return (
@@ -134,14 +115,14 @@ export default function NewPasswordSet() {
             <input
               id="confirmPassword"
               type={showConfirm ? "text" : "password"}
-              {...register("confirm_password", {
+              {...register("new_password_confirmation", {
                 required: "Confirm your password",
                 validate: (value) =>
                   value === newPassword || "Passwords do not match",
               })}
               placeholder="••••••••"
               className={`w-full pl-10 pr-12 py-3 border rounded-lg text-sm focus:ring-2 focus:outline-none transition ${
-                errors.confirm_password
+                errors.new_password_confirmation
                   ? "border-red-500 focus:ring-red-300"
                   : "border-gray-300 focus:ring-blue-500"
               }`}
@@ -158,9 +139,9 @@ export default function NewPasswordSet() {
               )}
             </button>
           </div>
-          {errors.confirm_password && (
+          {errors.new_password_confirmation && (
             <p className="mt-1 text-sm text-red-600">
-              {errors.confirm_password.message}
+              {errors.new_password_confirmation.message}
             </p>
           )}
         </div>

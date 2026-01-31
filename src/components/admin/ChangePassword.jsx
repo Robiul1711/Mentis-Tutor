@@ -1,3 +1,4 @@
+import { useApiMutation } from "@/hooks/apiMutation";
 import React from "react";
 import { useForm } from "react-hook-form";
 
@@ -7,14 +8,25 @@ const ChangePassword = () => {
     handleSubmit,
     formState: { errors },
     watch,
+    reset
   } = useForm();
 
-  const onSubmit = (data) => {
-    console.log("Password Changed:", data);
-    // Call your API here
-  };
+const { mutate, isPending } = useApiMutation({
+  url: "/update-password",
+  method: "POST",
+  secure: true,
+  successMessage: "Password updated successfully!",
+  // ✅ This now works because we passed it in the hook above
+  onSuccess: (data) => {
+   reset();
+  },
+});
 
-  const newPassword = watch("newPassword");
+  const onSubmit = (data) => {
+
+    mutate(data);
+  };
+  const newPassword = watch("new_password");
 
   return (
     <div className=" mt-6">
@@ -28,10 +40,10 @@ const ChangePassword = () => {
             type="password"
             placeholder="Enter current password"
             className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-custom-primary"
-            {...register("currentPassword", { required: "Current password is required" })}
+            {...register("old_password", { required: "Current password is required" })}
           />
-          {errors.currentPassword && (
-            <p className="text-red-500 text-sm">{errors.currentPassword.message}</p>
+          {errors.old_password && (
+            <p className="text-red-500 text-sm">{errors.old_password.message}</p>
           )}
         </div>
 
@@ -42,13 +54,13 @@ const ChangePassword = () => {
             type="password"
             placeholder="Enter new password"
             className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-custom-primary"
-            {...register("newPassword", {
+            {...register("new_password", {
               required: "New password is required",
               minLength: { value: 6, message: "Password must be at least 6 characters" },
             })}
           />
-          {errors.newPassword && (
-            <p className="text-red-500 text-sm">{errors.newPassword.message}</p>
+          {errors.new_password && (
+            <p className="text-red-500 text-sm">{errors.new_password.message}</p>
           )}
         </div>
 
@@ -59,14 +71,14 @@ const ChangePassword = () => {
             type="password"
             placeholder="Confirm new password"
             className="border rounded-md px-3 py-2 focus:outline-none focus:ring-2 focus:ring-custom-primary"
-            {...register("confirmPassword", {
+            {...register("new_password_confirmation", {
               required: "Please confirm your password",
               validate: (value) =>
                 value === newPassword || "Passwords do not match",
             })}
           />
-          {errors.confirmPassword && (
-            <p className="text-red-500 text-sm">{errors.confirmPassword.message}</p>
+          {errors.new_password_confirmation && (
+            <p className="text-red-500 text-sm">{errors.new_password_confirmation.message}</p>
           )}
         </div>
 

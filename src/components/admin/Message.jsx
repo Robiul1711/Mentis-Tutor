@@ -1,13 +1,19 @@
 import React, { useState, useEffect } from "react";
 import { Loader } from "lucide-react";
 import MessageInbox from "./MessageInbox";
+import { useApiQuery } from "@/hooks/apiQuery";
 
 const Message = () => {
   const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
   const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-
+const { data } = useApiQuery({
+  queryKey: ["chatList"], // Just the base key
+  url: "/chat/search",
+  secure: true
+});
+console.log(data?.data?.users);
   // Mock API function
   const fetchConversations = () => {
     return new Promise((resolve) => {
@@ -120,7 +126,7 @@ const Message = () => {
           </div>
         ) : (
           <div className="space-y-2 overflow-y-auto flex-1">
-            {filteredConversations.map((conversation) => (
+            {data?.data?.users?.map((conversation) => (
               <div
                 key={conversation.id}
                 onClick={() => setSelectedConversation(conversation)}

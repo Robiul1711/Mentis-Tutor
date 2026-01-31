@@ -1,19 +1,20 @@
-import useAxiosSecure from "@/hooks/useAxiosSecure";
-import { useMutation, useQuery } from "@tanstack/react-query";
 import React, { useState, useEffect, useRef } from "react";
-import { FaSignOutAlt, FaUserCircle } from "react-icons/fa";
+import { FaSignOutAlt } from "react-icons/fa";
 import { MdDashboard } from "react-icons/md";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
 import profile from "@/assets/images/avatar.png";
+import { useApiQuery } from "@/hooks/apiQuery";
+import { useApiMutation } from "@/hooks/apiMutation";
+
 const UserDropdown = () => {
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
-  const axiosSecure = useAxiosSecure();
   const navigate = useNavigate();
 
   const toggleDropdown = () => setIsOpen((prev) => !prev);
 
+  // Close dropdown on outside click or Escape key
   useEffect(() => {
     const handleClickOutside = (event) => {
       if (dropdownRef.current && !dropdownRef.current.contains(event.target)) {
@@ -36,72 +37,60 @@ const UserDropdown = () => {
     };
   }, []);
 
-  // ✅ Fetch user details
-  const { data: userDetails } = useQuery({
+  // Fetch User Profile
+  const { data: userDetails } = useApiQuery({
     queryKey: ["userDetails"],
-    queryFn: async () => {
-      const response = await axiosSecure.get(`/profile`);
-      return response.data;
-    },
+    url: "/profile",
+    secure: true,
   });
 
-  // ✅ Logout Mutation
-  const LogoutMutation = useMutation({
-    mutationFn: async () => {
-      const response = await axiosSecure.post(`/logout`);
-      return response.data;
-    },
+  console.log(userDetails);
+  // ✅ New Mutation Implementation
+  const { mutate: logoutUser } = useApiMutation({
+    url: "/logout",
+    method: "POST",
+    secure: true,
+    successMessage: "Logged out successfully!",
     onSuccess: () => {
-      Swal.fire({
-        icon: "success",
-        title: "Logged Out!",
-        text: "You have been successfully logged out.",
-        timer: 2000,
-        showConfirmButton: false,
-      });
-      localStorage.removeItem("user");
+      localStorage.removeItem("token");
+      localStorage.removeItem("user"); // Clean up user object if stored
       navigate("/auth/sign-in");
-    },
-    onError: (error) => {
-      Swal.fire({
-        icon: "error",
-        title: "Logout Failed",
-        text: error?.message || "Something went wrong!",
-      });
     },
   });
 
   // ✅ Handle Logout with Confirmation
   const handleLogout = () => {
+    setIsOpen(false); // Close dropdown immediately
     Swal.fire({
       title: "Are you sure?",
       text: "Do you really want to log out?",
       icon: "warning",
       showCancelButton: true,
-      confirmButtonColor: "#d33", // red confirm
-      cancelButtonColor: "#3085d6", // blue cancel
+      confirmButtonColor: "#d33",
+      cancelButtonColor: "#3085d6",
       confirmButtonText: "Yes, Logout",
       cancelButtonText: "Cancel",
     }).then((result) => {
       if (result.isConfirmed) {
-        LogoutMutation.mutate();
+        logoutUser(); // Triggers the useApiMutation
       }
     });
   };
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <button
-        onClick={toggleDropdown}
-        className="flex items-center gap-2 "
-      >
-     <img className="lg:size-12 md:size-10  size-8  bg-white rounded-full object-cover" src={profile} alt="image" />
+      <button onClick={toggleDropdown} className="flex items-center gap-2 focus:outline-none">
+        <img
+          className=" size-8 sm:size-9 md:size-10  bg-white rounded-full object-cover border border-gray-200"
+          src={userDetails?.userdata?.avatar || profile}
+          alt="User Profile"
+        />
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white rounded shadow-xl border  z-50 text-gray-800">
+        <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border z-50 text-gray-800 animate-in fade-in zoom-in duration-150">
           <div className="px-4 py-3 border-b">
-            <p className="font-semibold">
+            <p className="font-semibold truncate">
               {userDetails?.userdata?.name || "Username"}
             </p>
             <p className="text-sm text-gray-500 truncate">
@@ -111,14 +100,15 @@ const UserDropdown = () => {
           <div className="py-1">
             <Link
               to={`/dashboard`}
-              className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100"
+              onClick={() => setIsOpen(false)}
+              className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
             >
-              <MdDashboard className="mr-2" /> Dashboard
+              <MdDashboard className="mr-2 text-indigo-600" /> Dashboard
             </Link>
 
             <button
               onClick={handleLogout}
-              className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-gray-100"
+              className="flex w-full items-center px-4 py-2 text-sm text-red-600 hover:bg-red-50 transition-colors"
             >
               <FaSignOutAlt className="mr-2" /> Logout
             </button>
