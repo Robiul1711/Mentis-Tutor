@@ -13,46 +13,52 @@ import {
   QustionIcon,
 } from "../SVG/Icons";
 import Title from "../common/Title";
+import { useApiQuery } from "@/hooks/apiQuery";
 
-const data = [
-  {
-    id: 1,
-    icon: CameraIcon,
-    title: "Full GCSE Video Library",
-    desc: "Access every GCSE Maths topic in one place: clear, structured, and taught by expert tutors.",
-    img: v1,
-  },
-  {
-    id: 2,
-    icon: QustionIcon,
-    title: "Interactive Quizzes & Smart Feedback",
-    desc: "Test your understanding instantly and get personalised feedback that guides your next steps.",
-    img: v1,
-  },
-  {
-    id: 3,
-    icon: CalendarIcon,
-    title: "Past Paper Solutions",
-    desc: "Master exam technique with step-by-step solutions for every past paper question.",
-    img: v1,
-  },
-  {
-    id: 4,
-    icon: MessageIcon,
-    title: "One-to-One Tutor Messaging",
-    desc: "Get personalised guidance from real tutors whenever you're stuck—fast, friendly, and reliable.",
-    img: v1,
-  },
-  {
-    id: 5,
-    icon: CalendarIcon,
-    title: "Revision + Mindset Guidance",
-    desc: "Build stronger study habits and develop the right mindset to stay focused, confident, and exam-ready.",
-    img: v1,
-  },
-];
+// const data = [
+//   {
+//     id: 1,
+//     icon: CameraIcon,
+//     title: "Full GCSE Video Library",
+//     desc: "Access every GCSE Maths topic in one place: clear, structured, and taught by expert tutors.",
+//     img: v1,
+//   },
+//   {
+//     id: 2,
+//     icon: QustionIcon,
+//     title: "Interactive Quizzes & Smart Feedback",
+//     desc: "Test your understanding instantly and get personalised feedback that guides your next steps.",
+//     img: v1,
+//   },
+//   {
+//     id: 3,
+//     icon: CalendarIcon,
+//     title: "Past Paper Solutions",
+//     desc: "Master exam technique with step-by-step solutions for every past paper question.",
+//     img: v1,
+//   },
+//   {
+//     id: 4,
+//     icon: MessageIcon,
+//     title: "One-to-One Tutor Messaging",
+//     desc: "Get personalised guidance from real tutors whenever you're stuck—fast, friendly, and reliable.",
+//     img: v1,
+//   },
+//   {
+//     id: 5,
+//     icon: CalendarIcon,
+//     title: "Revision + Mindset Guidance",
+//     desc: "Build stronger study habits and develop the right mindset to stay focused, confident, and exam-ready.",
+//     img: v1,
+//   },
+// ];
 
 const FeaturesSlider = () => {
+    const { data: whatInsideMentis} = useApiQuery({
+    queryKey: ["whatInsideMentis"],
+    url: "/what-inside-mentis",
+  });
+  // console.log(whatInsideMentis?.data)
   return (
     <section className="section-padding-x  relative py-12 md:py-20">
       {/* Heading */}
@@ -99,14 +105,12 @@ const FeaturesSlider = () => {
           1280: { slidesPerView: 4 },
         }}
       >
-        {data.map((item) => (
+        {whatInsideMentis?.data?.map((item) => (
           <SwiperSlide key={item.id}>
             <div className="bg-white dark:bg-gray-800 dark:border-gray-700 border border-[#d7e8f9] rounded-3xl p-6 h-full transition">
               {/* ICON */}
               <div className="xl:w-16 xl:h-16 size-12 rounded-full bg-Primary flex items-center justify-center mb-4">
-                <p>
-                  <item.icon className="text-white w-6 h-6 sm:w-8 sm:h-8  xl:w-auto xl:h-auto" />
-                </p>
+            <img src={item.icon} alt="" />
               
               </div>
 
@@ -116,13 +120,11 @@ const FeaturesSlider = () => {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-600 dark:text-gray-400 text-[15px] mt-2 leading-relaxed line-clamp-2">
-                {item.desc}
-              </p>
+              <p className="text-gray-600 dark:text-gray-400 text-[15px] mt-2 leading-relaxed line-clamp-2" dangerouslySetInnerHTML={{ __html: item.description }} />
 
               {/* Image Preview */}
               <img
-                src={item.img}
+                src={item.image}
                 className="w-full mt-6 rounded-xl border-2 border-[#cfe5ff]"
                 alt="preview"
               />

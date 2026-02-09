@@ -7,6 +7,7 @@ import { FaPlay } from "react-icons/fa";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { useApiQuery } from "@/hooks/apiQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
@@ -17,6 +18,23 @@ const AboutBanner = () => {
   const buttonRef = useRef(null);
   const imageRef = useRef(null);
   const playRef = useRef(null);
+  const [isPlaying, setIsPlaying] = React.useState(false);
+
+  const { data } = useApiQuery({
+    queryKey: ["aboutPageBannerSection"],
+    url: "/about-page/banner-section",
+  });
+
+  const togglePlay = () => {
+    if (imageRef.current) {
+      if (isPlaying) {
+        imageRef.current.pause();
+      } else {
+        imageRef.current.play();
+      }
+      setIsPlaying(!isPlaying);
+    }
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -45,7 +63,7 @@ const AboutBanner = () => {
           duration: 0.6,
           ease: "power2.out",
         },
-        "-=0.4"
+        "-=0.4",
       );
 
       // Button
@@ -57,7 +75,7 @@ const AboutBanner = () => {
           duration: 0.6,
           ease: "back.out(1.6)",
         },
-        "-=0.3"
+        "-=0.3",
       );
 
       // Image
@@ -70,7 +88,7 @@ const AboutBanner = () => {
           duration: 0.7,
           ease: "power2.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
 
       // Play Button
@@ -91,17 +109,15 @@ const AboutBanner = () => {
       <div className="text-center max-w-3xl mx-auto">
         <div ref={titleRef}>
           <Title level="title48" className="">
-            About Mentis Learning
+            {data?.title}
           </Title>
         </div>
 
         <p
           ref={descRef}
           className="text-lg mt-4 leading-relaxed"
-        >
-          About Mentis Learning Modern tutoring with a mission helping every student unlock the
-          confidence and results they deserve. No ceilings. No limits. No student left behind.
-        </p>
+          dangerouslySetInnerHTML={{ __html: data?.description }}
+        ></p>
 
         {/* Button */}
         <div
@@ -123,24 +139,13 @@ const AboutBanner = () => {
       </div>
 
       {/* Video Preview Box */}
-      <div className="max-w-5xl mx-auto mt-14">
-        <div className="relative rounded-2xl overflow-hidden ">
-          <img
-            ref={imageRef}
-            src={dashboardImg}
-            alt="Mentis Dashboard"
-            className="w-full h-auto"
-          />
-
-          {/* Play Button */}
-          <button
-            ref={playRef}
-            className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-1/2 
-            bg-white shadow-lg w-16 h-16 rounded-full flex items-center justify-center hover:scale-105 transition"
-          >
-            <FaPlay className="text-black text-xl ml-1" />
-          </button>
-        </div>
+      <div className="max-w-5xl mx-auto md:mt-14 mt-8">
+        <video
+          src={data?.video}
+          poster={data?.image} // Use API image as poster
+          controls
+          className="w-full h-[400px] rounded-xl shadow-lg"
+        />
       </div>
     </section>
   );

@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Mail, Lock, Eye, EyeOff, User } from "lucide-react";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import logo from "@/assets/images/logo.png";
 import { BeatLoader } from "react-spinners";
 import CommonButton from "@/components/common/CommonButton";
@@ -9,9 +9,12 @@ import { useApiMutation } from "@/hooks/apiMutation";
 import { useAuth } from "@/hooks/useAuth";
 
 export default function SignIn() {
-  const {setUser} = useAuth();
+  const { setUser } = useAuth();
   const [showPassword, setShowPassword] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+
+  const from = location.state?.from?.pathname || "/";
 
   const {
     register,
@@ -28,7 +31,7 @@ export default function SignIn() {
     onSuccess: (data) => {
       localStorage.setItem("token", data.token);
       setUser(data?.userData);
-      navigate("/");
+      navigate(from, { replace: true });
     },
   });
 

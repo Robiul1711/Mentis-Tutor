@@ -97,6 +97,7 @@ const MyQuiz = () => {
                       {attempt.title}
                     </p>
                     <div className="flex items-center gap-2 mt-2 text-gray-600 dark:text-gray-400 text-xs">
+                      {/* {console.log(attempt)} */}
                       <img
                         src={attempt.avatar}
                         alt={attempt.author}
@@ -160,6 +161,7 @@ const MyQuiz = () => {
               key={attempt.id}
               className="bg-white dark:bg-[#0B1120] rounded-lg shadow border border-gray-200 dark:border-gray-700 p-4"
             >
+
               {/* Quiz Header */}
               <div className="mb-3">
                 <h3 className="font-medium text-gray-900 dark:text-white text-sm line-clamp-2">

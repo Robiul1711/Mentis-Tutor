@@ -25,11 +25,12 @@ import FAQsPage from "@/pages/FaqsPage/FAQsPage";
 import Home from "@/pages/home/Home";
 import TearmsAndConditions from "@/pages/TearmAndConditions/TearmsAndConditions";
 
-
 import { createBrowserRouter } from "react-router-dom";
 
+import PrivateRoute from "./PrivateRoute";
+
 const router = createBrowserRouter([
-    // Auth
+  // Auth
   {
     path: "/auth",
     element: <AuthLayout />,
@@ -66,15 +67,15 @@ const router = createBrowserRouter([
     children: [
       {
         path: "/",
-        element: <Home />
+        element: <Home />,
       },
       {
         path: "/about",
-        element: <About />
+        element: <About />,
       },
       {
         path: "/courses",
-        element: <Course />
+        element: <Course />,
       },
       {
         path: "/course-details",
@@ -105,39 +106,43 @@ const router = createBrowserRouter([
   // Admin routes
   {
     path: "/dashboard",
-    element: <AdminLayout />,
+    element: (
+      <PrivateRoute>
+        <AdminLayout />
+      </PrivateRoute>
+    ),
     children: [
       {
         path: "/dashboard",
-        element: <Dashboard />, 
+        element: <Dashboard />,
       },
       {
         path: "/dashboard/my-courses",
-        element: <MyCourses />, 
+        element: <MyCourses />,
       },
       {
         path: "/dashboard/message",
-        element: <Message />, 
+        element: <Message />,
       },
       {
         path: "/dashboard/my-quiz",
-        element: <MyQuiz />, 
+        element: <MyQuiz />,
       },
       {
         path: "/dashboard/past-papers",
-        element: <AllPastPapers />, 
+        element: <AllPastPapers />,
       },
       {
         path: "/dashboard/past-paper-progress-tracker",
-        element: <PastPaperProgressTracker />, 
+        element: <PastPaperProgressTracker />,
       },
       {
         path: "/dashboard/help-and-support",
-        element: <HelpAndSupport />, 
+        element: <HelpAndSupport />,
       },
       {
         path: "/dashboard/settings",
-        element: <Settinngs />, 
+        element: <Settinngs />,
       },
     ],
   },
