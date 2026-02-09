@@ -6,8 +6,10 @@ import Swal from "sweetalert2";
 import profile from "@/assets/images/avatar.png";
 import { useApiQuery } from "@/hooks/apiQuery";
 import { useApiMutation } from "@/hooks/apiMutation";
+import { useAuth } from "@/hooks/useAuth";
 
 const UserDropdown = () => {
+  const { setUser } = useAuth();
   const [isOpen, setIsOpen] = useState(false);
   const dropdownRef = useRef(null);
   const navigate = useNavigate();
@@ -53,7 +55,7 @@ const UserDropdown = () => {
     successMessage: "Logged out successfully!",
     onSuccess: () => {
       localStorage.removeItem("token");
-      localStorage.removeItem("user"); // Clean up user object if stored
+      setUser(null);
       navigate("/auth/sign-in");
     },
   });
@@ -79,7 +81,10 @@ const UserDropdown = () => {
 
   return (
     <div className="relative" ref={dropdownRef}>
-      <button onClick={toggleDropdown} className="flex items-center gap-2 focus:outline-none">
+      <button
+        onClick={toggleDropdown}
+        className="flex items-center gap-2 focus:outline-none"
+      >
         <img
           className=" size-8 sm:size-9 md:size-10  bg-white rounded-full object-cover border border-gray-200"
           src={userDetails?.userdata?.avatar || profile}
@@ -88,7 +93,7 @@ const UserDropdown = () => {
       </button>
 
       {isOpen && (
-        <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border z-50 text-gray-800 animate-in fade-in zoom-in duration-150">
+        <div className="absolute right-0 mt-2 w-64 bg-white rounded-lg shadow-xl border z-50 text-gray-800 animate-in fade-in zoom-in duration-300">
           <div className="px-4 py-3 border-b">
             <p className="font-semibold truncate">
               {userDetails?.userdata?.name || "Username"}

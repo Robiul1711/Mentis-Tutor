@@ -8,6 +8,7 @@ import { MdEmail } from "react-icons/md";
 import CommonButton from "../common/CommonButton";
 import Title from "../common/Title";
 import { useApiMutation } from "@/hooks/apiMutation";
+import { useApiQuery } from "@/hooks/apiQuery";
 
 const GetInTouch = () => {
 const {
@@ -31,14 +32,20 @@ const {
     // This will only run if all validations (including checkbox) pass
     mutate(data);
   };
+
+    const { data } = useApiQuery({
+      queryKey: ["contactPageData"],
+      url: "/cms/contact_page/get_in_touch_section",
+    
+    });
+    console.log(data?.data?.get_in_touch_section)
   return (
     <div className="py-14   section-padding-x">
       {/* Top Title */}
       <div className="flex flex-col gap-4 max-w-[800px] mx-auto text-center">
-        <Title level="title48">Get in Touch with Mentis</Title>
+        <Title level="title48">{data?.data?.get_in_touch_section?.title}</Title>
         <Title level="title20">
-          Have questions about our courses, pricing, or support? Reach out and
-          we’ll respond quickly to help you succeed in your GCSE Maths journey.
+          <span dangerouslySetInnerHTML={{ __html: data?.data?.get_in_touch_section?.description }} />
         </Title>
       </div>
       <div className="flex flex-col md:flex-row gap-10 mt-14">
@@ -51,7 +58,7 @@ const {
                 <MdEmail size={20} />
               </div>
               <span className="text-gray-800 dark:text-white font-medium text-base">
-                support@mentis.co.uk
+               {data?.data?.get_in_touch_section?.email}
               </span>
             </div>
             <div className="flex items-center gap-3 mt-4">
@@ -59,7 +66,7 @@ const {
                 <BiSolidPhoneCall size={20} />
               </div>
               <span className="text-gray-800 dark:text-white font-medium text-base">
-                London, United Kingdom
+                {data?.data?.get_in_touch_section?.phone}
               </span>
             </div>
             <div className="flex items-center gap-3 mt-4">
@@ -67,7 +74,7 @@ const {
                 <FaLocationDot size={20} />
               </div>
               <span className="text-gray-800 dark:text-white font-medium text-base">
-                London, United Kingdom
+                {data?.data?.get_in_touch_section?.location}
               </span>
             </div>
           </div>

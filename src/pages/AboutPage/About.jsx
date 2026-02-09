@@ -15,7 +15,7 @@ import Testimonials from "@/components/HomeComponents/Testimonials";
 
 const About = () => {
   return (
-    <div className="section-padding-y space-y-12 sm:space-y-20 lg:space-y-28">
+    <div className="section-padding-y space-y-12 ">
       <AboutBanner />
       <AbourHero />
       {/* <MeetYourTutor/>

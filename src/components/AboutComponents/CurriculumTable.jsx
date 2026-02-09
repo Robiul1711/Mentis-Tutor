@@ -1,10 +1,8 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
-
 import "swiper/css";
 import "swiper/css/navigation";
-
 import Title from "../common/Title";
 
 const sections = [
@@ -108,7 +106,7 @@ const sections = [
 
 const CurriculumTable = () => {
   return (
-    <section className="section-padding-x ">
+    <section className="section-padding-x">
       {/* Heading */}
       <div className="text-center mb-12">
         <Title level="title48" className="">
