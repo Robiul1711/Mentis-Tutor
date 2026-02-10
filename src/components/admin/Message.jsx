@@ -13,7 +13,7 @@ const { data } = useApiQuery({
   url: "/chat/search",
   secure: true
 });
-console.log(data?.data?.users);
+// console.log(data?.data?.users);
   // Mock API function
   const fetchConversations = () => {
     return new Promise((resolve) => {

@@ -1,6 +1,12 @@
-
-
-import { DashboardIcon, HelpIcon, MessageIcon, MyCourseIcon, MyQuizIcon, PastPapersIcon, SettingsIcon } from "@/components/DashboardIcons/DashIcons";
+import {
+  DashboardIcon,
+  HelpIcon,
+  MessageIcon,
+  MyCourseIcon,
+  MyQuizIcon,
+  PastPapersIcon,
+  SettingsIcon,
+} from "@/components/DashboardIcons/DashIcons";
 import CommonNavbar from "@/pages/admin/CommonNavbar";
 import SideBar from "@/pages/admin/SideBar";
 
@@ -13,18 +19,15 @@ const AdminLayout = () => {
   const sideBar = [
     {
       id: 1,
-      icon: <DashboardIcon  />,
+      icon: <DashboardIcon />,
       text: "Dashboard",
       path: "/dashboard", // main path (optional, if you still want to keep it)
-      activePaths: [
-        "/dashboard",
-
-      ], // all paths that should make this item active
+      activePaths: ["/dashboard"], // all paths that should make this item active
       sublink: false,
     },
     {
       id: 2,
-      icon: <MyCourseIcon  />,
+      icon: <MyCourseIcon />,
       text: "My Courses",
       path: "/dashboard/my-courses", // main path (optional, if you still want to keep it)
       activePaths: ["/dashboard/my-courses"], // all paths that should make this item active
@@ -40,7 +43,7 @@ const AdminLayout = () => {
     },
     {
       id: 4,
-      icon: <MyQuizIcon  />,
+      icon: <MyQuizIcon />,
       text: "My Quiz Attempts",
       path: "/dashboard/my-quiz", // main path (optional, if you still want to keep it)
       activePaths: ["/dashboard/my-quiz"], // all paths that should make this item active
@@ -48,7 +51,7 @@ const AdminLayout = () => {
     },
     {
       id: 5,
-      icon: <PastPapersIcon  />,
+      icon: <PastPapersIcon />,
       text: "Past Papers",
       path: "/dashboard/past-papers", // main path (optional, if you still want to keep it)
       activePaths: ["/dashboard/past-papers"], // all paths that should make this item active
@@ -64,13 +67,12 @@ const AdminLayout = () => {
     },
     {
       id: 7,
-      icon: <SettingsIcon  />,
+      icon: <SettingsIcon />,
       text: "Settinngs",
       path: "/dashboard/settings", // main path (optional, if you still want to keep it)
       activePaths: ["/dashboard/settings"], // all paths that should make this item active
       sublink: false,
     },
-  
   ];
   const location = useLocation();
   useEffect(() => {
@@ -88,8 +90,7 @@ const AdminLayout = () => {
           <div className=" flex flex-col  ">
             <CommonNavbar open={Open} setOpen={setOpen} />
             <div className="p-4 sm:p-6 md:p-9  ">
-
-            <Outlet />
+              <Outlet />
             </div>
           </div>
         </div>

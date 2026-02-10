@@ -5,9 +5,11 @@ import profile from "@/assets/images/avatar.png";
 import { IoNotificationsOutline } from "react-icons/io5";
 import UserDropdown from "@/shared/navbar/UserDropdown";
 import ThemeToggleButton from "@/components/common/ThemeToggleButton";
+import { useAuth } from "@/hooks/useAuth";
+
 
 const CommonNavbar = ({ open, setOpen }) => {
-  const { pathname } = useLocation();
+  const { user } = useAuth();
   return (
     <div className="flex items-center gap-5 justify-between w-full py-3 md:py-5 px-6 dark:border-b shadow dark:bg-[#0B1120] bg-white">
       <div className="flex items-center gap-4">
@@ -19,7 +21,7 @@ const CommonNavbar = ({ open, setOpen }) => {
         </span>
         <div className="text-black dark:text-white">
           <h1 className="md:text-3xl font-bold">
-            Welcome Back, Iyad!
+            Welcome Back, {user?.name}
           </h1>
         </div>
       </div>

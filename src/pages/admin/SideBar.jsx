@@ -12,7 +12,7 @@ const SideBar = ({ sidebar, open, setOpen }) => {
     sidebar.forEach((item, index) => {
       if (item.sublink) {
         const activeSub = item.sublink.find(
-          (sub) => sub.path === location.pathname
+          (sub) => sub.path === location.pathname,
         );
         if (activeSub) {
           setActiveParentIndex(index);
@@ -58,7 +58,11 @@ const SideBar = ({ sidebar, open, setOpen }) => {
         {/* Logo */}
         <Link to={"/"} className="lg:px-8 px-4">
           <div className="flex items-center justify-center">
-            <img src={logo} alt="Safe" className="h-12 md:h-16 object-contain" />
+            <img
+              src={logo}
+              alt="Safe"
+              className="h-12 md:h-16 object-contain"
+            />
           </div>
         </Link>
 

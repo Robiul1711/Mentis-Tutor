@@ -410,16 +410,9 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
               <h2 className="font-semibold text-lg lg:text-xl">
                 {selectedConversation?.name || "Select a conversation"}
               </h2>
-              <p className="flex items-center gap-0.5 text-sm">
-                <TiStarFullOutline
-                  size={18}
-                  className="text-custom-primary mb-1"
-                />
-                4.3
-              </p>
             </div>
             <p className="text-sm text-gray-700 dark:text-gray-400">
-              jaannecooper@gmail.com
+        {selectedConversation?.email}
             </p>
           </div>
         </div>

@@ -99,7 +99,7 @@ const TearmsAndConditions = () => {
             <AccordionItem
               key={item.id}
               value={`item-${item.id}`}
-              className="rounded-lg bg-[#fff] px-4 text-black border-l-4 border-Primary"
+              className="rounded-lg bg-[#fff] dark:bg-[#111827] px-4 text-black dark:text-white border-l-4 border-Primary"
             >
               <AccordionTrigger className="text-sm sm:text-base md:text-xl lg:text-2xl">
                 {item.question}

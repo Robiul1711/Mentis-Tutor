@@ -1,17 +1,22 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { HiCheck, HiX } from "react-icons/hi";
 import Title from "../common/Title";
 import CommonButton from "../common/CommonButton";
 import { MdArrowOutward } from "react-icons/md";
+import { AuthContext } from "@/context";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
-import { Switch } from "@/components/ui/switch"
+import { Switch } from "@/components/ui/switch";
 import { useApiQuery } from "@/hooks/apiQuery";
 
 gsap.registerPlugin(ScrollTrigger);
 
 const PricingComparison = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const sectionRef = useRef(null);
   const headingRef = useRef(null);
   const subtitleRef = useRef(null);
@@ -21,6 +26,13 @@ const PricingComparison = () => {
   const rightFeaturesRef = useRef([]);
   const buttonRef = useRef(null);
 
+  const handleDashboardClick = () => {
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      toast.error("Please login first to start your journey!");
+    }
+  };
 
   const addLeftFeature = (el) => {
     if (el && !leftFeaturesRef.current.includes(el)) {
@@ -59,7 +71,7 @@ const PricingComparison = () => {
           duration: 0.55,
           ease: "power2.out",
         },
-        "-=0.45"
+        "-=0.45",
       );
 
       // Cards (left then right)
@@ -71,7 +83,7 @@ const PricingComparison = () => {
           duration: 0.7,
           ease: "power3.out",
         },
-        "-=0.2"
+        "-=0.2",
       );
 
       tl.from(
@@ -82,7 +94,7 @@ const PricingComparison = () => {
           duration: 0.7,
           ease: "power3.out",
         },
-        "-=0.6"
+        "-=0.6",
       );
 
       // Left card features
@@ -104,7 +116,7 @@ const PricingComparison = () => {
           stagger: 0.15,
           ease: "power2.out",
         },
-        "-=0.6"
+        "-=0.6",
       );
 
       // Button pop in
@@ -166,17 +178,23 @@ const PricingComparison = () => {
 
             <div ref={addLeftFeature} className="flex justify-between">
               <span>Support outside lessons</span>
-               <span className="flex items-center gap-1">: <HiX className="text-red-500 text-xl" /></span>
+              <span className="flex items-center gap-1">
+                : <HiX className="text-red-500 text-xl" />
+              </span>
             </div>
 
             <div ref={addLeftFeature} className="flex justify-between">
               <span>Past papers included</span>
-               <span className="flex items-center gap-1">: <HiX className="text-red-500 text-xl" /></span>
+              <span className="flex items-center gap-1">
+                : <HiX className="text-red-500 text-xl" />
+              </span>
             </div>
 
             <div ref={addLeftFeature} className="flex justify-between">
               <span>Grade 7–9 guarantee</span>
-               <span className="flex items-center gap-1">: <HiX className="text-red-500 text-xl" /></span>
+              <span className="flex items-center gap-1">
+                : <HiX className="text-red-500 text-xl" />
+              </span>
             </div>
           </div>
         </div>
@@ -186,7 +204,9 @@ const PricingComparison = () => {
           ref={rightCardRef}
           className="bg-white dark:bg-gray-800 border border-gray-200 dark:border-gray-700 rounded-3xl p-8 shadow-sm"
         >
-          <h2 className="text-[22px] font-semibold text-black dark:text-white">Mentis</h2>
+          <h2 className="text-[22px] font-semibold text-black dark:text-white">
+            Mentis
+          </h2>
 
           <div className="mt-4 flex items-center gap-3">
             <p className="text-[32px] font-bold text-[#0047ab] dark:text-white">
@@ -197,10 +217,7 @@ const PricingComparison = () => {
             </p>
 
             <label className="flex items-center gap-2 text-[14px] text-gray-600 dark:text-gray-400 cursor-pointer">
-           
-               <Switch />
-
-             
+              <Switch />
               Yearly saves 2 months
             </label>
           </div>
@@ -211,26 +228,35 @@ const PricingComparison = () => {
               <span>: Unlimited</span>
             </div>
 
-            <div ref={addRightFeature} className="flex items-center justify-between">
+            <div
+              ref={addRightFeature}
+              className="flex items-center justify-between"
+            >
               <span>Support outside lessons</span>
-              <span className="flex items-center gap-1">: <HiCheck className="text-green-500 text-xl" /></span>
+              <span className="flex items-center gap-1">
+                : <HiCheck className="text-green-500 text-xl" />
+              </span>
             </div>
 
             <div ref={addRightFeature} className="flex justify-between">
               <span>Past papers included</span>
-              <span className="flex items-center gap-1">: <HiCheck className="text-green-500 text-xl" /></span>
+              <span className="flex items-center gap-1">
+                : <HiCheck className="text-green-500 text-xl" />
+              </span>
             </div>
 
             <div ref={addRightFeature} className="flex justify-between">
               <span>Grade 7–9 guarantee</span>
-            <span className="flex items-center gap-1">: <HiCheck className="text-green-500 text-xl" /></span>
+              <span className="flex items-center gap-1">
+                : <HiCheck className="text-green-500 text-xl" />
+              </span>
             </div>
           </div>
 
           {/* BUTTON */}
           <div ref={buttonRef}>
             <CommonButton
-              link={"/dashboard"}
+              onClick={handleDashboardClick}
               variant="secondary"
               className="mt-6 group"
             >

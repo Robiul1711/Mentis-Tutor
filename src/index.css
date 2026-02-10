@@ -1,4 +1,4 @@
-@import url('https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap');
+@import url("https://fonts.googleapis.com/css2?family=Urbanist:ital,wght@0,100..900;1,100..900&display=swap");
 
 @import "tailwindcss";
 
@@ -12,11 +12,11 @@
 
   /* color */
 
-  --color-Primary: #64B5F6;
-  --color-Secondary: #2A4C67;
-  --color-Tertiary: #4C4C4C;
-  --color-bg-custom: #F7F2ED;
-  --color-bg-custom1: #FAF6F3;
+  --color-Primary: #64b5f6;
+  --color-Secondary: #2a4c67;
+  --color-Tertiary: #4c4c4c;
+  --color-bg-custom: #f7f2ed;
+  --color-bg-custom1: #faf6f3;
 
   /* breakpoint */
   --breakpoint-xxs: 390px;
@@ -186,12 +186,11 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: #F0F8FE;
-
+    background: #f0f8fe;
   }
 }
 .dark body {
-  background: #0B1120 ; /* Dark mode background */
+  background: #0b1120; /* Dark mode background */
 }
 .section-padding-x {
   padding-left: 16px;
@@ -261,4 +260,41 @@
 
 button {
   cursor: pointer;
+}
+
+/* Custom Thin Scrollbar */
+.custom-scrollbar::-webkit-scrollbar {
+  width: 5px;
+  height: 5px;
+}
+
+.custom-scrollbar::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #cbd5e1; /* slate-300 */
+  border-radius: 20px;
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb {
+  background: #334155; /* slate-700 */
+}
+
+.custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #94a3b8; /* slate-400 */
+}
+
+.dark .custom-scrollbar::-webkit-scrollbar-thumb:hover {
+  background: #475569; /* slate-600 */
+}
+
+/* For Firefox */
+.custom-scrollbar {
+  scrollbar-width: thin;
+  scrollbar-color: #cbd5e1 transparent;
+}
+
+.dark .custom-scrollbar {
+  scrollbar-color: #334155 transparent;
 }
