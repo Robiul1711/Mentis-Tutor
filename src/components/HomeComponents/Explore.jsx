@@ -128,11 +128,11 @@ const Explore = () => {
     method: "POST",
     secure: true,
     onSuccess: (response) => {
-// If we received a redirect URL (Stripe), open in a new tab
-if (response?.data?.url) {
-  window.open(response.data.url, "_blank", "noopener,noreferrer");
-  return;
-}
+      // If we received a redirect URL (Stripe), open in a new tab
+      if (response?.data?.url) {
+        window.open(response.data.url, "_blank", "noopener,noreferrer");
+        return;
+      }
       // If we just clicked trial, switch to purchase mode
       if (!isTrialActive) {
         setIsTrialActive(true);
@@ -230,30 +230,18 @@ if (response?.data?.url) {
 
           {/* Features */}
           <div className="flex flex-col gap-4 mt-5">
-            <p
-              ref={addToFeatureRefs}
-              className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
-            >
-              <MsgIcon className={"!dark:text-white"} /> 24/7 one-to-one support
-            </p>
-            <p
-              ref={addToFeatureRefs}
-              className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
-            >
-              <LeasonsIcon /> 80+ Video Lessons
-            </p>
-            <p
-              ref={addToFeatureRefs}
-              className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
-            >
-              <ProgressIcon /> Progress trackers
-            </p>
-            <p
-              ref={addToFeatureRefs}
-              className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
-            >
-              <ExamIcon /> Exam techniques
-            </p>
+            {courseData?.description
+              ?.split(/\r?\n/) // split by new line
+              .filter(Boolean) // remove empty lines
+              .map((item, index) => (
+                <p
+                  key={index}
+                  ref={addToFeatureRefs}
+                  className="flex items-center gap-2 text-tertiaryColor text-lg font-medium"
+                >
+                  {item}
+                </p>
+              ))}
           </div>
 
           {/* Button */}

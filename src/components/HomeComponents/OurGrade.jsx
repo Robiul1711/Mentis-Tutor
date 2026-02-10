@@ -1,7 +1,10 @@
-import React, { useEffect, useRef } from "react";
+import React, { useEffect, useRef, useContext } from "react";
 import { MdArrowOutward } from "react-icons/md";
 import CommonButton from "../common/CommonButton";
 import Title from "../common/Title";
+import { AuthContext } from "@/context";
+import { useNavigate } from "react-router-dom";
+import toast from "react-hot-toast";
 
 import gsap from "gsap";
 import { ScrollTrigger } from "gsap/ScrollTrigger";
@@ -9,10 +12,20 @@ import { ScrollTrigger } from "gsap/ScrollTrigger";
 gsap.registerPlugin(ScrollTrigger);
 
 const OurGrade = () => {
+  const { user } = useContext(AuthContext);
+  const navigate = useNavigate();
   const sectionRef = useRef(null);
   const titleRef = useRef(null);
   const subtitleRef = useRef(null);
   const buttonRef = useRef(null);
+
+  const handleDashboardClick = () => {
+    if (user) {
+      navigate("/dashboard");
+    } else {
+      toast.error("Please login first to start your journey!");
+    }
+  };
 
   useEffect(() => {
     const ctx = gsap.context(() => {
@@ -41,7 +54,7 @@ const OurGrade = () => {
           duration: 0.6,
           ease: "power2.out",
         },
-        "-=0.4"
+        "-=0.4",
       );
 
       // Button animation
@@ -53,7 +66,7 @@ const OurGrade = () => {
           duration: 0.6,
           ease: "back.out(1.7)",
         },
-        "-=0.3"
+        "-=0.3",
       );
     }, sectionRef);
 
@@ -61,7 +74,10 @@ const OurGrade = () => {
   }, []);
 
   return (
-    <section ref={sectionRef} className="w-full section-padding-x py-12 md:py-20">
+    <section
+      ref={sectionRef}
+      className="w-full section-padding-x py-12 md:py-20"
+    >
       <div className="text-center max-w-3xl mx-auto">
         {/* Title */}
         <div ref={titleRef}>
@@ -80,7 +96,7 @@ const OurGrade = () => {
         {/* Button */}
         <div ref={buttonRef}>
           <CommonButton
-            link={"/dashboard"}
+            onClick={handleDashboardClick}
             variant="secondary"
             className="mt-6 group max-w-sm mx-auto flex items-center justify-center"
           >

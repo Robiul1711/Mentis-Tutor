@@ -64,7 +64,7 @@ const TutorSupport = () => {
         {data.map((item) => (
           <div
             key={item.id}
-            className="bg-white border border-[#d7e8f9] rounded-3xl p-6 h-full transition"
+            className="bg-white dark:bg-[#111827] border border-[#d7e8f9] rounded-3xl p-6 h-full transition"
           >
             {/* ICON */}
             <div className="lg:w-16 lg:h-16 size-12 md:size-14 rounded-full bg-Primary flex items-center justify-center mb-4">
@@ -72,12 +72,12 @@ const TutorSupport = () => {
             </div>
 
             {/* Title */}
-            <h3 className="text-[20px] font-semibold text-gray-900">
+            <h3 className="text-[20px] font-semibold text-gray-900 dark:text-white">
               {item.title}
             </h3>
 
             {/* Description */}
-            <p className="text-gray-600 text-[15px] mt-2 leading-relaxed line-clamp-2">
+            <p className="text-gray-600 dark:text-white text-[15px] mt-2 leading-relaxed line-clamp-2">
               {item.desc}
             </p>
 

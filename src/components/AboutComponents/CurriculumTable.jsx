@@ -122,15 +122,35 @@ const CurriculumTable = () => {
       <div className="relative">
         {/* Left Arrow */}
         <button className="curriculum-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-3 rounded-full hover:bg-gray-100">
-          <svg className="w-6 h-6" fill="none" stroke="black" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M15 19l-7-7 7-7" />
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="black"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </button>
 
         {/* Right Arrow */}
         <button className="curriculum-next absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-3 rounded-full hover:bg-gray-100">
-          <svg className="w-6 h-6" fill="none" stroke="black" strokeWidth={2} viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" d="M9 5l7 7-7 7" />
+          <svg
+            className="w-6 h-6"
+            fill="none"
+            stroke="black"
+            strokeWidth={2}
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </button>
 
@@ -151,12 +171,12 @@ const CurriculumTable = () => {
         >
           {sections.map((sec, idx) => (
             <SwiperSlide key={idx}>
-              <div className="bg-white rounded-3xl p-8 shadow-sm h-full border border-[#d7e8f9]">
-                <h3 className="text-[20px] font-semibold text-black mb-4">
+              <div className="bg-white dark:bg-[#111827] rounded-3xl p-8 shadow-sm h-full border border-[#d7e8f9]">
+                <h3 className="text-[20px] font-semibold text-black dark:text-white mb-4">
                   {sec.title}
                 </h3>
 
-                <ul className="text-gray-700 text-[15px] space-y-1">
+                <ul className="text-gray-700 dark:text-white text-[15px] space-y-1">
                   {sec.list.map((item, i) => (
                     <li key={i} className="flex gap-2">
                       <span>{i + 1}.</span>

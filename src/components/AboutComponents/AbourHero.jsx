@@ -63,7 +63,7 @@ const AboutHero = () => {
       {/* Dashboard Slider */}
       <div className="relative max-w-5xl mx-auto">
         {/* Tablet Frame */}
-        <div className="md:bg-[#C9C9C9] md:p-6 rounded-2xl">
+        <div className=" md:p-6 rounded-2xl">
           <div className="rounded-xl overflow-hidden shadow-md h-[200px] sm:h-[250px] md:h-[400px] relative group">
             <Swiper
               modules={[Navigation, Autoplay]}
@@ -85,10 +85,7 @@ const AboutHero = () => {
           </div>
         </div>
       </div>
-      {/* CSS to customize Swiper arrows color if needed, though they are usually blue/white by default. 
-           We can leave them default or add global styles. 
-           For now, default navigation arrows will appear. 
-       */}
+
     </section>
   );
 };

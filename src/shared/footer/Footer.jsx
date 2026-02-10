@@ -49,7 +49,7 @@ const Footer = () => {
     { href: socials?.other_link, icon: <FaGlobe className="w-4 h-4" /> },
   ].filter((link) => link.href);
   return (
-    <footer className="section-padding-x section-padding-y dark:border-t bg-[#FFF] dark:bg-[#0B1120]  ">
+    <footer className="section-padding-x py-10 sm:pt-20 dark:border-t bg-[#FFF] dark:bg-[#0B1120]  ">
       {/* Top Section */}
       <div className="flex flex-col lg:flex-row justify-between items-center gap-8 pb-8 border-b border-black">
         {/* Logo */}
