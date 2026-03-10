@@ -128,30 +128,19 @@ const Explore = () => {
     method: "POST",
     secure: true,
     onSuccess: (response) => {
-      // If we received a redirect URL (Stripe), open in a new tab
-      if (response?.data?.url) {
-        window.open(response.data.url, "_blank", "noopener,noreferrer");
+      // If we received a redirect URL (Stripe), redirect to checkout
+      if (response?.url) {
+        window.location.href = response.url;
         return;
-      }
-      // If we just clicked trial, switch to purchase mode
-      if (!isTrialActive) {
-        setIsTrialActive(true);
       }
     },
   });
 
   const handleAction = () => {
-    if (!isTrialActive) {
-      mutate({
-        course_id: courseData?.id,
-        is_trial: true,
-      });
-    } else {
-      mutate({
-        course_id: courseData?.id,
-        billing_cycle: billingCycle,
-      });
-    }
+    mutate({
+      course_id: courseData?.id,
+      billing_cycle: billingCycle,
+    });
   };
 
   return (
@@ -190,7 +179,37 @@ const Explore = () => {
         >
           {/* Price & Rating */}
           <div className="flex flex-col sm:flex-row sm:items-center sm:justify-between gap-4">
-            <div className="flex flex-col gap-1">
+            <div className="flex flex-col gap-3">
+              {/* Billing Cycle Toggle */}
+              <div className="inline-flex items-center bg-gray-100 dark:bg-gray-800 rounded-full p-1 w-fit">
+                <button
+                  onClick={() => setBillingCycle("monthly")}
+                  className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                    billingCycle === "monthly"
+                      ? "bg-secondaryColor text-white shadow-md"
+                      : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                  }`}
+                >
+                  Monthly
+                </button>
+                <button
+                  onClick={() => setBillingCycle("yearly")}
+                  className={`px-5 py-2 text-sm font-medium rounded-full transition-all duration-300 ${
+                    billingCycle === "yearly"
+                      ? "bg-secondaryColor text-white shadow-md"
+                      : "text-gray-500 dark:text-gray-400 hover:text-gray-700 dark:hover:text-gray-200"
+                  }`}
+                >
+                  Yearly
+                  <span
+                    className={`ml-1 text-xs ${billingCycle === "yearly" ? "text-green-200" : "text-green-500"}`}
+                  >
+                    (Save 20%)
+                  </span>
+                </button>
+              </div>
+
+              {/* Price Display */}
               <p className="text-secondaryColor text-3xl lg:text-5xl font-semibold">
                 $
                 {billingCycle === "monthly"
@@ -198,22 +217,6 @@ const Explore = () => {
                   : (courseData?.price * 10).toFixed(2)}
                 <span className="text-base font-normal">/ {billingCycle}</span>
               </p>
-              {isTrialActive && (
-                <div className="flex items-center gap-2 mt-2">
-                  <button
-                    onClick={() => setBillingCycle("monthly")}
-                    className={`px-3 py-1 text-xs rounded-full border ${billingCycle === "monthly" ? "bg-secondaryColor text-white border-secondaryColor" : "text-gray-500 border-gray-300"}`}
-                  >
-                    Monthly
-                  </button>
-                  <button
-                    onClick={() => setBillingCycle("yearly")}
-                    className={`px-3 py-1 text-xs rounded-full border ${billingCycle === "yearly" ? "bg-secondaryColor text-white border-secondaryColor" : "text-gray-500 border-gray-300"}`}
-                  >
-                    Yearly (Save 20%)
-                  </button>
-                </div>
-              )}
             </div>
             <p className="flex items-center gap-2 text-gray-700 text-sm sm:text-base">
               <RattingIcon />{" "}

@@ -14,63 +14,64 @@ import React, { useEffect, useState } from "react";
 import { Outlet, ScrollRestoration, useLocation } from "react-router-dom";
 
 const AdminLayout = () => {
-  const [Open, setOpen] = useState(false);
+  const [isMobileOpen, setIsMobileOpen] = useState(false);
+  const [isCollapsed, setIsCollapsed] = useState(false);
 
   const sideBar = [
     {
       id: 1,
       icon: <DashboardIcon />,
       text: "Dashboard",
-      path: "/dashboard", // main path (optional, if you still want to keep it)
-      activePaths: ["/dashboard"], // all paths that should make this item active
+      path: "/dashboard",
+      activePaths: ["/dashboard"],
       sublink: false,
     },
     {
       id: 2,
       icon: <MyCourseIcon />,
       text: "My Courses",
-      path: "/dashboard/my-courses", // main path (optional, if you still want to keep it)
-      activePaths: ["/dashboard/my-courses"], // all paths that should make this item active
+      path: "/dashboard/my-courses",
+      activePaths: ["/dashboard/my-courses"],
       sublink: false,
     },
     {
       id: 3,
       icon: <MessageIcon />,
       text: "Message ",
-      path: "/dashboard/message", // main path (optional, if you still want to keep it)
-      activePaths: ["/dashboard/message"], // all paths that should make this item active
+      path: "/dashboard/message",
+      activePaths: ["/dashboard/message"],
       sublink: false,
     },
     {
       id: 4,
       icon: <MyQuizIcon />,
       text: "My Quiz Attempts",
-      path: "/dashboard/my-quiz", // main path (optional, if you still want to keep it)
-      activePaths: ["/dashboard/my-quiz"], // all paths that should make this item active
+      path: "/dashboard/my-quiz",
+      activePaths: ["/dashboard/my-quiz"],
       sublink: false,
     },
     {
       id: 5,
       icon: <PastPapersIcon />,
       text: "Past Papers",
-      path: "/dashboard/past-papers", // main path (optional, if you still want to keep it)
-      activePaths: ["/dashboard/past-papers"], // all paths that should make this item active
+      path: "/dashboard/past-papers",
+      activePaths: ["/dashboard/past-papers"],
       sublink: false,
     },
     {
       id: 6,
       icon: <HelpIcon />,
       text: "Help & Support",
-      path: "/dashboard/help-and-support", // main path (optional, if you still want to keep it)
-      activePaths: ["/dashboard/help-and-support"], // all paths that should make this item active
+      path: "/dashboard/help-and-support",
+      activePaths: ["/dashboard/help-and-support"],
       sublink: false,
     },
     {
       id: 7,
       icon: <SettingsIcon />,
       text: "Settinngs",
-      path: "/dashboard/settings", // main path (optional, if you still want to keep it)
-      activePaths: ["/dashboard/settings"], // all paths that should make this item active
+      path: "/dashboard/settings",
+      activePaths: ["/dashboard/settings"],
       sublink: false,
     },
   ];
@@ -81,15 +82,27 @@ const AdminLayout = () => {
       behavior: "smooth",
     });
   }, [location]);
+
   return (
     <>
       <ScrollRestoration />
-      <div className="flex  h-screen min-h-screen w-full">
-        <SideBar open={Open} setOpen={setOpen} sidebar={sideBar} />
-        <div className="flex-1 bg-dark  bg-white dark:bg-[#0B1120]  flex flex-col overflow-auto custom-scrollbar">
-          <div className=" flex flex-col  ">
-            <CommonNavbar open={Open} setOpen={setOpen} />
-            <div className="p-4 sm:p-6 md:p-9  ">
+      <div className="flex h-screen min-h-screen w-full">
+        <SideBar
+          open={isMobileOpen}
+          setOpen={setIsMobileOpen}
+          isCollapsed={isCollapsed}
+          sidebar={sideBar}
+          isMobileOpen={isMobileOpen}
+          setIsMobileOpen={setIsMobileOpen}
+       
+          setIsCollapsed={setIsCollapsed}
+        />
+        <div className="flex-1 bg-white dark:bg-[#0B1120] flex flex-col overflow-auto custom-scrollbar">
+          <div className="flex flex-col">
+            <CommonNavbar
+
+            />
+            <div className="p-4 sm:p-6">
               <Outlet />
             </div>
           </div>

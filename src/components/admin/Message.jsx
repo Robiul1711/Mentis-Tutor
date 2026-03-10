@@ -4,84 +4,20 @@ import MessageInbox from "./MessageInbox";
 import { useApiQuery } from "@/hooks/apiQuery";
 
 const Message = () => {
-  const [conversations, setConversations] = useState([]);
   const [selectedConversation, setSelectedConversation] = useState(null);
-  const [isLoading, setIsLoading] = useState(true);
   const [searchQuery, setSearchQuery] = useState("");
-const { data } = useApiQuery({
-  queryKey: ["chatList"], // Just the base key
-  url: "/chat/search",
-  secure: true
-});
-// console.log(data?.data?.users);
-  // Mock API function
-  const fetchConversations = () => {
-    return new Promise((resolve) => {
-      setTimeout(() => {
-        resolve([
-          {
-            id: 1,
-            name: "Kabir",
-            avatar: "https://i.pravatar.cc/40?img=3",
-            lastMessage: "Hey there!",
-            unread: 2,
-            time: "10:00am",
-          },
-          {
-            id: 2,
-            name: "Junaid",
-            avatar: "https://i.pravatar.cc/40?img=4",
-            lastMessage: "How are you?",
-            unread: 0,
-            time: "9:45am",
-          },
-          {
-            id: 3,
-            name: "Mahi",
-            avatar: "https://i.pravatar.cc/40?img=5",
-            lastMessage: "See you tomorrow!",
-            unread: 1,
-            time: "Yesterday",
-          },
-          {
-            id: 4,
-            name: "Arif",
-            avatar: "https://i.pravatar.cc/40?img=6",
-            lastMessage: "Check this out",
-            unread: 0,
-            time: "Mon",
-          },
-          {
-            id: 5,
-            name: "Sarah",
-            avatar: "https://i.pravatar.cc/40?img=7",
-            lastMessage: "Meeting at 3pm",
-            unread: 3,
-            time: "Sun",
-          },
-        ]);
-      }, 800);
-    });
-  };
 
-  useEffect(() => {
-    const loadConversations = async () => {
-      setIsLoading(true);
-      try {
-        const data = await fetchConversations();
-        setConversations(data);
-      } catch (error) {
-        console.error("Error loading conversations:", error);
-      } finally {
-        setIsLoading(false);
-      }
-    };
+  const { data, isLoading } = useApiQuery({
+    queryKey: ["chatList"],
+    url: "/chat/search",
+    secure: true,
+    refetchInterval: 5000,
+  });
 
-    loadConversations();
-  }, []);
+  const conversations = data?.data?.users || [];
 
   const filteredConversations = conversations.filter((conv) =>
-    conv.name.toLowerCase().includes(searchQuery.toLowerCase())
+    conv.name.toLowerCase().includes(searchQuery.toLowerCase()),
   );
 
   return (
@@ -126,7 +62,7 @@ const { data } = useApiQuery({
           </div>
         ) : (
           <div className="space-y-2 overflow-y-auto flex-1">
-            {data?.data?.users?.map((conversation) => (
+            {filteredConversations.map((conversation) => (
               <div
                 key={conversation.id}
                 onClick={() => setSelectedConversation(conversation)}

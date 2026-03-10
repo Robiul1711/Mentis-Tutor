@@ -14,7 +14,7 @@ export default function SignIn() {
   const navigate = useNavigate();
   const location = useLocation();
 
-  const from = location.state?.from?.pathname || "/";
+  const from = location.state?.from?.pathname || "/dashboard/my-courses";
 
   const {
     register,
