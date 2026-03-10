@@ -108,7 +108,7 @@ const Banner = () => {
   }, []);
 
   return (
-    <section className="section-padding-x py-12 md:py-20  overflow-hidden ">
+    <section className="section-padding-x py-8 sm:py-12 md:py-20  overflow-hidden ">
       <div
         ref={bannerRef}
         className="flex flex-col-reverse lg:flex-row items-center justify-between"
@@ -178,7 +178,7 @@ const Banner = () => {
         {/* Right Image/Video Section */}
         <div
           ref={rightSectionRef}
-          className="w-full lg:w-1/2 flex flex-col items-center lg:items-end mt-12 lg:mt-0"
+          className="w-full lg:w-1/2 flex flex-col items-center lg:items-end "
         >
           <div className="relative w-full max-w-[600px] group">
             {/* Artistic Background Glow */}

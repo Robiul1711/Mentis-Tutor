@@ -4,6 +4,7 @@ import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
 import Title from "../common/Title";
+import { FaAngleLeft, FaAngleRight } from "react-icons/fa";
 
 const sections = [
   {
@@ -121,37 +122,15 @@ const CurriculumTable = () => {
       {/* Slider */}
       <div className="relative">
         {/* Left Arrow */}
-        <button className="curriculum-prev absolute left-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-3 rounded-full hover:bg-gray-100">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="black"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
+        <button className="curriculum-prev absolute -left-5 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-[#434852] shadow-md p-2.5 rounded-full hover:bg-gray-100">
+<FaAngleLeft className="w-5 h-5"/>
         </button>
 
         {/* Right Arrow */}
-        <button className="curriculum-next absolute right-0 top-1/2 -translate-y-1/2 z-10 bg-white shadow-md p-3 rounded-full hover:bg-gray-100">
-          <svg
-            className="w-6 h-6"
-            fill="none"
-            stroke="black"
-            strokeWidth={2}
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
+        <button className="curriculum-next absolute -right-5 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-[#434852] shadow-md p-2.5 rounded-full hover:bg-gray-100">
+         
+         <FaAngleRight className="w-5 h-5"/>
+         
         </button>
 
         <Swiper

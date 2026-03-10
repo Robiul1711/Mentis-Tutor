@@ -9,8 +9,8 @@ import { useApiQuery } from "@/hooks/apiQuery";
 
 const Dashboard = () => {
   const { data: courseData } = useApiQuery({
-    queryKey: ["course-overview", 3],
-    url: "/courses/overview/3",
+    queryKey: ["course-overview", 2],
+    url: "/courses/overview/2",
     secure: true,
   });
 

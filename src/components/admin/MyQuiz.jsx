@@ -13,6 +13,7 @@ const MyQuiz = () => {
     url: "/quiz-attempts",
     secure: true,
   });
+  console.log(data?.quizzes)
   const [selectedAttemptId, setSelectedAttemptId] = React.useState(null);
 
   const { data: attemptDetails, isLoading: isDetailsLoading } = useApiQuery({
@@ -25,6 +26,9 @@ const MyQuiz = () => {
   const quizAttempts = React.useMemo(() => {
     if (!data?.quizzes) return [];
     return data.quizzes.flatMap((quiz) =>
+
+   
+
       (quiz.attempts || []).map((attempt) => ({
         id: attempt.attempt_id,
         quizId: quiz.quiz_id,
@@ -32,12 +36,12 @@ const MyQuiz = () => {
         author: quiz.user_name,
         totalAttempts: quiz.total_attempts,
         date: attempt.attempted_at,
-        avatar: "https://i.pravatar.cc/40?img=3", // Placeholder as API doesn't provide avatar
+        avatar: quiz.avatar, // Placeholder as API doesn't provide avatar
         questions: attempt.total_questions,
         score: attempt.score,
         correct: attempt.correct_answers,
         incorrect: attempt.wrong_answers,
-        result: attempt.result, // "fail" or "pass"
+        result: attempt.result, // "fail" or "pass"`
       })),
     );
   }, [data]);

@@ -54,7 +54,7 @@ import { useApiQuery } from "@/hooks/apiQuery";
 // ];
 
 const FeaturesSlider = () => {
-    const { data: whatInsideMentis} = useApiQuery({
+  const { data: whatInsideMentis } = useApiQuery({
     queryKey: ["whatInsideMentis"],
     url: "/what-inside-mentis",
   });
@@ -78,13 +78,33 @@ const FeaturesSlider = () => {
       {/* Navigation Arrows */}
       <div className="flex justify-end gap-3 mb-6">
         <button className="features-slider-prev bg-Primary text-white p-3 rounded-full hover:bg-Primary/90 transition-colors shadow-md">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M15 19l-7-7 7-7" />
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M15 19l-7-7 7-7"
+            />
           </svg>
         </button>
         <button className="features-slider-next bg-Primary text-white p-3 rounded-full hover:bg-Primary/90 transition-colors shadow-md">
-          <svg className="w-5 h-5" fill="none" stroke="currentColor" viewBox="0 0 24 24">
-            <path strokeLinecap="round" strokeLinejoin="round" strokeWidth={2} d="M9 5l7 7-7 7" />
+          <svg
+            className="w-5 h-5"
+            fill="none"
+            stroke="currentColor"
+            viewBox="0 0 24 24"
+          >
+            <path
+              strokeLinecap="round"
+              strokeLinejoin="round"
+              strokeWidth={2}
+              d="M9 5l7 7-7 7"
+            />
           </svg>
         </button>
       </div>
@@ -102,16 +122,16 @@ const FeaturesSlider = () => {
           640: { slidesPerView: 1.2 },
           768: { slidesPerView: 2 },
           1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 4 },
+          1280: { slidesPerView: 3 },
+          1536: { slidesPerView: 4 },
         }}
       >
         {whatInsideMentis?.data?.map((item) => (
-          <SwiperSlide key={item.id}>
+          <SwiperSlide key={item.id} className="h-auto">
             <div className="bg-white dark:bg-gray-800 dark:border-gray-700 border border-[#d7e8f9] rounded-3xl p-6 h-full transition">
               {/* ICON */}
-              <div className="xl:w-16 xl:h-16 size-12 rounded-full bg-Primary flex items-center justify-center mb-4">
-            <img src={item.icon} alt="" />
-              
+              <div className="lg:w-14 lg:h-14 size-12 rounded-full bg-Primary flex items-center justify-center mb-4">
+                <img src={item.icon} alt="" className="size-8" />
               </div>
 
               {/* Title */}
@@ -120,12 +140,15 @@ const FeaturesSlider = () => {
               </h3>
 
               {/* Description */}
-              <p className="text-gray-600 dark:text-gray-400 text-[15px] mt-2 leading-relaxed line-clamp-2" dangerouslySetInnerHTML={{ __html: item.description }} />
+              <p
+                className="text-gray-600 dark:text-gray-400 text-[15px] mt-2 leading-relaxed line-clamp-2"
+                dangerouslySetInnerHTML={{ __html: item.description }}
+              />
 
               {/* Image Preview */}
               <img
                 src={item.image}
-                className="w-full mt-6 rounded-xl border-2 border-[#cfe5ff]"
+                className="w-full h-52 object-cover mt-6 rounded-xl border-2 border-[#cfe5ff]"
                 alt="preview"
               />
             </div>

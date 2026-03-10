@@ -28,7 +28,7 @@ const PricingComparison = () => {
 
   const handleDashboardClick = () => {
     if (user) {
-      navigate("/dashboard");
+      navigate("/courses");
     } else {
       toast.error("Please login first to start your journey!");
     }
@@ -172,28 +172,28 @@ const PricingComparison = () => {
 
           <div className="mt-6 space-y-4 text-[16px] text-black dark:text-white">
             <div ref={addLeftFeature} className="flex justify-between">
-              <span>Total learning</span>
-              <span>: 4–8 hrs</span>
+              <span>Total learning :</span>
+              <span> 4–8 hrs</span>
             </div>
 
             <div ref={addLeftFeature} className="flex justify-between">
-              <span>Support outside lessons</span>
+              <span>Support outside lessons  :</span>
               <span className="flex items-center gap-1">
-                : <HiX className="text-red-500 text-xl" />
+                <HiX className="text-red-500 text-xl" />
               </span>
             </div>
 
             <div ref={addLeftFeature} className="flex justify-between">
-              <span>Past papers included</span>
+              <span>Past papers included  : </span>
               <span className="flex items-center gap-1">
-                : <HiX className="text-red-500 text-xl" />
+               <HiX className="text-red-500 text-xl" />
               </span>
             </div>
 
             <div ref={addLeftFeature} className="flex justify-between">
-              <span>Grade 7–9 guarantee</span>
+              <span>Grade 7–9 guarantee  :</span>
               <span className="flex items-center gap-1">
-                : <HiX className="text-red-500 text-xl" />
+                <HiX className="text-red-500 text-xl" />
               </span>
             </div>
           </div>
@@ -224,31 +224,31 @@ const PricingComparison = () => {
 
           <div className="mt-6 space-y-4 text-[16px] text-black dark:text-white">
             <div ref={addRightFeature} className="flex justify-between">
-              <span>Total learning</span>
-              <span>: Unlimited</span>
+              <span>Total learning :</span>
+              <span> Unlimited</span>
             </div>
 
             <div
               ref={addRightFeature}
               className="flex items-center justify-between"
             >
-              <span>Support outside lessons</span>
+              <span>Support outside lessons :</span>
               <span className="flex items-center gap-1">
-                : <HiCheck className="text-green-500 text-xl" />
+                 <HiCheck className="text-green-500 text-xl" />
               </span>
             </div>
 
             <div ref={addRightFeature} className="flex justify-between">
-              <span>Past papers included</span>
+              <span>Past papers included :</span>
               <span className="flex items-center gap-1">
-                : <HiCheck className="text-green-500 text-xl" />
+                 <HiCheck className="text-green-500 text-xl" />
               </span>
             </div>
 
             <div ref={addRightFeature} className="flex justify-between">
-              <span>Grade 7–9 guarantee</span>
+              <span>Grade 7–9 guarantee :</span>
               <span className="flex items-center gap-1">
-                : <HiCheck className="text-green-500 text-xl" />
+                 <HiCheck className="text-green-500 text-xl" />
               </span>
             </div>
           </div>

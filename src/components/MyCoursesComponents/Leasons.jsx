@@ -1,5 +1,5 @@
 "use client";
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
 import Title from "../common/Title";
 import { BsDownload } from "react-icons/bs";
 import {
@@ -19,6 +19,13 @@ import Quiz from "./Quiz";
 
 const Lessons = ({ currentVideo }) => {
   const [showQuiz, setShowQuiz] = useState(false);
+  const topRef = useRef(null);
+
+  useEffect(() => {
+    if (currentVideo && topRef.current) {
+      topRef.current.scrollIntoView({ behavior: "smooth" });
+    }
+  }, [currentVideo]);
 
   const handleDownload = (fileUrl) => {
     const link = document.createElement("a");
@@ -41,7 +48,7 @@ const Lessons = ({ currentVideo }) => {
   };
 
   return (
-    <div className="flex flex-col w-full">
+    <div ref={topRef} className="flex flex-col w-full">
       {/* Header */}
       <Title level="title32" className="text-xl sm:text-2xl lg:text-3xl">
         Lessons
@@ -133,12 +140,13 @@ const Lessons = ({ currentVideo }) => {
       </div>
 
       {/* Feedback Section */}
+      {currentVideo?.title  &&
       <div className="flex flex-col lg:flex-row lg:items-center gap-4 lg:gap-6 py-4 sm:py-6">
         <Title
           level="title24"
           className="text-lg sm:text-xl lg:text-2xl text-center lg:text-left"
         >
-          How do you feel about this lesson?
+          {currentVideo?.title }
         </Title>
 
         <div className="flex flex-col sm:flex-row gap-3 sm:gap-4 lg:gap-6 justify-center lg:justify-start">
@@ -180,7 +188,11 @@ const Lessons = ({ currentVideo }) => {
           </label>
         </div>
       </div>
-    </div>
+      }
+
+
+    </div>  
+    
   );
 };
 

@@ -1,31 +1,15 @@
 /* eslint-disable react-hooks/exhaustive-deps */
 /* eslint-disable no-unused-vars */
+import { useQueryClient } from "@tanstack/react-query";
 import React, { useRef, useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import {
-  LuHeart,
-  LuSend,
-  LuThumbsUp,
-  LuPaperclip,
-  LuX,
-  LuFile,
-} from "react-icons/lu";
-import { FaRegSmile } from "react-icons/fa";
+import { LuSend, LuPaperclip, LuX, LuFile } from "react-icons/lu";
 import { FiImage } from "react-icons/fi";
 import { Loader } from "lucide-react";
-import { TiStarFullOutline } from "react-icons/ti";
 import { useApiMutation } from "@/hooks/apiMutation";
 import { useApiQuery } from "@/hooks/apiQuery";
 
-const Message = ({
-  message,
-  reactingTo,
-  toggleReactionMenu,
-  handleReaction,
-  messageVariants,
-  reactionVariants,
-  formatFileSize,
-}) => (
+const Message = ({ message, messageVariants, formatFileSize }) => (
   <motion.div
     variants={messageVariants}
     custom={message}
@@ -96,84 +80,12 @@ const Message = ({
           className="w-8 h-8 rounded-full"
         />
       )}
-
-      {message.reaction && (
-        <span
-          title={message.reaction}
-          onClick={() => toggleReactionMenu(message.id)}
-          className="bg-white absolute -right-2 bottom-2 rounded-full min-h-[25px] min-w-[25px] flex items-center cursor-pointer justify-center shadow-md shadow-gray-100 dark:bg-slate-700 dark:shadow-slate-800"
-        >
-          {message.reaction === "love" ? (
-            <LuHeart size={12} fill="red" color="red" />
-          ) : null}
-          {message.reaction === "like" ? (
-            <LuThumbsUp size={12} fill="blue" color="blue" />
-          ) : null}
-          {message.reaction === "smile" ? (
-            <FaRegSmile size={12} fill="gold" color="gold" />
-          ) : null}
-        </span>
-      )}
-
-      {message.sender === "other" && !message.reaction && (
-        <button
-          onClick={() => toggleReactionMenu(message.id)}
-          title="add reaction"
-          className="absolute bottom-2 -right-2 bg-gray-100 rounded-full p-1 shadow-sm hover:bg-gray-200 dark:bg-slate-700 dark:text-[#d2e5f5] dark:hover:bg-slate-800 transition-colors"
-        >
-          <FaRegSmile size={14} />
-        </button>
-      )}
-
-      <AnimatePresence>
-        {reactingTo === message.id && (
-          <motion.div
-            variants={reactionVariants}
-            initial="hidden"
-            animate="visible"
-            exit="exit"
-            className="absolute z-30 -bottom-6 right-0 bg-white rounded-full p-1 flex border border-border dark:bg-slate-800 dark:border-slate-700 shadow-lg"
-          >
-            <button
-              onClick={() => handleReaction(message.id, "love")}
-              className="min-w-[25px] min-h-[25px] flex items-center justify-center hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-            >
-              <LuHeart
-                size={15}
-                color={message.reaction === "love" ? "red" : "gray"}
-                className="dark:!text-[#d2e5f5]"
-              />
-            </button>
-            <button
-              onClick={() => handleReaction(message.id, "like")}
-              className="p-1 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-            >
-              <LuThumbsUp
-                size={15}
-                color={message.reaction === "like" ? "blue" : "gray"}
-                className="dark:!text-[#d2e5f5]"
-              />
-            </button>
-            <button
-              onClick={() => handleReaction(message.id, "smile")}
-              className="p-1 hover:bg-gray-100 dark:hover:bg-slate-900 rounded-full"
-            >
-              <FaRegSmile
-                size={16}
-                color={message.reaction === "smile" ? "gold" : "gray"}
-                className="dark:!text-[#d2e5f5]"
-              />
-            </button>
-          </motion.div>
-        )}
-      </AnimatePresence>
     </div>
   </motion.div>
 );
 const MessageInbox = ({ selectedConversation, onBack }) => {
   const [messages, setMessages] = useState([]);
   const [newMessage, setNewMessage] = useState("");
-  const [reactingTo, setReactingTo] = useState(null);
   const [attachments, setAttachments] = useState([]);
   const [isUploading, setIsUploading] = useState(false);
   const [totalAttachments, setTotalAttachments] = useState(0);
@@ -181,33 +93,44 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
   const messagesEndRef = useRef(null);
   const inputRef = useRef(null);
   const fileInputRef = useRef(null);
+  const queryClient = useQueryClient();
 
   const { data, isLoading: isQueryLoading } = useApiQuery({
     queryKey: ["conversation", selectedConversation?.id],
     url: `/chat/conversation/${selectedConversation?.id}`,
     secure: true,
     enabled: !!selectedConversation?.id,
+    refetchInterval: 3000,
   });
 
   const { mutate, isPending } = useApiMutation({
     url: `/chat/send/${selectedConversation?.id}`,
     method: "POST",
     secure: true,
-    successMessage: "Message sent successfully!",
+    showToast: false, // ✅ Disable toast
     onSuccess: (res) => {
+      // Invalidate queries to sync with server
+      queryClient.invalidateQueries({
+        queryKey: ["conversation", selectedConversation?.id],
+      });
+      queryClient.invalidateQueries({ queryKey: ["chatList"] });
+
       if (res?.success || res?.data) {
         // Map the new message to our local format before adding to state
-        const newMsg = res.data;
+        // If res is the data object itself, use it. If nested in data, use res.data.
+        const newMsg = res.data || res;
+
+        if (!newMsg || !newMsg.id) return; // Safety check
+
         const mappedNewMsg = {
           id: newMsg.id,
-          text: newMsg.text,
+          text: newMsg.text || "",
           sender: "me",
           senderProfile: {
             name: newMsg.sender?.name,
             avatar: newMsg.sender?.avatar || "https://i.pravatar.cc/40?img=1",
           },
           timestamp: newMsg.humanize_date || "Just now",
-          reaction: null,
           attachments: newMsg.file
             ? [
                 {
@@ -222,10 +145,13 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
               ]
             : [],
         };
-        setMessages((prev) => [...prev, mappedNewMsg]);
-        setNewMessage("");
-        setAttachments([]);
-        inputRef.current?.focus();
+
+        // Optimistic update - only if we don't already have it (though invalidation might catch it too)
+        setMessages((prev) => {
+          // Avoid duplicate if invalidation happened fast
+          if (prev.some((m) => m.id === mappedNewMsg.id)) return prev;
+          return [...prev, mappedNewMsg];
+        });
       }
     },
   });
@@ -269,11 +195,19 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
   const handleSendMessage = async () => {
     if (newMessage.trim() === "" && attachments.length === 0) return;
 
-    const formData = new FormData();
-    formData.append("text", newMessage);
+    const textToSend = newMessage;
+    const attachmentsToSend = [...attachments];
 
-    if (attachments.length > 0) {
-      attachments.forEach((file) => {
+    // Optimistically clear input
+    setNewMessage("");
+    setAttachments([]);
+    inputRef.current?.focus();
+
+    const formData = new FormData();
+    formData.append("text", textToSend);
+
+    if (attachmentsToSend.length > 0) {
+      attachmentsToSend.forEach((file) => {
         formData.append("file", file.file);
       });
     }
@@ -320,24 +254,6 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
     );
   };
 
-  const handleReaction = (messageId, reaction) => {
-    setMessages(
-      messages.map((message) => {
-        if (message.id === messageId) {
-          const hasReaction = message.reaction === reaction;
-          const updatedReaction = hasReaction ? null : reaction;
-          return { ...message, reaction: updatedReaction };
-        }
-        return message;
-      }),
-    );
-    setReactingTo(null);
-  };
-
-  const toggleReactionMenu = (messageId) => {
-    setReactingTo(reactingTo === messageId ? null : messageId);
-  };
-
   const messageVariants = {
     hidden: (message) => ({
       opacity: 0,
@@ -362,12 +278,6 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
       scale: 0.8,
       transition: { duration: 0.2 },
     },
-  };
-
-  const reactionVariants = {
-    hidden: { opacity: 0, y: 10 },
-    visible: { opacity: 1, y: 0 },
-    exit: { opacity: 0, y: 10 },
   };
 
   const formatFileSize = (bytes) => {
@@ -412,7 +322,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
               </h2>
             </div>
             <p className="text-sm text-gray-700 dark:text-gray-400">
-        {selectedConversation?.email}
+              {selectedConversation?.email}
             </p>
           </div>
         </div>
@@ -431,11 +341,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
                 <Message
                   key={message.id}
                   message={message}
-                  reactingTo={reactingTo}
-                  toggleReactionMenu={toggleReactionMenu}
-                  handleReaction={handleReaction}
                   messageVariants={messageVariants}
-                  reactionVariants={reactionVariants}
                   formatFileSize={formatFileSize}
                 />
               ))}

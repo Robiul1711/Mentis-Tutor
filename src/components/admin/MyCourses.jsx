@@ -26,8 +26,8 @@ const MyCourses = () => {
     }`;
 
   const { data, isLoading } = useApiQuery({
-    queryKey: ["course-overview"], // Just the base key
-    url: "/courses/overview/3",
+    queryKey: ["course-overview", 2], // Just the base key
+    url: "/courses/overview/2",
     secure: true,
   });
 

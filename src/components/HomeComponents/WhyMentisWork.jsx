@@ -141,7 +141,7 @@ const WhyMentisWork = () => {
       </div>
 
       {/* Cards */}
-      <div className="grid grid-cols-1 sm:grid-cols-2 md:grid-cols-4 gap-8">
+      <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-8">
         {features.map((item) => (
           <div
             key={item.id}
@@ -157,7 +157,7 @@ const WhyMentisWork = () => {
             </div>
 
             <div className="flex items-center gap-2">
-              <p className="text-gray-800 dark:text-gray-200 text-lg font-semibold leading-tight">
+              <p className="text-gray-800 dark:text-gray-200 lg:text-lg font-semibold leading-tight">
                 {item.text}
               </p>
             </div>

@@ -1,7 +1,11 @@
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import useAxiosPublic from "@/hooks/useAxiosPublic";
 import useAxiosSecure from "@/hooks/useAxiosSecure";
-import { showLoadingToast, updateToastError, updateToastSuccess } from "@/lib/utils";
+import {
+  showLoadingToast,
+  updateToastError,
+  updateToastSuccess,
+} from "@/lib/utils";
 
 export const useApiMutation = ({
   url,
@@ -11,7 +15,8 @@ export const useApiMutation = ({
   successMessage = "Success!",
   errorMessage = "Something went wrong",
   onSuccess, // ✅ Accept external callback
-  onError,   // ✅ Accept external callback
+  onError, // ✅ Accept external callback
+  showToast = true,
 }) => {
   const axiosPublic = useAxiosPublic();
   const axiosSecure = useAxiosSecure();
@@ -24,25 +29,32 @@ export const useApiMutation = ({
         method: method.toUpperCase(),
         url: url,
         // ✅ Fix: Axios DELETE expects data inside a 'data' key, others use 'data' directly
-        ...(method.toUpperCase() === "DELETE" ? { data: data } : { data: data }),
+        ...(method.toUpperCase() === "DELETE"
+          ? { data: data }
+          : { data: data }),
       };
-      
+
       // We use the generic request method to handle all types correctly
       const response = await axiosClient(config);
       return response.data;
     },
 
     onMutate: () => {
-      const toastId = showLoadingToast("Processing...");
-      return { toastId };
+      if (showToast) {
+        const toastId = showLoadingToast("Processing...");
+        return { toastId };
+      }
+      return {};
     },
 
     onSuccess: (response, variables, context) => {
       // 1. Update Toast
-      updateToastSuccess(
-        context.toastId,
-        response?.message || successMessage
-      );
+      if (showToast && context?.toastId) {
+        updateToastSuccess(
+          context.toastId,
+          response?.message || successMessage,
+        );
+      }
 
       // 2. Invalidate Queries (Refresh Data)
       if (invalidateKeys.length > 0) {
@@ -59,7 +71,10 @@ export const useApiMutation = ({
 
     onError: (error, variables, context) => {
       const message = error?.response?.data?.message || errorMessage;
-      updateToastError(context.toastId, message);
+
+      if (showToast && context?.toastId) {
+        updateToastError(context.toastId, message);
+      }
 
       // 4. ✅ Run external error logic if needed
       if (onError) {
@@ -69,8 +84,7 @@ export const useApiMutation = ({
   });
 };
 
-
-//uses 
+//uses
 
 // const {
 //     register,
@@ -86,7 +100,7 @@ export const useApiMutation = ({
 //   // ✅ This now works because we passed it in the hook above
 //   onSuccess: (data) => {
 //     localStorage.setItem('token', data.token);
-//     navigate('/dashboard'); 
+//     navigate('/dashboard');
 //   }
 // });
 

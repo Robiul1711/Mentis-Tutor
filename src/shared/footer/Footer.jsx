@@ -127,7 +127,7 @@ const Footer = () => {
           </li>
         </ul>
         <p className="text-center lg:text-right">
-          © 2025 labonneroute.fr. All rights reserved.
+          © {new Date().getFullYear()} MeNTiS. All rights reserved.
         </p>
       </div>
     </footer>

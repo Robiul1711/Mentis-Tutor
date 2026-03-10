@@ -1,6 +1,6 @@
 import React, { useState, useEffect } from "react";
 import { Link, useLocation } from "react-router-dom";
-import logo from "../../assets/images/logo.png";
+import logo from "@/assets/images/logo.png";
 import CommonButton from "@/components/common/CommonButton";
 import { Menu, X } from "lucide-react";
 import ThemeToggleButton from "@/components/common/ThemeToggleButton";
@@ -49,7 +49,7 @@ const Navbar = () => {
             <img
               src={logo}
               alt="logo"
-              className="h-12 sm:h-14 md:h-16 transition-all duration-300"
+              className=""
             />
           </Link>
         </div>
@@ -88,6 +88,7 @@ const Navbar = () => {
         <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
           <ThemeToggleButton />
           {user ? <UserDropdown /> : 
+          <>
           <CommonButton
             link={"/auth/sign-in"}
             variant="secondary"
@@ -95,6 +96,14 @@ const Navbar = () => {
           >
             Sign In
           </CommonButton>
+          <CommonButton
+            link={"/auth/sign-up"}
+            variant="secondary"
+            className="px-6 py-2 dark:bg-gray-800 dark:text-white dark:border-gray-700 dark:hover:bg-gray-700 transition-colors duration-200"
+          >
+           Register
+          </CommonButton>
+          </>
           }
         </div>
 
@@ -156,6 +165,13 @@ const Navbar = () => {
             className="w-full py-2 mt-2 dark:bg-gray-800 dark:text-white"
           >
             Sign In
+          </CommonButton>
+          <CommonButton
+            link={"/auth/sign-up"}
+            variant="secondary"
+            className="w-full py-2 mt-2 dark:bg-gray-800 dark:text-white"
+          >
+         Register
           </CommonButton>
         </ul>
       </div>
