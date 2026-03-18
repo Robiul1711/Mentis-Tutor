@@ -102,7 +102,7 @@ const MessageInbox = ({ selectedConversation, onBack }) => {
     enabled: !!selectedConversation?.id,
     refetchInterval: 3000,
   });
-
+  console.log(data);
   const { mutate, isPending } = useApiMutation({
     url: `/chat/send/${selectedConversation?.id}`,
     method: "POST",

@@ -69,7 +69,7 @@ const AdminLayout = () => {
     {
       id: 7,
       icon: <SettingsIcon />,
-      text: "Settinngs",
+      text: "Settings",
       path: "/dashboard/settings",
       activePaths: ["/dashboard/settings"],
       sublink: false,

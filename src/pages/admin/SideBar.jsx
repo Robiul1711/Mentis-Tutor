@@ -56,7 +56,7 @@ const SideBar = ({ sidebar, open, setOpen, isCollapsed, isMobileOpen, setIsMobil
       >
         {/* Logo Section */}
         <div
-          className={`pt-8 transition-all duration-500 flex items-center justify-between ${isCollapsed ? "justify-center px-0" : "px-8"}`}
+          className={`pt-8 transition-all duration-500 flex items-center justify-between ${isCollapsed ? "justify-center px-0" : "px-4"}`}
         >
           <Link
             to={"/"}

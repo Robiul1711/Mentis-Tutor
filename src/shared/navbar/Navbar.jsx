@@ -12,7 +12,7 @@ const Navbar = () => {
   const [scrolled, setScrolled] = useState(false);
   const location = useLocation();
   const {user} = useAuth();
-
+// console.log(user)
   const navLinks = [
     { name: "Home", link: "/" },
     { name: "About", link: "/about" },
@@ -87,7 +87,7 @@ const Navbar = () => {
         {/* Desktop Actions */}
         <div className="hidden lg:flex items-center gap-4 flex-shrink-0">
           <ThemeToggleButton />
-          {user ? <UserDropdown /> : 
+          {user?.email ? <UserDropdown /> : 
           <>
           <CommonButton
             link={"/auth/sign-in"}

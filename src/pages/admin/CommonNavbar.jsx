@@ -21,7 +21,7 @@ const CommonNavbar = ({
 
         <div className="text-black dark:text-white">
           <h1 className="text-lg md:text-2xl font-bold tracking-tight">
-            Welcome, <span className="text-Secondary">{user?.name}</span>
+            Welcome, <span className="text-Secondary dark:text-white">{user?.name}</span>
           </h1>
         </div>
       </div>

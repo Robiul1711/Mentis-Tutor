@@ -24,6 +24,8 @@ import CourseDetais from "@/pages/CourseDetails/CourseDetais";
 import FAQsPage from "@/pages/FaqsPage/FAQsPage";
 import Home from "@/pages/home/Home";
 import TearmsAndConditions from "@/pages/TearmAndConditions/TearmsAndConditions";
+import PaymentSuccess from "@/pages/Payment/PaymentSuccess";
+import PaymentFailed from "@/pages/Payment/PaymentFailed";
 
 import { createBrowserRouter } from "react-router-dom";
 
@@ -100,6 +102,14 @@ const router = createBrowserRouter([
       {
         path: "/tearms-and-conditions",
         element: <TearmsAndConditions />,
+      },
+      {
+        path: "/payment-success",
+        element: <PaymentSuccess />,
+      },
+      {
+        path: "/payment-failed",
+        element: <PaymentFailed />,
       },
     ],
   },
