@@ -422,8 +422,8 @@ const VideoPlayerSection = ({ question, paperId }) => {
 
 export default function AllPastPapers() {
   const [selectedBoard, setSelectedBoard] = useState("Edexcel");
-  const [selectedYear, setSelectedYear] = useState("2017"); // Default year as per user requirements
-  const [selectedPaper, setSelectedPaper] = useState("P1"); // Default paper
+  const [selectedYear, setSelectedYear] = useState(""); // Default year as per user requirements
+  const [selectedPaper, setSelectedPaper] = useState(""); // Default paper
   const [activeQuestion, setActiveQuestion] = useState(null);
 
   const { data: pastPaperResponse, isLoading } = useApiQuery({

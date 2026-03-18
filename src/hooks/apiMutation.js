@@ -25,16 +25,23 @@ export const useApiMutation = ({
 
   return useMutation({
     mutationFn: async (data) => {
+      // ✅ Handle dynamic URLs (e.g., /todo-tasks/:id)
+      let finalUrl = url;
+      if (data?.id && url.includes(":id")) {
+        finalUrl = url.replace(":id", data.id);
+      } else if (data?.id && (method.toUpperCase() === "DELETE" || method.toUpperCase() === "PUT" || method.toUpperCase() === "PATCH")) {
+        // If it's a delete/update and no :id in URL, append it if the URL doesn't already end with an ID-like string
+        if (!url.endsWith(`/${data.id}`)) {
+          finalUrl = `${url}/${data.id}`;
+        }
+      }
+
       const config = {
         method: method.toUpperCase(),
-        url: url,
-        // ✅ Fix: Axios DELETE expects data inside a 'data' key, others use 'data' directly
-        ...(method.toUpperCase() === "DELETE"
-          ? { data: data }
-          : { data: data }),
+        url: finalUrl,
+        data: data,
       };
 
-      // We use the generic request method to handle all types correctly
       const response = await axiosClient(config);
       return response.data;
     },

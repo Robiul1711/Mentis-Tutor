@@ -146,9 +146,11 @@ const EditProfile = () => {
         <div className="grid grid-cols-1 md:grid-cols-2 gap-5">
           <Input
             placeholder="Full Name"
-            {...register("fullName", { required: "Full name is required" })}
+            {...register("name", { required: "Full name is required" })}
           />
           <Input
+          className="cursor-not-allowed "
+          disabled
             placeholder="Email"
             type="email"
             {...register("email", { required: "Email is required" })}
