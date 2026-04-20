@@ -90,7 +90,7 @@ const Lessons = ({ currentVideo }) => {
           </button>
 
           <Select onValueChange={handleSelectChange}>
-            <SelectTrigger className="w-full sm:w-[180px] bg-Secondary py-2 sm:py-3 !text-white border-Secondary outline-none text-sm sm:text-base">
+            <SelectTrigger className="w-full sm:w-[180px] bg-Secondary py-2 sm:py-3 text-white! border-Secondary outline-none text-sm sm:text-base">
               <SelectValue placeholder="Question Packs" />
             </SelectTrigger>
             <SelectContent className="bg-Secondary text-white">
@@ -123,15 +123,28 @@ const Lessons = ({ currentVideo }) => {
           </div>
         ) : (
           <div className="w-full h-auto min-h-[200px] flex items-center justify-center text-gray-600 dark:text-gray-300 text-lg sm:text-xl font-medium">
-            {currentVideo?.url ? (
-              <video
-                src={currentVideo.url}
-                controls
-                className="w-full h-full max-h-[600px] object-contain"
-                poster={currentVideo.thumbnail || ""}
-              >
-                Your browser does not support the video tag.
-              </video>
+            {currentVideo?.url || currentVideo?.vimeo_url ? (
+              currentVideo?.url ? (
+                <video
+                  src={currentVideo.url}
+                  controls
+                  className="w-full h-full max-h-[600px] object-contain"
+                  poster={currentVideo.thumbnail || ""}
+                >
+                  Your browser does not support the video tag.
+                </video>
+              ) : (
+                <iframe
+                  src={currentVideo?.vimeo_url?.replace(
+                    "vimeo.com",
+                    "player.vimeo.com/video",
+                  )}
+                  className="w-full h-full min-h-[300px] md:min-h-[500px]"
+                  frameBorder="0"
+                  allow="autoplay; fullscreen; picture-in-picture"
+                  allowFullScreen
+                ></iframe>
+              )
             ) : (
               <div className="py-20">Select a lesson to view content</div>
             )}

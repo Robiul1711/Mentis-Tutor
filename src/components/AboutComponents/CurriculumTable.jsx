@@ -107,7 +107,7 @@ const sections = [
 
 const CurriculumTable = () => {
   return (
-    <section className="section-padding-x">
+    <section className="section-padding-x  section-padding-y">
       {/* Heading */}
       <div className="text-center mb-12">
         <Title level="title48" className="">

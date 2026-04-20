@@ -17,7 +17,7 @@ import Testimonials from '@/components/HomeComponents/Testimonials'
 
 const Home = () => {
   return (
-   <div className="section-padding-y ">
+   <div className="">
 
       <Banner />
       <WhyMentisExgist />
@@ -30,7 +30,7 @@ const Home = () => {
       <FeaturesSlider />
       <Testimonials />
       <Guarantee />
-      <OurGrade />
+      {/* <OurGrade /> */}
       {/* <WhyChoose /> */}
       {/* <GetInTouch /> */}
     </div>

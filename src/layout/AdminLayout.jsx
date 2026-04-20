@@ -29,9 +29,9 @@ const AdminLayout = () => {
     {
       id: 2,
       icon: <MyCourseIcon />,
-      text: "My Courses",
-      path: "/dashboard/my-courses",
-      activePaths: ["/dashboard/my-courses"],
+      text: "Lessons",
+      path: "/dashboard/lessons",
+      activePaths: ["/dashboard/lessons"],
       sublink: false,
     },
     {

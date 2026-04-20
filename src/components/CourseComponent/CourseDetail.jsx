@@ -76,7 +76,7 @@ const CourseDetail = () => {
                 This Course Fee:
               </p>
               <p className="text-2xl md:text-3xl lg:text-4xl font-bold mt-1">
-                $25
+                €25
               </p>
             </div>
             <div className=" mt-5 bg-white p-6 flex flex-col gap-6 rounded-[20px]">

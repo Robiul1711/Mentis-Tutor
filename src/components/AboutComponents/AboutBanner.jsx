@@ -125,6 +125,7 @@ const AboutBanner = () => {
           className="flex justify-center pt-2 sm:pt-4 lg:pt-6"
         >
           <CommonButton
+          link={"/courses"}
             variant="secondary"
             className="mt-2 sm:mt-4 lg:mt-6 rounded-full group px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base lg:text-lg font-semibold"
           >
@@ -144,7 +145,7 @@ const AboutBanner = () => {
           src={data?.video}
           poster={data?.image} // Use API image as poster
           controls
-          className="w-full h-[400px] rounded-xl shadow-lg"
+          className="w-full aspect-video rounded-xl shadow-lg"
         />
       </div>
     </section>
