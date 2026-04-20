@@ -1,147 +1,152 @@
 import React from "react";
 import { Swiper, SwiperSlide } from "swiper/react";
-import { Navigation, Autoplay } from "swiper/modules";
-import { FaAngleRight, FaAngleLeft, FaQuoteLeft, FaStar } from "react-icons/fa6";
+import { Navigation, Autoplay, Pagination } from "swiper/modules";
+import { FaAngleRight, FaAngleLeft, FaStar } from "react-icons/fa6";
 import "swiper/css";
 import "swiper/css/navigation";
-import img1 from "@/assets/images/tutor.png";
-import img2 from "@/assets/images/s1.png";
-import img3 from "@/assets/images/tutor.png";
-import img4 from "@/assets/images/s1.png";
-import img5 from "@/assets/images/tutor.png";
+import "swiper/css/pagination";
+
 import Title from "../common/Title";
-import { useApiQuery } from "@/hooks/apiQuery";
 
 const testimonials = [
   {
     id: 1,
-    msg: "The tutors at Mentis completely transformed my approach to GCSE Maths. Their personalized guidance helped me go from struggling to achieving top grades!",
-    name: "Tom Anderson",
-    role: "GCSE Student",
-    avatar: img3,
+    name: "Sarah",
+    role: "Parent of Year 11 student",
+    avatar: "https://images.unsplash.com/photo-1438761681033-6461ffad8d80?q=80&w=150&h=150&auto=format&fit=crop",
     rating: 5,
+    msg: "“The mix of videos and direct support made a huge difference. My daughter felt more confident going into her exams.”",
+    tag: "Grade 5 to Grade 8",
+    tagColor: "bg-blue-50 text-blue-600",
   },
   {
     id: 2,
-    msg: "As a parent, I've seen remarkable improvement in my child's confidence and grades. The one-to-one messaging feature is incredibly helpful for quick questions.",
-    name: "James Wilson",
-    role: "Parent",
-    avatar: img1,
+    name: "Ayaan",
+    role: "GCSE Maths student",
+    avatar: "https://images.unsplash.com/photo-1506794778202-cad84cf45f1d?q=80&w=150&h=150&auto=format&fit=crop",
     rating: 5,
+    msg: "“The explanations were clear and I liked that I could go back over topics properly instead of rushing in class.”",
+    tag: "Improved confidence",
+    tagColor: "bg-emerald-50 text-emerald-600",
   },
   {
     id: 3,
-    msg: "The video library and interactive quizzes made learning engaging and effective. I finally understand topics that confused me for months!",
-    name: "Sophia Martinez",
-    role: "A-Level Student",
-    avatar: img2,
-    rating: 4,
+    name: "Jessica",
+    role: "Year 10 Student",
+    avatar: "https://images.unsplash.com/photo-1494790108377-be9c29b29330?q=80&w=150&h=150&auto=format&fit=crop",
+    rating: 5,
+    msg: "“It didn't feel like just another course. The support side is what made it worth it. I finally understand fractions!”",
+    tag: "Clearer exam technique",
+    tagColor: "bg-rose-50 text-rose-600",
   },
   {
     id: 4,
-    msg: "The step-by-step past paper solutions are game-changing. It's like having a tutor available 24/7 to walk you through every problem.",
-    name: "Mia Chen",
+    name: "David",
     role: "GCSE Student",
-    avatar: img4,
+    avatar: "https://images.unsplash.com/photo-1507003211169-0a1dd7228f2d?q=80&w=150&h=150&auto=format&fit=crop",
     rating: 5,
+    msg: "“The step-by-step past paper solutions are a game changer. It's like having a tutor available 24/7.”",
+    tag: "Mastered Past Papers",
+    tagColor: "bg-indigo-50 text-indigo-600",
   },
   {
     id: 5,
-    msg: "The mindset guidance combined with academic support created a holistic learning experience that truly sets Mentis apart.",
-    name: "Chris Johnson",
-    role: "Parent",
-    avatar: img5,
+    name: "Emma",
+    role: "Parent of Year 11",
+    avatar: "https://images.unsplash.com/photo-1544005313-94ddf0286df2?q=80&w=150&h=150&auto=format&fit=crop",
     rating: 5,
+    msg: "“My son actually enjoys practicing now. The structure Mentis provides is exactly what was missing from school.”",
+    tag: "Top Grade Consistency",
+    tagColor: "bg-purple-50 text-purple-600",
   },
 ];
 
 const Testimonials = () => {
-  const { data, isLoading } = useApiQuery({
-    queryKey: ["testimonials"], // Just the base key
-    url: "/testimonials",
-  });
-  console.log(data?.data)
   return (
-    <section className="w-full dark:bg-[#0B1120] py-12 md:py-20 section-padding-x ">
-      {/* Title */}
+    <section className="w-full  dark:bg-[#0B1120] pb-16 md:pb-24 section-padding-x overflow-hidden">
+      {/* Header Section */}
       <div className="text-center mb-16">
-       <Title level="title48" className="">
+        <Title level="title48" className="text-[#1a2b4b] dark:text-white">
           What Our Students & Parents Say
         </Title>
-       <Title level="title20" className="text-gray-700 dark:text-gray-300 max-w-[1020px] mx-auto mt-4">
-         Hear From Our Happy students & parents
-        </Title>
+        <p className="text-gray-500 dark:text-gray-400 text-lg mt-4 max-w-2xl mx-auto">
+          Trusted by students and parents preparing for GCSE Maths
+        </p>
       </div>
 
-      <div className="relative max-w-6xl mx-auto">
-        {/* Navigation Arrows */}
-        <button className="prevBtn absolute -left-4 md:-left-12 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200 dark:border-gray-700 hover:scale-110">
-          <FaAngleLeft className="text-xl text-gray-700 dark:text-gray-300" />
+      <div className="relative max-w-7xl mx-auto">
+        {/* Custom Navigation Buttons */}
+        <button className="prevBtn absolute -left-2 lg:-left-6 top-1/2 -translate-y-1/2 z-20 bg-white dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-all border border-gray-100 dark:border-gray-700 hidden md:flex">
+          <FaAngleLeft className="text-gray-600 dark:text-gray-300" />
         </button>
 
-        <button className="nextBtn absolute -right-4 md:-right-12 top-1/2 -translate-y-1/2 z-10 bg-white dark:bg-gray-800 w-12 h-12 rounded-full flex items-center justify-center shadow-lg hover:shadow-xl transition-all duration-300 cursor-pointer border border-gray-200 dark:border-gray-700 hover:scale-110">
-          <FaAngleRight className="text-xl text-gray-700 dark:text-gray-300" />
+        <button className="nextBtn absolute -right-2 lg:-right-6 top-1/2 -translate-y-1/2 z-20 bg-white dark:bg-gray-800 w-10 h-10 rounded-full flex items-center justify-center shadow-md hover:shadow-lg transition-all border border-gray-100 dark:border-gray-700 hidden md:flex">
+          <FaAngleRight className="text-gray-600 dark:text-gray-300" />
         </button>
 
-        {/* Swiper */}
+        {/* Swiper Implementation */}
         <Swiper
-          modules={[Navigation, Autoplay]}
+          modules={[Navigation, Autoplay, Pagination]}
           navigation={{
             prevEl: ".prevBtn",
             nextEl: ".nextBtn",
           }}
-          autoplay={{
-            delay: 5000,
-            disableOnInteraction: false,
-          }}
-          slidesPerView={1}
-          spaceBetween={30}
+          pagination={{ clickable: true, dynamicBullets: true }}
+          autoplay={{ delay: 5000, disableOnInteraction: false }}
+          spaceBetween={24}
           loop={true}
-          className="pb-12"
+          breakpoints={{
+            320: { slidesPerView: 1 },
+            768: { slidesPerView: 2 },
+            1024: { slidesPerView: 3 },
+          }}
+          className="pb-14 px-2"
         >
-          {data?.data?.map((item) => (
-            <SwiperSlide key={item.id}>
-              <div className="flex flex-col items-center px-4">
-                {/* Main Testimonial Card */}
-                <div className="bg-white dark:bg-gray-800 rounded-3xl p-8 md:p-10 max-w-4xl w-full text-center relative  border border-gray-100 dark:border-gray-700">
-
-
-
-                  {/* Author Info */}
-                  <div className="flex items-center justify-center gap-4">
-                    <img
-                      src={item.image}
-                      alt={item.name}
-                      className="w-14 h-14 rounded-full border-4 border-blue-100 dark:border-blue-900 shadow-md"
-                    />
-                    <div className="text-left">
-                      <h4 className="font-semibold text-gray-900 dark:text-white text-lg">
-                        {item.name}
-                      </h4>
-                      <p className="text-gray-500 dark:text-gray-400 text-sm">
-                        {item.title}
-                      </p>
-                    </div>
+          {testimonials.map((item) => (
+            <SwiperSlide key={item.id} className="h-auto">
+              <div className=" dark:bg-gray-800 rounded-[2rem] p-8 flex flex-col h-full border border-gray-200 dark:border-gray-700 shadow-sm transition-all duration-300 hover:-translate-y-2">
+                {/* Header: Avatar and Identity */}
+                <div className="flex items-center gap-4 mb-5">
+                  <img
+                    src={item.avatar}
+                    alt={item.name}
+                    className="w-14 h-14 rounded-full object-cover border-2 border-blue-50"
+                  />
+                  <div>
+                    <h4 className="font-bold text-[#1a2b4b] dark:text-white text-lg leading-tight">
+                      {item.name}
+                    </h4>
+                    <p className="text-gray-400 dark:text-gray-500 text-sm">
+                      {item.role}
+                    </p>
                   </div>
-
-                  {/* Testimonial Text */}
-                  <blockquote className="text-gray-700 dark:text-gray-300 text-lg md:text-xl leading-relaxed mb-6 font-light italic" dangerouslySetInnerHTML={{__html:item.description}}>
-
-                  </blockquote>
                 </div>
 
+                {/* Star Rating */}
+                <div className="flex gap-1 mb-5">
+                  {[...Array(5)].map((_, i) => (
+                    <FaStar key={i} className="text-amber-400 text-sm" />
+                  ))}
+                </div>
 
+                {/* Testimonial Text */}
+                <p className="text-slate-600 dark:text-gray-300 text-base md:text-lg leading-relaxed mb-8 flex-grow">
+                  {item.msg}
+                </p>
+
+                {/* Bottom Pill Tag */}
+                <div className="mt-auto">
+                  <span
+                    className={`inline-block px-5 py-2 rounded-full text-xs font-bold uppercase tracking-wide ${item.tagColor}`}
+                  >
+                    {item.tag}
+                  </span>
+                </div>
               </div>
             </SwiperSlide>
           ))}
         </Swiper>
-
-        {/* Progress Dots */}
-
       </div>
-
-      {/* Background Decoration */}
-      {/* <div className="absolute bottom-0 left-0 w-full h-1/3 bg-gradient-to-t from-blue-50/50 to-transparent dark:from-blue-900/10 pointer-events-none" /> */}
     </section>
   );
 };

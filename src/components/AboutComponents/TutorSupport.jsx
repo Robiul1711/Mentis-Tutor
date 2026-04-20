@@ -1,97 +1,131 @@
 import React from "react";
-import "swiper/css";
-import "swiper/css/navigation";
-import v1 from "@/assets/images/bannerthumb.png";
-// Dummy images/icons
-
 import {
-  CalendarIcon,
-  CameraIcon,
-  MessageIcon,
-  QustionIcon,
-} from "../SVG/Icons";
-import Title from "../common/Title";
+  Lightbulb,
+  MessageSquare,
+  BarChart3,
+  ShieldCheck,
+  Zap,
+  Users,
+} from "lucide-react";
 
-const data = [
-  {
-    id: 1,
-    icon: MessageIcon,
-    title: "Unlimited Help & Support",
-    desc: "Get instant answers to your questions anytime. Our tutors are always ready to support your learning journey.",
-    img: v1,
-  },
-  {
-    id: 2,
-    icon: CameraIcon,
-    title: "Feedback & Zoom Sessions",
-    desc: "Receive personalized feedback and schedule one-on-one video sessions with expert tutors.",
-    img: v1,
-  },
-  {
-    id: 3,
-    icon: CalendarIcon,
-    title: "Revision Planning",
-    desc: "Stay organized with custom study schedules and revision plans tailored to your goals.",
-    img: v1,
-  },
-  {
-    id: 4,
-    icon: QustionIcon,
-    title: "Stress & Mindset Coaching",
-    desc: "Build confidence and manage exam stress with dedicated mindset coaching support.",
-    img: v1,
-  },
-];
+const BeliefCard = ({ icon: Icon, title, description }) => (
+  <div className="bg-white dark:bg-slate-900 p-6 sm:p-7 lg:p-8 
+  rounded-2xl border border-slate-200 dark:border-slate-700
+  shadow-sm hover:shadow-lg transition-all duration-300 
+  flex flex-col h-full group">
 
-const TutorSupport = () => {
-  return (
-    <section className="section-padding-x  relative">
-      {/* Heading */}
-      <div className="text-center mb-10">
-        <Title level="title48" className="dark:text-white">
-          Tutor Support Section
-        </Title>
-        <Title
-          level="title20"
-          className="text-gray-700 dark:text-gray-300 max-w-[1020px] mx-auto mt-4"
-        >
-          Your journey. Personalised. Mentis tutors adapt to your strengths and
-          struggles.
-        </Title>
+    <div className="flex items-start gap-4 mb-5">
+      <div
+        className="bg-blue-50 dark:bg-slate-800 
+        p-3 rounded-xl 
+        group-hover:scale-110 transition-transform duration-300"
+      >
+        <Icon className="w-5 h-5 text-blue-500 dark:text-blue-400" />
       </div>
 
-      <div className="grid md:grid-cols-2 lg:grid-cols-4 gap-6">
-        {data.map((item) => (
-          <div
-            key={item.id}
-            className="bg-white dark:bg-[#111827] border border-[#d7e8f9] rounded-3xl p-6 h-full transition"
-          >
-            {/* ICON */}
-            <div className="lg:w-16 lg:h-16 size-12 md:size-14 rounded-full bg-Primary flex items-center justify-center mb-4">
-              {<item.icon className="w-6 h-6 sm:w-8 sm:h-8 md:w-10 md:h-10 lg:w-auto lg:h-auto text-white" />}
-            </div>
+      <h3 className="text-base sm:text-lg font-bold text-slate-800 dark:text-white leading-tight">
+        {title}
+      </h3>
+    </div>
 
-            {/* Title */}
-            <h3 className="text-[20px] font-semibold text-gray-900 dark:text-white">
-              {item.title}
-            </h3>
+    <div className="h-px bg-slate-200 dark:bg-slate-700 w-full mb-5" />
 
-            {/* Description */}
-            <p className="text-gray-600 dark:text-white text-[15px] mt-2 leading-relaxed line-clamp-2">
-              {item.desc}
+    <p className="text-slate-600 dark:text-slate-400 text-sm leading-relaxed">
+      {description}
+    </p>
+  </div>
+);
+
+const WhatWeBelieve = () => {
+  const beliefs = [
+    {
+      icon: Lightbulb,
+      title: "Clarity builds confidence",
+      description:
+        "Students make better progress when explanations are simple, structured, and easy to return to.",
+    },
+    {
+      icon: Zap,
+      title: "Clarity builds confidence",
+      description:
+        "Students make better progress when explanations are simple, structured, and easy to return to.",
+    },
+    {
+      icon: MessageSquare,
+      title: "Support should not stop after the lesson",
+      description:
+        "Students need guidance when they get stuck, not just during a scheduled session.",
+    },
+    {
+      icon: Users,
+      title: "Support should not stop after the lesson",
+      description:
+        "Students need guidance when they get stuck, not just during a scheduled session.",
+    },
+    {
+      icon: BarChart3,
+      title: "Progress comes from consistency",
+      description:
+        "Small, supported steps over time lead to stronger understanding and better exam performance.",
+    },
+    {
+      icon: ShieldCheck,
+      title: "Progress comes from consistency",
+      description:
+        "Small, supported steps over time lead to stronger understanding and better exam performance.",
+    },
+  ];
+
+  return (
+    <section className="relative section-padding-x
+ dark:bg-slate-950 transition-colors duration-300">
+
+      {/* Background Pattern */}
+      <div
+        className="absolute inset-0 opacity-[0.05] dark:opacity-[0.04] pointer-events-none"
+        style={{
+          backgroundImage:
+            "radial-gradient(#3b82f6 1.5px, transparent 1.5px)",
+          backgroundSize: "40px 40px",
+        }}
+      />
+
+      <div className="relative z-10 max-w-7xl mx-auto">
+        {/* Header */}
+        <div className="text-center mb-12 lg:mb-16">
+          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 
+          font-extrabold text-[#1a2b4b] dark:text-white mb-6">
+            What we believe
+          </h2>
+
+          <div className="max-w-3xl mx-auto space-y-3">
+            <p className="text-base sm:text-lg text-slate-600 dark:text-slate-300 font-medium">
+              We believe students do best when learning is clear, structured, and supported.
             </p>
 
-            {/* Image Preview */}
-            <img
-              src={item.img}
-              className="w-full mt-6 rounded-xl border-2 border-[#cfe5ff]"
-              alt="preview"
-            />
+            <p className="text-sm sm:text-base text-slate-500 dark:text-slate-400">
+              Mentis was built to combine the flexibility of online learning with the reassurance of real tutor guidance.
+            </p>
           </div>
-        ))}
+        </div>
+
+        {/* Divider */}
+        <div className="relative flex justify-center items-center mb-12 lg:mb-16">
+          <div className="w-full h-[1px] bg-slate-200 dark:bg-slate-700" />
+          <div className="absolute w-2.5 h-2.5 rotate-45 
+          bg-white dark:bg-slate-900 
+          border border-slate-200 dark:border-slate-700" />
+        </div>
+
+        {/* Grid */}
+        <div className="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-5 lg:gap-7">
+          {beliefs.map((belief, index) => (
+            <BeliefCard key={index} {...belief} />
+          ))}
+        </div>
       </div>
     </section>
   );
 };
 
-export default TutorSupport;
+export default WhatWeBelieve;

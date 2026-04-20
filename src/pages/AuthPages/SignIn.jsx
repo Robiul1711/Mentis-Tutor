@@ -31,7 +31,11 @@ export default function SignIn() {
     onSuccess: (data) => {
       localStorage.setItem("token", data.token);
       setUser(data?.userData);
-      navigate(from, { replace: true });
+      if (data.payment_status === true) {
+        navigate("/dashboard", { replace: true });
+      } else {
+        navigate("/", { replace: true });
+      }
     },
   });
 

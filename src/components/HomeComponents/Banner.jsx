@@ -9,6 +9,7 @@ import { useApiQuery } from "@/hooks/apiQuery";
 import { AuthContext } from "@/context";
 import { useNavigate } from "react-router-dom";
 import toast from "react-hot-toast";
+import { useApiMutation } from "@/hooks/apiMutation";
 
 const Banner = () => {
   const { user } = useContext(AuthContext);
@@ -33,13 +34,7 @@ const Banner = () => {
 
   const bannerData = data?.data?.banner_section;
 
-  const handleDashboardClick = () => {
-    if (user) {
-      navigate("/dashboard");
-    } else {
-      toast.error("Please login first to start your journey!");
-    }
-  };
+
 
   const toggleVideo = () => {
     if (videoRef.current) {
@@ -148,11 +143,19 @@ const Banner = () => {
             ref={buttonRef}
             className="flex flex-col xs:flex-row justify-center gap-6 lg:justify-start"
           >
-            <CommonButton
-              onClick={handleDashboardClick}
-              variant="secondary"
-              className=" group "
-            >
+        <CommonButton
+  onClick={() => {
+    const section = document.getElementById("pricing");
+    if (section) {
+      section.scrollIntoView({
+        behavior: "smooth",
+        block: "start",
+      });
+    }
+  }}
+  variant="secondary"
+  className="group"
+>
               {" "}
               {bannerData?.button_text}
               <span className="rounded-full p-1 bg-black group-hover:bg-Secondary">
@@ -160,18 +163,7 @@ const Banner = () => {
                 <MdArrowOutward className="text-Primary text-2xl group-hover:text-white" />{" "}
               </span>{" "}
             </CommonButton>
-            <CommonButton
-              onClick={handleDashboardClick}
-              variant="secondary"
-              className=" group bg-transparent border border-Primary hover:bg-Primary dark:!text-white dark:hover:!text-black !text-black "
-            >
-              {" "}
-              {bannerData?.sub_button_text}
-              <span className="rounded-full p-1 border border-Secondary group-hover:bg-Secondary ">
-                {" "}
-                <MdArrowOutward className="text-Secondary text-2xl group-hover:text-white" />{" "}
-              </span>{" "}
-            </CommonButton>
+
           </div>
         </div>
 

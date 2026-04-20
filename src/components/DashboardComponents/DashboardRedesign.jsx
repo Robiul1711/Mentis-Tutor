@@ -117,7 +117,7 @@ const DashboardRedesign = ({ dashboardData, onSectionChange, isLoading }) => {
         {/* Left/Middle Column */}
         <div className="lg:col-span-8 space-y-6">
           {/* Quick Topic Select / Resume Learning */}
-          <div className="bg-white dark:bg-slate-900 rounded-3xl p-6 shadow-sm border border-slate-100 dark:border-slate-800">
+          <div className="bg-white dark:bg-slate-900 rounded-3xl p-4 sm:p-6 shadow-sm border border-slate-100 dark:border-slate-800">
             <div className="flex items-center justify-between mb-4">
               <h2 className="text-lg font-semibold text-slate-800 dark:text-slate-100">
                 Quick Topic Select
@@ -139,51 +139,19 @@ const DashboardRedesign = ({ dashboardData, onSectionChange, isLoading }) => {
               </div>
 
               <div className="relative group">
-                <div className="w-full h-64 bg-slate-800 rounded-2xl overflow-hidden relative shadow-2xl">
-                  {isPlaying && continueWatching.video_url ? (
-                    <video
-                      src={continueWatching.video_url}
-                      className="w-full h-full object-cover"
-                      controls
-                      autoPlay
-                    />
-                  ) : (
-                    <>
-                      <img
-                        src={
-                          data.course?.thumbnail ||
-                          "https://images.unsplash.com/photo-1509062522246-3755977927d7?q=80&w=1000&auto=format&fit=crop"
-                        }
-                        alt="Lesson video"
-                        className="w-full h-full object-cover opacity-50 transition-transform duration-500 group-hover:scale-105"
-                      />
-                      <div className="absolute inset-0 flex flex-col justify-end p-6 bg-linear-to-t from-slate-900/80 to-transparent">
-                        <div className="text-white mb-4">
-                          <h4 className="text-lg font-semibold">
-                            {continueWatching.video_title}
-                          </h4>
-                        </div>
-
-                        <div className="flex items-center gap-4 text-white">
-                          <button
-                            onClick={() => setIsPlaying(true)}
-                            className="bg-white/20 p-3 rounded-full hover:bg-white/30 transition-colors backdrop-blur-md"
-                          >
-                            <Play fill="white" className="w-8 h-8" />
-                          </button>
-                          <span className="text-sm font-medium">
-                            {continueWatching.video_duration || "00:00"}
-                          </span>
-                          <div className="flex-1 h-1 bg-white/30 rounded-full relative">
-                            <div
-                              className="absolute left-0 top-0 h-full bg-blue-500 rounded-full"
-                              style={{ width: "0%" }}
-                            ></div>
-                          </div>
-                        </div>
-                      </div>
-                    </>
-                  )}
+                <div className="w-full aspect-video rounded-2xl overflow-hidden relative shadow-2xl">
+         
+                      <iframe
+                        src={continueWatching?.vimeo_url?.replace(
+                          "vimeo.com",
+                          "player.vimeo.com/video",
+                        )}
+                        className="w-full h-full"
+                        frameBorder="0"
+                        allow="autoplay; fullscreen; picture-in-picture"
+                        allowFullScreen
+                      ></iframe>
+                
                 </div>
               </div>
 
@@ -199,14 +167,14 @@ const DashboardRedesign = ({ dashboardData, onSectionChange, isLoading }) => {
                   {continueWatching.resume_label || "Resume"}
                 </button>
               </div>
-
+{/* 
               <p className="text-sm text-Primary font-medium">
                 Recommended next step:{" "}
                 <span className="text-slate-500">After this lesson → </span>
                 <span className="hover:underline cursor-pointer font-bold">
                   {continueWatching.recommended_next_step}
                 </span>
-              </p>
+              </p> */}
             </div>
           </div>
 

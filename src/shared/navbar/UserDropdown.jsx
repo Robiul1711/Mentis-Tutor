@@ -88,7 +88,7 @@ const UserDropdown = () => {
       >
         <img
           className=" size-8 sm:size-9 md:size-10  bg-white rounded-full object-cover border border-gray-200"
-          src={userDetails?.userdata?.avatar || profile}
+          src={userDetails?.userData?.avatar || profile}
           alt="User Profile"
         />
       </button>
@@ -104,20 +104,24 @@ const UserDropdown = () => {
             </p>
           </div>
           <div className="py-1">
+            {userDetails?.userdata?.payment_status && (
+              <>
+              <Link
+                to={`/dashboard`}
+                onClick={() => setIsOpen(false)}
+                className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
+              >
+                <MdDashboard className="mr-2 text-[#5176ea]" /> Dashboard
+              </Link>
             <Link
-              to={`/dashboard`}
-              onClick={() => setIsOpen(false)}
-              className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
-            >
-              <MdDashboard className="mr-2 text-[#5176ea]" /> Dashboard
-            </Link>
-            <Link
-              to={`/dashboard/settings`}
-              onClick={() => setIsOpen(false)}
-              className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
+            to={`/dashboard/settings`}
+            onClick={() => setIsOpen(false)}
+            className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
             >
               <FiSettings className="mr-2 text-[#5176ea]" /> Setting
             </Link>
+                </>
+            )}
 
             <button
               onClick={handleLogout}

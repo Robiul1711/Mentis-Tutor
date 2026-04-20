@@ -36,7 +36,7 @@ const States = () => {
   return (
     <div
       ref={sectionRef}
-      className="section-padding-x bg-white dark:bg-[#0B1120] dark:border-t dark:border-b gap-12 py-16 grid grid-cols-2 md:grid-cols-3"
+      className="section-padding-x  dark:bg-[#0B1120] dark:border-t dark:border-b gap-12 py-16 grid grid-cols-2 md:grid-cols-3"
     >
       {data.map((item, i) => (
         <div key={i} className="flex gap-4 items-center">
