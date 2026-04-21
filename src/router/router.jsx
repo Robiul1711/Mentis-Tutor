@@ -30,6 +30,8 @@ import PaymentFailed from "@/pages/Payment/PaymentFailed";
 import { createBrowserRouter } from "react-router-dom";
 
 import PrivateRoute from "./PrivateRoute";
+import VerifyPaymentOtp from "@/pages/AuthPages/VerifyPaymentOtp";
+import PasswordSetup from "@/pages/AuthPages/PasswordSetup";
 
 const router = createBrowserRouter([
   // Auth
@@ -53,6 +55,14 @@ const router = createBrowserRouter([
         path: "verify-otp",
         element: <VerifyOtp />,
       },
+      {
+        path: "verify-user-otp",
+        element: <VerifyPaymentOtp />,
+      },
+      {
+        path: "password-setup",
+        element: <PasswordSetup />,
+      },  
       {
         path: "reset-verify-otp",
         element: <ResetVerifyOtp />,
