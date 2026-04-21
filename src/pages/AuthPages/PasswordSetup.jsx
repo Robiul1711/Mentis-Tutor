@@ -6,7 +6,6 @@ const PasswordSetup = () => {
     <div>PasswordSetup</div>
   )
 }
-  
 
 
 export default PasswordSetup
