@@ -18,11 +18,11 @@ console.log(email);
   } = useForm();
 
 const { mutate, isPending } = useApiMutation({
-  url: "/not-user-verify-otp",
+  url: "/new-user-verify-otp",
   method: "POST",
   secure: false,
   onSuccess: (data) => {
-    navigate('/auth/password-setu'); 
+    navigate('/auth/password-setup'); 
   }
 });
 
