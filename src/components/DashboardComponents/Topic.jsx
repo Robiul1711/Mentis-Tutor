@@ -11,7 +11,7 @@ const Topic = ({ data, onVideoSelect }) => {
   return (
     <div className="flex w-full">
       <Accordion className="space-y-2 w-full" type="single" collapsible>
-        {data?.map((section, index) => (
+        {data?.filter(Boolean).map((section, index) => (
           <div
             key={index}
             className="border rounded-lg md:rounded-xl overflow-hidden  "
@@ -22,14 +22,14 @@ const Topic = ({ data, onVideoSelect }) => {
               className="border-none px-4 bg-white dark:bg-[#0B1120] dark:text-white "
             >
               <AccordionTrigger className="font-medium md:text-lg xl:text-xl flex items-center gap-5 ">
-                <span>{section.title}</span>
+                <span>{section?.title}</span>
                 <span className="ml-auto text-sm bg-gray-200 dark:bg-gray-700 px-2 py-1 rounded">
-                  {section.videos?.length || 0} Lessons
+                  {section?.videos?.length || 0} Lessons
                 </span>
               </AccordionTrigger>
 
               <AccordionContent className="sm:text-base space-y-3">
-                {section.videos?.map((video, i) => (
+                {section?.videos?.filter(Boolean).map((video, i) => (
                   <div
                     key={video.id}
                     onClick={() => onVideoSelect && onVideoSelect(video)}
@@ -39,7 +39,7 @@ const Topic = ({ data, onVideoSelect }) => {
                       {i + 1}.
                     </span>
                     <span className="flex-1 text-gray-700 dark:text-gray-300">
-                      {video.title}
+                      {video?.title}
                     </span>
                   </div>
                 ))}

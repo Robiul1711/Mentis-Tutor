@@ -195,8 +195,8 @@ const MentisComparison = () => {
   return (
     <div className=" section-padding-x  section-padding-y">
       {/* Header Section */}
-      <div className="text-center mb-10 md:mb-14">
-        <h2 className="text-2xl sm:text-3xl md:text-4xl lg:text-5xl font-extrabold text-[#2a4c67] dark:text-white mb-4 tracking-tight leading-tight">
+      <div className="text-center mb-6 md:mb-10">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b]  dark:text-white mb-4 tracking-tight leading-tight">
           The Problem is the Gap  Between Sessions
         </h2>
         <p className="text-sm sm:text-base md:text-lg opacity-90 max-w-2xl mx-auto ">
@@ -207,11 +207,11 @@ const MentisComparison = () => {
       </div>
 
       {/* Main Comparison Card */}
-      <div className="max-w-7xl mx-auto bg-[#f1f0ef] dark:bg-[#2a4c67] rounded-[1.5rem] md:rounded-[2.5rem] shadow-xl shadow-slate-200/50 border border-white/50 overflow-hidden">
-        <div className="grid grid-cols-1 lg:grid-cols-2 p-6 md:p-10 lg:p-14 gap-8 lg:gap-12 relative">
+      <div className=" bg-[#fbfaf9] dark:bg-[#0B1120] rounded-[1.5rem] md:rounded-[2.5rem] border border-white/50 dark:border-white/5 overflow-hidden">
+        <div className="grid grid-cols-1 lg:grid-cols-2  p-6 md:p-10  gap-8 lg:gap-12 ">
           
           {/* Traditional Tutoring Column */}
-          <div className="space-y-6 md:space-y-8 py-4">
+          <div className="space-y-6 md:space-y-8 bg-white dark:bg-[#0B1120]  rounded-2xl md:rounded-3xl p-6 md:p-8 border border-[#64b5f6]/20 shadow-inner relative overflow-hidden">
             <div className="inline-block px-4 py-1 bg-rose-50 text-rose-700 rounded-full text-xs md:text-sm font-bold tracking-wide uppercase border border-rose-100">
               Traditional Tutoring
             </div>
@@ -240,13 +240,10 @@ const MentisComparison = () => {
             </ul>
           </div>
 
-          {/* VS Divider for Desktop (Optional styling) */}
-          <div className="hidden lg:flex absolute left-1/2 top-1/2 -translate-x-1/2 -translate-y-1/2 w-12 h-12 bg-[#f7f2ed]  border border-white rounded-full items-center justify-center font-bold text-[#2a4c67] z-20 shadow-sm">
-            VS
-          </div>
+
 
           {/* Mentis Tutoring Column */}
-          <div className="bg-white dark:bg-[#2a4c67]  rounded-2xl md:rounded-3xl p-6 md:p-8 border border-[#64b5f6]/20 shadow-inner relative overflow-hidden">
+          <div className="bg-white dark:bg-[#0B1120]  rounded-2xl md:rounded-3xl p-6 md:p-8 border border-[#64b5f6]/20 shadow-inner relative overflow-hidden">
             <div className="inline-block px-5 py-1.5 bg-[#64b5f6] text-white rounded-full text-xs md:text-sm font-bold tracking-wide uppercase mb-6 md:mb-8 shadow-md shadow-[#64b5f6]/30">
               Mentis Tutoring
             </div>
@@ -279,7 +276,7 @@ const MentisComparison = () => {
         </div>
 
         {/* Lower Features Grid */}
-        <div className="bg-white dark:bg-[#2a4c67] border-t border-slate-100 p-6 md:p-10">
+        <div className="bg-white dark:bg-[#0B1120] border-t border-slate-100 dark:border-[#0B1120] p-6 md:p-10">
           <p className="text-center text-[#2a4c67] dark:text-white text-lg md:text-xl font-bold mb-8 md:mb-10 px-2">
             Mentis exists to{" "}
             <span className="text-[#64b5f6] italic underline decoration-2 underline-offset-4">remove</span> the 'stuck

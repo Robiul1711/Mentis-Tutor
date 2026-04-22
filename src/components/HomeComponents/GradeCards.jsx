@@ -46,15 +46,12 @@ const GradeCards = () => {
     <section className="section-padding-x bg-white dark:bg-[#0B1120] py-16 md:py-24 overflow-hidden">
       {/* Heading */}
       <div className="text-center mb-10 md:mb-16">
-        <Title level="title48" className="dark:text-white">
+        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b] dark:text-white">
           Everyone Can Reach Grade 9
-        </Title>
-        <Title
-          level="title20"
-          className="text-gray-700 dark:text-gray-300 max-w-[800px] mx-auto mt-4 px-4"
-        >
+        </p>
+        <p className="mt-4 text-[#475569] dark:text-white text-base md:text-lg">
           Wherever you start, Mentis helps you climb higher step by step.
-        </Title>
+        </p>
       </div>
 
       {/* Cards Container */}

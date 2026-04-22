@@ -1,40 +1,53 @@
-import React, { useEffect, useRef, useContext, useState } from "react";
-import Title from "../common/Title";
-import CommonButton from "../common/CommonButton";
+import React, { useContext, useState, useRef } from "react";
 import bannerthumbnail from "../../assets/images/bannerthumb.png";
-import { MdArrowOutward } from "react-icons/md";
+import { MdArrowForward } from "react-icons/md";
+import { FaCheck } from "react-icons/fa";
 import VideoButton from "../common/VideoButton";
-import { gsap } from "gsap";
 import { useApiQuery } from "@/hooks/apiQuery";
 import { AuthContext } from "@/context";
 import { useNavigate } from "react-router-dom";
-import toast from "react-hot-toast";
-import { useApiMutation } from "@/hooks/apiMutation";
 
+// --- SKELETON LOADER COMPONENT ---
+const BannerSkeleton = () => (
+  <section className="section-padding-x py-8 sm:py-12 md:py-20 h-screen animate-pulse">
+    <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
+      <div className="w-full lg:w-1/2 flex flex-col space-y-6 mt-8 lg:mt-0">
+        <div className="h-10 md:h-14 bg-gray-200 dark:bg-gray-700 rounded-lg w-3/4 mx-auto lg:mx-0" />
+        <div className="h-6 bg-gray-200 dark:bg-gray-700 rounded-lg w-full max-w-[500px] mx-auto lg:mx-0" />
+        <div className="space-y-4 pt-4">
+          {[1, 2, 3].map((i) => (
+            <div key={i} className="flex items-center gap-3 justify-center lg:justify-start">
+              <div className="h-5 w-5 bg-blue-100 dark:bg-blue-900 rounded-full" />
+              <div className="h-4 bg-gray-200 dark:bg-gray-700 rounded-lg w-64" />
+            </div>
+          ))}
+        </div>
+        <div className="flex flex-col sm:flex-row gap-4 mt-6 justify-center lg:justify-start">
+          <div className="h-12 bg-gray-300 dark:bg-gray-600 rounded-xl w-48" />
+          <div className="h-12 bg-gray-200 dark:bg-gray-700 rounded-xl w-48" />
+        </div>
+      </div>
+      <div className="w-full lg:w-1/2 flex justify-center lg:justify-end">
+        <div className="w-full max-w-[600px] h-60 md:h-96  aspect-video bg-gray-200 dark:bg-gray-700 rounded-3xl" />
+      </div>
+    </div>
+  </section>
+);
+
+// --- MAIN BANNER COMPONENT ---
 const Banner = () => {
   const { user } = useContext(AuthContext);
   const navigate = useNavigate();
-  const bannerRef = useRef(null);
-  const leftSectionRef = useRef(null);
-  const rightSectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const subtitleRef = useRef(null);
-  const buttonRef = useRef(null);
-  const imageRef = useRef(null);
-  const descriptionRef = useRef(null);
-  const extraTitleRef = useRef(null);
   const videoRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
 
   const { data, isLoading } = useApiQuery({
-    queryKey: ["banner"], // Just the base key
+    queryKey: ["banner"],
     url: "/cms/home_page/banner_section",
   });
 
   const bannerData = data?.data?.banner_section;
-
-
 
   const toggleVideo = () => {
     if (videoRef.current) {
@@ -47,137 +60,79 @@ const Banner = () => {
       }
     }
   };
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      // Main timeline
-      const tl = gsap.timeline({
-        defaults: { ease: "power3.out" },
-      });
 
-      // Animate left section elements sequentially
-      tl.fromTo(
-        titleRef.current,
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-      );
-      tl.fromTo(
-        extraTitleRef.current,
-        { y: 50, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.8 },
-      )
-        .fromTo(
-          subtitleRef.current,
-          { y: 30, opacity: 0 },
-          { y: 0, opacity: 1, duration: 0.6 },
-          "-=0.4", // Overlap with previous animation
-        )
-        .fromTo(
-          buttonRef.current,
-          { y: 20, opacity: 0, scale: 0.9 },
-          { y: 0, opacity: 1, scale: 1, duration: 0.5 },
-          "-=0.3",
-        );
+  const scrollToSection = (id) => {
+    const section = document.getElementById(id);
+    if (section) {
+      section.scrollIntoView({ behavior: "smooth", block: "start" });
+    }
+  };
 
-      // Animate right section elements
-      tl.fromTo(
-        rightSectionRef.current,
-        { x: 100, opacity: 0, scale: 0.9 },
-        { x: 0, opacity: 1, scale: 1, duration: 1, ease: "power4.out" },
-        "-=1",
-      );
-
-      tl.fromTo(
-        imageRef.current,
-        { scale: 0.8, opacity: 0, rotationY: 15 },
-        { scale: 1, opacity: 1, rotationY: 0, duration: 1 },
-        "-=0.7",
-      ).fromTo(
-        descriptionRef.current,
-        { y: 20, opacity: 0 },
-        { y: 0, opacity: 1, duration: 0.6 },
-        "-=0.4",
-      );
-    }, bannerRef);
-
-    return () => ctx.revert(); // Cleanup
-  }, []);
+  if (isLoading) return <BannerSkeleton />;
 
   return (
-    <section className="section-padding-x py-8 sm:py-12 md:py-20  overflow-hidden ">
-      <div
-        ref={bannerRef}
-        className="flex flex-col-reverse lg:flex-row items-center justify-between"
-      >
+    <section className="section-padding-x py-8 sm:py-12 md:py-20 overflow-hidden">
+      <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
+        
         {/* Left Text Section */}
-        <div
-          ref={leftSectionRef}
-          className="w-full lg:w-1/2 flex flex-col space-y-6 text-center lg:text-left mt-8 lg:mt-0"
-        >
-          <div ref={titleRef}>
-            <Title level="title40">{bannerData?.title}</Title>
+        <div className="w-full lg:w-1/2 flex flex-col space-y-5 text-center lg:text-left mt-8 lg:mt-0">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-gray-900 dark:text-white leading-[1.2]">
+            A real GCSE tutor + <br className="hidden lg:block" /> a complete Grade 9 system.
+          </h1>
+
+          <p className="sm:text-lg md:text-xl text-[#475569] dark:text-[#BABABA] leading-relaxed max-w-[540px] mx-auto lg:mx-0">
+            Mentis is the all-in-one GCSE Maths platform with tutor guidance whenever you need it.
+          </p>
+
+          <div className="flex flex-col gap-3.5 text-left mt-2 max-w-[540px] mx-auto lg:mx-0">
+            {[
+              "Grade 9 video lessons (Edexcel/AQA aligned)",
+              "Task Mode practice + guided marking (model solutions)",
+              "1-to-1 tutor messaging + Zoom when needed"
+            ].map((text, idx) => (
+              <div key={idx} className="flex items-center gap-3">
+                <FaCheck className="text-[#5698ff] sm:text-lg flex-shrink-0" />
+                <p className="text-[#334155] dark:text-gray-200 text-sm sm:text-base lg:text-lg md:text-[19px]">
+                  {text}
+                </p>
+              </div>
+            ))}
           </div>
 
-          <Title
-            ref={extraTitleRef}
-            level="title20"
-            className="dark:text-white !font-bold"
-          >
-            <span
-              dangerouslySetInnerHTML={{ __html: bannerData?.description }}
-            ></span>
-          </Title>
-          <div ref={subtitleRef}>
-            <Title
-              level="title20"
-              className="text-gray-600 dark:text-[#BABABA] leading-relaxed"
+          <div className="mt-4 text-center lg:text-left">
+            <p className="text-lg sm:text-xl text-[#1e293b] dark:text-white font-semibold">
+              £30/month <span className="text-[#64748b] font-normal tracking-wide"> &bull; Cancel anytime</span>
+            </p>
+          </div>
+
+          <div className="flex flex-col sm:flex-row items-center justify-center lg:justify-start gap-4 mt-2">
+            <button
+              onClick={() => scrollToSection("pricing")}
+              className="bg-[#5a9cff] hover:bg-[#4585f0] text-white font-medium py-3 px-6 rounded-[10px] transition-all text-[17px] shadow-sm w-full sm:w-auto"
             >
-              <span
-                dangerouslySetInnerHTML={{
-                  __html: bannerData?.sub_description,
-                }}
-              ></span>{" "}
-            </Title>
+              Start 2-Day Free Trial
+            </button>
+            <button 
+              onClick={() => scrollToSection("whatInsideMentis")}
+              className="bg-transparent border border-[#cbd5e1] hover:bg-gray-50 text-[#334155] font-medium py-3 px-6 rounded-[10px] transition-all flex items-center justify-center gap-2 text-[17px] shadow-sm w-full sm:w-auto dark:border-gray-600 dark:text-white dark:hover:bg-gray-800"
+            >
+              See what's inside <MdArrowForward className="text-xl" />
+            </button>
           </div>
 
-          <div
-            ref={buttonRef}
-            className="flex flex-col xs:flex-row justify-center gap-6 lg:justify-start"
-          >
-        <CommonButton
-  onClick={() => {
-    const section = document.getElementById("pricing");
-    if (section) {
-      section.scrollIntoView({
-        behavior: "smooth",
-        block: "start",
-      });
-    }
-  }}
-  variant="secondary"
-  className="group"
->
-              {" "}
-              {bannerData?.button_text}
-              <span className="rounded-full p-1 bg-black group-hover:bg-Secondary">
-                {" "}
-                <MdArrowOutward className="text-Primary text-2xl group-hover:text-white" />{" "}
-              </span>{" "}
-            </CommonButton>
-
+          <div className="mt-1 text-center lg:text-left">
+            <p className="text-[15px] text-[#64748b] tracking-wide">
+              Edexcel + AQA &bull; GCSE Maths only &bull; Tutor support included
+            </p>
           </div>
         </div>
 
         {/* Right Image/Video Section */}
-        <div
-          ref={rightSectionRef}
-          className="w-full lg:w-1/2 flex flex-col items-center lg:items-end "
-        >
+        <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-end">
           <div className="relative w-full max-w-[600px] group">
-            {/* Artistic Background Glow */}
-            <div className="absolute -inset-4 bg-linear-to-r from-Primary/20 to-Secondary/20 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-full"></div>
+            <div className="absolute -inset-4 bg-blue-400/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-full"></div>
 
             <div
-              ref={imageRef}
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className="relative aspect-video rounded-3xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl bg-slate-100 dark:bg-slate-900 z-10"
@@ -188,40 +143,25 @@ const Banner = () => {
                     ref={videoRef}
                     src={bannerData.video}
                     poster={bannerData?.image || bannerthumbnail}
-                    className="w-full h-full object-cover"
+                    className="w-full h-full object-cover cursor-pointer"
                     onEnded={() => setIsPlaying(false)}
                     onClick={toggleVideo}
                   />
 
-                  {/* Overlay Play Button */}
                   {!isPlaying && (
                     <div className="absolute inset-0 flex items-center justify-center bg-black/20 backdrop-blur-[2px] transition-all duration-300">
                       <VideoButton onClick={toggleVideo} />
                     </div>
                   )}
 
-                  {/* Pause Button Visible on Hover when Playing */}
                   {isPlaying && isHovered && (
-                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-all duration-300">
-                      <button
-                        onClick={toggleVideo}
-                        className="p-4 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30 hover:bg-white/40 transition-all scale-110"
-                      >
-                        <svg
-                          xmlns="http://www.w3.org/2000/svg"
-                          width="24"
-                          height="24"
-                          viewBox="0 0 24 24"
-                          fill="none"
-                          stroke="currentColor"
-                          strokeWidth="3"
-                          strokeLinecap="round"
-                          strokeLinejoin="round"
-                        >
+                    <div className="absolute inset-0 flex items-center justify-center bg-black/10 transition-all duration-300 pointer-events-none">
+                      <div className="p-4 rounded-full bg-white/20 backdrop-blur-md text-white border border-white/30 scale-110">
+                        <svg width="24" height="24" viewBox="0 0 24 24" fill="none" stroke="currentColor" strokeWidth="3" strokeLinecap="round" strokeLinejoin="round">
                           <rect x="6" y="4" width="4" height="16"></rect>
                           <rect x="14" y="4" width="4" height="16"></rect>
                         </svg>
-                      </button>
+                      </div>
                     </div>
                   )}
                 </div>
@@ -229,7 +169,7 @@ const Banner = () => {
                 <div className="relative w-full h-full">
                   <img
                     src={bannerData?.image || bannerthumbnail}
-                    alt="bannerthumbnail"
+                    alt="banner thumbnail"
                     className="w-full h-full object-cover"
                   />
                   <div className="absolute inset-0 flex items-center justify-center">
@@ -239,14 +179,10 @@ const Banner = () => {
               )}
             </div>
 
-            {/* Description / Caption Under Video */}
-            <div
-              ref={descriptionRef}
-              className="mt-8 text-right relative z-10 pr-4"
-            >
+            <div className="mt-8 text-right relative z-10 pr-4">
               <div className="inline-flex items-center gap-3">
-                <div className="h-px w-8 bg-Primary/50"></div>
-                <p className="text-sm font-medium text-slate-500 dark:text-slate-400 font-Inter tracking-wide uppercase">
+                <div className="h-px w-8 bg-[#5a9cff]/50"></div>
+                <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
                   {bannerData?.sub_title || "Watch how we work"}
                 </p>
               </div>

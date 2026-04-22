@@ -37,16 +37,16 @@ const PricingComparison = () => {
   };
 
   return (
-    <section id="pricing" className="section-padding-x py-16 md:py-24 bg-gray-50 dark:bg-black">
+    <section id="pricing" className="section-padding-x py-10 sm:py-16 md:py-24 bg-gray-50 dark:bg-[#0f1524]">
       <div className="max-w-6xl mx-auto">
         {/* Header Section */}
         <div className="text-center mb-16">
           <span className="inline-block px-4 py-1.5 mb-4 text-sm font-semibold tracking-wider text-Primary uppercase bg-blue-50 rounded-full dark:bg-blue-900/20 dark:text-blue-400">
             Pricing Comparison
           </span>
-          <Title level="title48" className="dark:text-white font-bold tracking-tight">
+          <p  className="dark:text-white text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b]">
             Same Grade 9. <span className="text-secondaryColor">90% cheaper.</span>
-          </Title>
+          </p>
           <p className="text-gray-600 dark:text-gray-400 max-w-2xl mx-auto mt-4 text-lg">
             High-quality Grade 9 education designed to be accessible. Choose the path that fits your budget and goals.
           </p>
@@ -63,7 +63,7 @@ const PricingComparison = () => {
 
             <div className="mb-8">
               <div className="flex items-baseline gap-1">
-                <span className="text-4xl font-bold text-gray-900 dark:text-white">£200–400</span>
+                <span className="text-2xl sm:text-4xl font-bold text-gray-900 dark:text-white">£200–400</span>
                 <span className="text-gray-500 dark:text-gray-400">/mo</span>
               </div>
             </div>
@@ -108,9 +108,9 @@ const PricingComparison = () => {
               </div>
             </div>
 
-            <div className="mb-8">
+            <div className="mb-4 sm:mb-6">
               <div className="flex items-baseline gap-1">
-                <span className="text-5xl font-extrabold text-secondaryColor">
+                <span className="text-2xl sm:text-4xl font-bold text-secondaryColor">
                   £{billingCycle === "monthly" ? courseData?.price : (courseData?.price * 10).toFixed(0)}
                 </span>
                 <span className="text-gray-500 dark:text-gray-400">/{billingCycle === "monthly" ? "mo" : "yr"}</span>

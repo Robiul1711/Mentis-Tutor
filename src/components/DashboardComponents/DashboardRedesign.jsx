@@ -1,4 +1,5 @@
-import React, { useState } from "react";
+import React, { useState, useEffect, useRef } from "react";
+import Player from '@vimeo/player';
 import {
   DashboardIcon,
   MessageIcon,
@@ -24,6 +25,55 @@ const DashboardRedesign = ({ dashboardData, onSectionChange, isLoading }) => {
   const [selectedBoard, setSelectedBoard] = useState("Edexcel");
   const [isPlaying, setIsPlaying] = useState(false);
 
+  const videoRef = useRef(null);
+  const vimeoContainerRef = useRef(null);
+  const vimeoPlayerRef = useRef(null);
+
+  const continueWatching = data.continue_watching || {};
+
+  // Handle standard video resume
+  useEffect(() => {
+    if (videoRef.current && continueWatching?.id && !continueWatching?.vimeo_url) {
+      const savedTime = localStorage.getItem(`video-progress-${continueWatching.id}`);
+      if (savedTime) {
+        videoRef.current.currentTime = parseFloat(savedTime);
+      }
+    }
+  }, [continueWatching?.id]);
+
+  // Handle Vimeo video resume
+  useEffect(() => {
+    let player = null;
+    if (vimeoContainerRef.current && continueWatching?.vimeo_url) {
+      player = new Player(vimeoContainerRef.current, {
+        url: continueWatching.vimeo_url,
+        responsive: true,
+        autoplay: false,
+      });
+      vimeoPlayerRef.current = player;
+
+      const savedTime = localStorage.getItem(`video-progress-${continueWatching.id}`);
+      if (savedTime) {
+        player.setCurrentTime(parseFloat(savedTime)).catch(() => {});
+      }
+
+      player.on('timeupdate', (data) => {
+        localStorage.setItem(`video-progress-${continueWatching.id}`, data.seconds);
+      });
+    }
+    return () => {
+      if (player) {
+        player.destroy().catch(() => {});
+      }
+    };
+  }, [continueWatching?.vimeo_url]);
+
+  const handleTimeUpdate = () => {
+    if (videoRef.current && continueWatching?.id && !continueWatching?.vimeo_url) {
+      localStorage.setItem(`video-progress-${continueWatching.id}`, videoRef.current.currentTime);
+    }
+  };
+
   // Map section tabs to subjects if they exist
   const displaySubjects =
     data.section_tabs?.map((section, index) => ({
@@ -45,7 +95,6 @@ const DashboardRedesign = ({ dashboardData, onSectionChange, isLoading }) => {
         ) : null,
     })) || [];
 
-  const continueWatching = data.continue_watching || {};
   const progress = data.progress_overview || {};
   const tutorMessages = data.tutor_messages || {};
   const confidence = data.confidence || {
@@ -76,7 +125,7 @@ const DashboardRedesign = ({ dashboardData, onSectionChange, isLoading }) => {
 
   return (
     <div
-      className={`space-y-6 transition-opacity duration-300 ${isLoading ? "opacity-50 pointer-events-none" : "opacity-100"}`}
+      className={`space-y-6`}
     >
       <div className="flex items-center justify-between">
         <h1 className="text-2xl font-bold text-slate-800 dark:text-slate-100">
@@ -140,18 +189,17 @@ const DashboardRedesign = ({ dashboardData, onSectionChange, isLoading }) => {
 
               <div className="relative group">
                 <div className="w-full aspect-video rounded-2xl overflow-hidden relative shadow-2xl">
-         
-                      <iframe
-                        src={continueWatching?.vimeo_url?.replace(
-                          "vimeo.com",
-                          "player.vimeo.com/video",
-                        )}
-                        className="w-full h-full"
-                        frameBorder="0"
-                        allow="autoplay; fullscreen; picture-in-picture"
-                        allowFullScreen
-                      ></iframe>
-                
+                  {continueWatching?.vimeo_url ? (
+                    <div ref={vimeoContainerRef} className="w-full h-full"></div>
+                  ) : (
+                    <video
+                      ref={videoRef}
+                      onTimeUpdate={handleTimeUpdate}
+                      src={continueWatching.url}
+                      controls
+                      className="w-full h-full object-contain"
+                    />
+                  )}
                 </div>
               </div>
 
@@ -167,14 +215,14 @@ const DashboardRedesign = ({ dashboardData, onSectionChange, isLoading }) => {
                   {continueWatching.resume_label || "Resume"}
                 </button>
               </div>
-{/* 
+
               <p className="text-sm text-Primary font-medium">
                 Recommended next step:{" "}
                 <span className="text-slate-500">After this lesson → </span>
                 <span className="hover:underline cursor-pointer font-bold">
                   {continueWatching.recommended_next_step}
                 </span>
-              </p> */}
+              </p>
             </div>
           </div>
 

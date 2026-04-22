@@ -93,8 +93,7 @@ const WhatWeBelieve = () => {
       <div className="relative z-10 max-w-7xl mx-auto">
         {/* Header */}
         <div className="text-center mb-12 lg:mb-16">
-          <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 
-          font-extrabold text-[#1a2b4b] dark:text-white mb-6">
+          <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b] dark:text-white mb-6">
             What we believe
           </h2>
 

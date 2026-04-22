@@ -1,10 +1,9 @@
 import React, { useState } from "react";
 import Title from "../common/Title";
-import CommonButton from "../common/CommonButton";
-import { MdArrowOutward, MdCheckCircle } from "react-icons/md";
+import { FaCheck } from "react-icons/fa";
 import { useApiQuery } from "@/hooks/apiQuery";
 import { useApiMutation } from "@/hooks/apiMutation";
-
+import ClipLoader from "react-spinners/ClipLoader";
 const Explore = () => {
   const [billingCycle, setBillingCycle] = useState("monthly");
 
@@ -32,107 +31,126 @@ const Explore = () => {
     });
   };
 
-  if (isLoading) return <ExploreSkeleton />;
+
+
+if (isLoading) return (
+  <div className="section-padding-x py-16 w-full h-[500px] lg:h-[600px] xl:h-[700px] flex justify-center items-center dark:bg-[#1E293B]">
+    <ClipLoader
+      color="#3b82f6" 
+      loading={isLoading}
+      size={50}
+      aria-label="Loading Spinner"
+    />
+  </div>
+);
 
   return (
-    <section className="section-padding-x">
-      {/* Header with decorative element */}
-      <div className="relative max-w-3xl mx-auto text-center mb-16">
-        <div className="absolute -top-6 left-1/2 -translate-x-1/2 w-24 h-1 bg-secondaryColor rounded-full opacity-50" />
-        <Title level="title48" className="font-bold tracking-tight dark:text-white">
-          {courseData?.title || "Explore Our Premium Content"}
-        </Title>
-      </div>
-
-      {/* Main Feature Card */}
-      <div className="overflow-hidden bg-white dark:bg-[#0F172A] border border-gray-200 dark:border-gray-800 rounded-2xl sm:rounded-3xl md:rounded-4xl shadow-2xl shadow-gray-200/50 dark:shadow-none flex flex-col lg:flex-row">
+    <section className="section-padding-x ">
+      <div className=" bg-white dark:bg-[#1E293B] rounded-[24px] md:rounded-[32px] shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none p-4 sm:p-6 md:p-8  flex flex-col lg:flex-row gap-10 lg:gap-16 items-center">
         
-        {/* Left Side: Visual/Image */}
-        <div className="w-full lg:w-5/12 relative group bg-gray-50 dark:bg-gray-900/50 p-6 flex items-center justify-center">
-          <div className="relative">
-            <img
-              src={courseData?.thumbnail}
-              alt={courseData?.title}
-              className="w-full h-auto max-h-[450px] object-cover rounded-2xl shadow-xl transition-transform duration-500 group-hover:scale-[1.02]"
-            />
+        {/* Left Side */}
+        <div className="w-full lg:w-[50%] flex flex-col">
+          <h2 className="text-[1.5rem] sm:text-[2rem] md:text-[3rem] font-bold text-[#1e293b] leading-[1.1] dark:text-white mb-4">
+            Explore Our GCSE <span className="text-Primary">Maths Course</span>  
+          </h2>
+          <p className="text-[14px] sm:text-base md:text-lg text-[#475569] dark:text-[#BABABA] mb-8 ">
+            Grade 9 focused learning with tutor support, Task Mode practice and past papers.
+          </p>
 
+          {/* Toggle */}
+          <div className="inline-flex bg-[#f1f5f9] dark:bg-[#334155] rounded-full p-1 mb-6 w-max">
+            <button
+              onClick={() => setBillingCycle("monthly")}
+              className={`px-6 py-2 rounded-full text-[14px] md:text-[15px] font-medium transition-all ${
+                billingCycle === "monthly" ? "bg-[#4e94ff] text-white shadow-sm" : "text-[#64748b] dark:text-gray-300"
+              }`}
+            >
+              Monthly
+            </button>
+            <button
+              onClick={() => setBillingCycle("yearly")}
+              className={`px-6 py-2 rounded-full text-[14px] md:text-[15px] font-medium transition-all flex items-center gap-1.5 ${
+                billingCycle === "yearly" ? "bg-white text-[#1e293b] dark:bg-gray-700 dark:text-white shadow-sm" : "text-[#64748b] dark:text-gray-300"
+              }`}
+            >
+              Yearly <span className={`${billingCycle === "yearly" ? "text-[#10b981]" : "text-[#10b981]"}`}>(2 months free)</span>
+            </button>
           </div>
-        </div>
 
-        {/* Right Side: Details */}
-        <div className="w-full lg:w-7/12 p-8 lg:p-14 flex flex-col justify-center">
-          <div className="flex flex-wrap items-center justify-between gap-6 mb-8">
-            {/* Billing Toggle (Professional Style) */}
-            <div className="flex p-1 bg-gray-100 dark:bg-gray-800 rounded-xl border border-gray-200 dark:border-gray-700">
-              {["monthly", "yearly"].map((cycle) => (
-                <button
-                  key={cycle}
-                  onClick={() => setBillingCycle(cycle)}
-                  className={`px-6 py-2 text-sm font-bold capitalize rounded-lg transition-all ${
-                    billingCycle === cycle
-                      ? "bg-white dark:bg-gray-700 text-secondaryColor shadow-md"
-                      : "text-gray-500 hover:text-gray-700 dark:hover:text-gray-300"
-                  }`}
-                >
-                  {cycle}
-                </button>
-              ))}
-            </div>
-
-            {/* Price Display */}
-            <div className="flex flex-col items-end">
+          {/* Prices */}
+          <div className="flex  items-start gap-8 sm:gap-16 mb-8">
+            <div className={`flex flex-col transition-opacity duration-300 ${billingCycle !== "monthly" ? "opacity-30" : ""}`}>
               <div className="flex items-baseline gap-1">
-                <span className="text-4xl lg:text-5xl font-black text-secondaryColor">
-                  £{billingCycle === "monthly" ? courseData?.price : (courseData?.price * 10).toFixed(0)}
-                </span>
-                <span className="text-gray-400 font-medium">/{billingCycle === "monthly" ? "mo" : "yr"}</span>
+                <span className="text-[1.75rem] md:text-[2.2rem] font-bold text-[#1e293b] dark:text-white">£30</span>
+                <span className="text-[#1e293b] font-medium text-md md:text-lg dark:text-gray-300">/ month</span>
               </div>
-     
+            </div>
+
+            <div className={`flex flex-col transition-opacity duration-300 ${billingCycle !== "yearly" ? "opacity-30" : ""}`}>
+              <div className="flex items-baseline gap-1">
+                <span className="text-[1.75rem] md:text-[2.2rem] font-bold text-[#1e293b] dark:text-white">£300</span>
+                <span className="text-[#1e293b] font-medium text-md md:text-lg dark:text-gray-300">/ year</span>
+              </div>
+              <div className="bg-[#dcfce7] text-[#16a34a] text-xs md:text-sm font-semibold px-4 py-1.5 rounded-full w-max mt-1">
+                2 months free
+              </div>
+              <p className="text-[#64748b] text-[13px] md:text-[15px] mt-2 font-medium">Equivalent to £25/month</p>
             </div>
           </div>
 
-          <div className="space-y-6">
-            <div>
-              <span className="text-secondaryColor font-bold text-sm uppercase tracking-widest">
-                {courseData?.category || "Category"}
-              </span>
-              <h3 className="text-2xl font-bold mt-1 dark:text-white">What's included in this course</h3>
+          {/* Reviews */}
+          {/* <div className="flex items-center gap-2 mb-6">
+            <div className="flex text-[#fbbf24] text-xl">
+              <MdStar /><MdStar /><MdStar /><MdStar /><MdStar />
             </div>
+            <span className="text-[#475569] dark:text-gray-400 font-medium text-[15px]">(12 reviews)</span>
+          </div> */}
 
-            <div 
-              className="text-gray-600 dark:text-gray-400 leading-relaxed text-lg prose dark:prose-invert"
-              dangerouslySetInnerHTML={{ __html: courseData?.description }}
-            />
+          {/* Checklist */}
+          <div className="flex flex-col gap-3.5 mb-10">
+            {[
+              "Grade 9 video lessons (Edexcel/AQA aligned)",
+              "Task Mode practice + guided marking (model solutions)",
+              "Past paper walkthroughs (2022–2024)",
+              "1-to-1 tutor messaging + Zoom when needed",
+              "Progress tracking + clear next steps"
+            ].map((item, i) => (
+              <div key={i} className="flex items-center gap-3">
+                <FaCheck className="text-[#10b981] text-[15px] md:text-[18px] flex-shrink-0" strokeWidth={1} />
+                <p className="text-[#334155] dark:text-gray-300 text-[13px] md:text-[16px]">{item}</p>
+              </div>
+            ))}
+          </div>
 
-
-
-           
-              <CommonButton
-                onClick={handleAction}
-                disabled={isLoading || isPending || !courseData?.id}
-                variant="secondary"
-                className="w-full "
-              >
-                Start Your 2-Day Free Trial
-                <MdArrowOutward className="ml-3 text-2xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
-              </CommonButton>
-              <p className="mt-4 text-xs text-gray-400 text-center sm:text-left">
-                * No commitment required. Cancel anytime during your trial period.
-              </p>
-          
+          {/* Button */}
+          <div className="flex flex-col">
+            <button
+              onClick={handleAction}
+              disabled={isLoading || isPending || !courseData?.id}
+              className="bg-[#4e94ff] hover:bg-[#3b82f6] text-white font-semibold py-2 px-8 rounded-xl transition-all text-[13px] md:text-[16px] w-full sm:w-max shadow-sm"
+            >
+              Start Your 2 Day Free Trial
+            </button>
+            <p className="text-[#64748b] text-[14px] mt-3 sm:ml-2 text-center sm:text-left">Cancel anytime &bull; Instant access</p>
           </div>
         </div>
+
+        {/* Right Side */}
+        <div className="w-full lg:w-[50%] relative flex items-center justify-center mt-6 lg:mt-0">
+          <div className="relative w-full">
+            <img 
+              src={courseData?.thumbnail || "https://placehold.co/800x600/e2e8f0/64748b?text=Course+Mockups"} 
+              alt="Course Materials" 
+              className="w-full h-auto object-contain drop-shadow-2xl transform hover:scale-[1.02] transition-transform duration-500" 
+            />
+          </div>
+        </div>
+
       </div>
     </section>
   );
 };
 
-/* --- Skeleton Component --- */
-const ExploreSkeleton = () => (
-  <div className="section-padding-x py-16 animate-pulse">
-    <div className="h-12 bg-gray-200 dark:bg-gray-800 w-1/2 mx-auto rounded-xl mb-16" />
-    <div className="max-w-6xl mx-auto h-[600px] bg-gray-100 dark:bg-gray-900 rounded-[2.5rem]" />
-  </div>
-);
+
 
 export default Explore;

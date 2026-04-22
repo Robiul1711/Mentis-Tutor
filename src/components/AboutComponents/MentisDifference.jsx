@@ -27,33 +27,33 @@ const MentisDifference = () => {
   ];
 
   return (
-    <section className="section-padding-x section-padding-y">
-      <div className="max-w-7xl mx-auto">
-        <div className="grid grid-cols-1 lg:grid-cols-2 gap-12 lg:gap-8 items-center">
+    <section className="section-padding-x section-padding-y dark:bg-[#0F172A] transition-colors duration-300">
+      <div className="max-w-[1250px] mx-auto">
+        <div className="grid grid-cols-1 lg:grid-cols-2 gap-10 lg:gap-16 items-center">
           
           {/* Left Panel: Feature Text and Icons */}
-          <div className="space-y-12">
-            <div className="space-y-4">
-              <h2 className="text-4xl md:text-5xl font-extrabold text-[#1a2b4b] tracking-tight">
+          <div className="space-y-8 lg:space-y-10">
+            <div className="space-y-4 text-center lg:text-left">
+              <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b] dark:text-white tracking-tight">
                 Why Mentis feels different
               </h2>
-              <p className="text-slate-600 text-lg md:text-xl leading-relaxed max-w-2xl">
+              <p className="text-slate-600 dark:text-[#BABABA] text-lg md:text-xl leading-relaxed max-w-2xl mx-auto lg:mx-0">
                 Mentis is designed to keep students progressing between lessons with the structure, support, and guidance that most courses and tutoring setups leave out.
               </p>
             </div>
 
-            {/* Feature List (Slightly larger icons and spacing) */}
-            <div className="space-y-10 border border-slate-100 bg-white p-10 rounded-3xl shadow-sm">
+            {/* Feature List */}
+            <div className="space-y-6 sm:space-y-8 border border-slate-100 dark:border-slate-800 bg-white dark:bg-[#1E293B] p-6 sm:p-8 lg:p-10 rounded-3xl shadow-[0_8px_30px_rgb(0,0,0,0.04)] dark:shadow-none">
               {features.map((feature, index) => (
-                <div key={index} className="flex gap-6 items-start group">
-                  <div className="bg-[#64b5f6]/10 p-3.5 rounded-2xl border border-[#64b5f6]/20 transition-all duration-300 group-hover:scale-110">
-                    <feature.icon className="w-8 h-8 text-[#64b5f6]" strokeWidth={1.5} />
+                <div key={index} className="flex flex-col sm:flex-row gap-4 sm:gap-6 items-center sm:items-start text-center sm:text-left group">
+                  <div className="bg-[#e0f2fe] dark:bg-[#334155] p-3.5 rounded-2xl border border-blue-100 dark:border-gray-700 transition-all duration-300 group-hover:scale-110 flex-shrink-0">
+                    <feature.icon className="w-5 h-5 md:w-8 md:h-8 text-[#4e94ff]" strokeWidth={2} />
                   </div>
                   <div>
-                    <h3 className="text-xl font-bold text-slate-800 leading-tight">
+                    <h3 className="text-lg md:text-[1.3rem] font-bold text-[#1e293b] dark:text-white leading-tight">
                       {feature.title}
                     </h3>
-                    <p className="text-slate-500 mt-2 text-base leading-relaxed">
+                    <p className="text-[#475569] dark:text-[#BABABA] mt-2 text-[15px] md:text-[16px] leading-relaxed">
                       {feature.description}
                     </p>
                   </div>
@@ -63,17 +63,11 @@ const MentisDifference = () => {
           </div>
 
           {/* Right Panel: Layered Card Composition */}
-          {/* This container defines the relative context for positioning the detailed image asset */}
-          <div className="relative h-[650px] w-full mt-10 md:mt-0 flex items-center justify-center">
-            {/* Base layer (Lesson Overview card) */}
-            <div className="absolute top-0 right-0 w-[90%] h-[500px] bg-slate-50 border border-slate-100 rounded-[2.5rem] shadow-sm z-0"></div>
-
-            {/* The main composition of detailed cards (Task Mode, Progress Tracker, Tutor Support) */}
-            {/* The actual detailed visuals are best handled by a high-resolution image asset here */}
+          <div className="relative w-full mt-6 lg:mt-0 flex items-center justify-center">
             <img 
               src="https://images.nano-banana.com/v1/auth/image-render?prompt=layered-ui-cards-with-math-equations-and-progress-tracking&style=high-fidelity-ui" 
-              alt="Mentis detailed UI composition showing mathematical equations, lesson tracking, and tutor support chat"
-              className="absolute top-1/2 left-1/2 -translate-x-1/2 -translate-y-[55%] w-[110%] max-w-[700px] z-10 drop-shadow-2xl"
+              alt="Mentis detailed UI composition"
+              className="w-full max-w-[650px] h-auto object-contain drop-shadow-2xl rounded-2xl transition-transform duration-500 hover:scale-[1.02]"
             />
           </div>
 

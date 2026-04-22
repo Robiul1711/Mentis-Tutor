@@ -7,9 +7,9 @@ const Guarantee = () => {
       <div className="text-center max-w-3xl mx-auto">
 
         {/* Title */}
-        <Title level="title48" className="font-bold ">
+        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b] dark:text-white">
           GUARANTEE
-        </Title>
+        </p>
 
         {/* Sub text */}
         <p className="mt-3 leading-relaxed">

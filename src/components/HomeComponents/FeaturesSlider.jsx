@@ -3,158 +3,122 @@ import { Swiper, SwiperSlide } from "swiper/react";
 import { Navigation } from "swiper/modules";
 import "swiper/css";
 import "swiper/css/navigation";
-import v1 from "@/assets/images/bannerthumb.png";
-// Dummy images/icons
-
-import {
-  CalendarIcon,
-  CameraIcon,
-  MessageIcon,
-  QustionIcon,
-} from "../SVG/Icons";
-import Title from "../common/Title";
 import { useApiQuery } from "@/hooks/apiQuery";
-
-// const data = [
-//   {
-//     id: 1,
-//     icon: CameraIcon,
-//     title: "Full GCSE Video Library",
-//     desc: "Access every GCSE Maths topic in one place: clear, structured, and taught by expert tutors.",
-//     img: v1,
-//   },
-//   {
-//     id: 2,
-//     icon: QustionIcon,
-//     title: "Interactive Quizzes & Smart Feedback",
-//     desc: "Test your understanding instantly and get personalised feedback that guides your next steps.",
-//     img: v1,
-//   },
-//   {
-//     id: 3,
-//     icon: CalendarIcon,
-//     title: "Past Paper Solutions",
-//     desc: "Master exam technique with step-by-step solutions for every past paper question.",
-//     img: v1,
-//   },
-//   {
-//     id: 4,
-//     icon: MessageIcon,
-//     title: "One-to-One Tutor Messaging",
-//     desc: "Get personalised guidance from real tutors whenever you're stuck—fast, friendly, and reliable.",
-//     img: v1,
-//   },
-//   {
-//     id: 5,
-//     icon: CalendarIcon,
-//     title: "Revision + Mindset Guidance",
-//     desc: "Build stronger study habits and develop the right mindset to stay focused, confident, and exam-ready.",
-//     img: v1,
-//   },
-// ];
 
 const FeaturesSlider = () => {
   const { data: whatInsideMentis } = useApiQuery({
     queryKey: ["whatInsideMentis"],
     url: "/what-inside-mentis",
   });
-  // console.log(whatInsideMentis?.data)
+
   return (
-    <section className="section-padding-x  relative py-12 md:py-20">
-      {/* Heading */}
-      <div className="text-center mb-10">
-        <Title level="title48" className="dark:text-white">
-          WHAT INSIDE MENTIS
-        </Title>
-        <Title
-          level="title20"
-          className="text-gray-700 dark:text-gray-300 max-w-[1020px] mx-auto mt-4"
-        >
-          Your journey. Personalised. Mentis tutors adapt to your strengths and
-          struggles.
-        </Title>
-      </div>
+    <section id="whatInsideMentis" className="section-padding-x relative py-16 md:py-24 bg-[#f4f7fb] dark:bg-[#0F172A] transition-colors duration-300">
+      <div className="">
+        
+        {/* Heading & Navigation */}
+        <div className="flex flex-col md:flex-row justify-between items-center md:items-end mb-12 md:mb-16 gap-6">
+          <div className="text-center md:text-left">
+            <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b] dark:text-white tracking-wide uppercase">
+              What's Inside Mentis
+            </h2>
+            <p className="text-[17px] md:text-lg text-[#475569] dark:text-[#BABABA] mt-4">
+              Everything included in your £30/month subscription.
+            </p>
+          </div>
 
-      {/* Navigation Arrows */}
-      <div className="flex justify-end gap-3 mb-6">
-        <button className="features-slider-prev bg-Primary text-white p-3 rounded-full hover:bg-Primary/90 transition-colors shadow-md">
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
+          {/* Navigation Arrows */}
+          <div className="flex justify-end gap-3">
+            <button className="features-slider-prev bg-[#4e94ff] text-white p-3 rounded-full hover:bg-[#3b82f6] transition-colors shadow-md">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M15 19l-7-7 7-7"
+                />
+              </svg>
+            </button>
+            <button className="features-slider-next bg-[#4e94ff] text-white p-3 rounded-full hover:bg-[#3b82f6] transition-colors shadow-md">
+              <svg
+                className="w-5 h-5"
+                fill="none"
+                stroke="currentColor"
+                viewBox="0 0 24 24"
+              >
+                <path
+                  strokeLinecap="round"
+                  strokeLinejoin="round"
+                  strokeWidth={2}
+                  d="M9 5l7 7-7 7"
+                />
+              </svg>
+            </button>
+          </div>
+        </div>
+
+        {/* Swiper */}
+        <div className="relative">
+          <Swiper
+            spaceBetween={24}
+            slidesPerView={4}
+            modules={[Navigation]}
+            navigation={{
+              nextEl: ".features-slider-next",
+              prevEl: ".features-slider-prev",
+            }}
+            breakpoints={{
+              0: { slidesPerView: 1.1, spaceBetween: 16 },
+              640: { slidesPerView: 2, spaceBetween: 20 },
+              1024: { slidesPerView: 3, spaceBetween: 24 },
+              1280: { slidesPerView: 4, spaceBetween: 24 },
+            }}
+            className="pb-4"
           >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M15 19l-7-7 7-7"
-            />
-          </svg>
-        </button>
-        <button className="features-slider-next bg-Primary text-white p-3 rounded-full hover:bg-Primary/90 transition-colors shadow-md">
-          <svg
-            className="w-5 h-5"
-            fill="none"
-            stroke="currentColor"
-            viewBox="0 0 24 24"
-          >
-            <path
-              strokeLinecap="round"
-              strokeLinejoin="round"
-              strokeWidth={2}
-              d="M9 5l7 7-7 7"
-            />
-          </svg>
-        </button>
+            {whatInsideMentis?.data?.map((item) => (
+              <SwiperSlide key={item.id} className="h-auto pb-4">
+                <div className="bg-white dark:bg-[#1E293B] border border-slate-100 dark:border-slate-800 rounded-[24px] p-4 sm:p-6 h-full flex flex-col transition-transform hover:-translate-y-1 duration-300">
+                  
+                  {/* Header */}
+                  <div className="flex items-center gap-3.5 mb-5">
+                    <div className="w-10 h-10  rounded-full overflow-hidden flex-shrink-0">
+                      <img src={item.icon} alt="" className="w-full h-full object-contain" />
+                    </div>
+                    <h3 className="text-[16px] md:text-[17px] font-bold text-[#1e293b] dark:text-white leading-tight">
+                      {item.title}
+                    </h3>
+                  </div>
+
+                  {/* Image */}
+                  <div className="w-full bg-[#f1f5f9] dark:bg-[#0f172a] rounded-[16px] overflow-hidden mb-6 flex items-center justify-center border border-slate-100 dark:border-slate-700 aspect-[4/3]">
+                    <img
+                      src={item.image}
+                      className="w-full h-full object-cover"
+                      alt={item.title}
+                    />
+                  </div>
+
+                  {/* Footer Text */}
+                  <div className="mt-auto">
+                    <h4 className="text-[17px] md:text-[18px] font-bold text-[#1e293b] dark:text-white mb-2 leading-tight">
+                      {item.title}
+                    </h4>
+                    <p
+                      className="text-[#475569] dark:text-[#BABABA] text-[14px] md:text-[15px] leading-relaxed line-clamp-3"
+                      dangerouslySetInnerHTML={{ __html: item.description }}
+                    />
+                  </div>
+                </div>
+              </SwiperSlide>
+            ))}
+          </Swiper>
+        </div>
+
       </div>
-
-      <Swiper
-        spaceBetween={30}
-        slidesPerView={3}
-        modules={[Navigation]}
-        navigation={{
-          nextEl: ".features-slider-next",
-          prevEl: ".features-slider-prev",
-        }}
-        breakpoints={{
-          0: { slidesPerView: 1 },
-          640: { slidesPerView: 1.2 },
-          768: { slidesPerView: 2 },
-          1024: { slidesPerView: 3 },
-          1280: { slidesPerView: 3 },
-          1536: { slidesPerView: 4 },
-        }}
-      >
-        {whatInsideMentis?.data?.map((item) => (
-          <SwiperSlide key={item.id} className="h-auto">
-            <div className="bg-white dark:bg-gray-800 dark:border-gray-700 border border-[#d7e8f9] rounded-3xl p-6 h-full transition">
-              {/* ICON */}
-              <div className="lg:w-14 lg:h-14 size-12 rounded-full bg-Primary flex items-center justify-center mb-4">
-                <img src={item.icon} alt="" className="size-8" />
-              </div>
-
-              {/* Title */}
-              <h3 className="text-[20px] font-semibold text-gray-900 dark:text-white">
-                {item.title}
-              </h3>
-
-              {/* Description */}
-              <p
-                className="text-gray-600 dark:text-gray-400 text-[15px] mt-2 leading-relaxed line-clamp-2"
-                dangerouslySetInnerHTML={{ __html: item.description }}
-              />
-
-              {/* Image Preview */}
-              <img
-                src={item.image}
-                className="w-full h-52 object-cover mt-6 rounded-xl border-2 border-[#cfe5ff]"
-                alt="preview"
-              />
-            </div>
-          </SwiperSlide>
-        ))}
-      </Swiper>
     </section>
   );
 };

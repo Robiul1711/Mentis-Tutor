@@ -1,152 +1,88 @@
-import React, { useEffect, useRef } from "react";
+import React from "react";
 import Title from "../common/Title";
-import CommonButton from "../common/CommonButton";
-import { MdArrowOutward } from "react-icons/md";
-import dashboardImg from "@/assets/images/about.png";
-import { FaPlay } from "react-icons/fa";
-
-import gsap from "gsap";
-import { ScrollTrigger } from "gsap/ScrollTrigger";
+import { MdArrowOutward, MdPlayArrow, MdOutlineEditNote, MdOutlineArticle, MdChatBubbleOutline } from "react-icons/md";
 import { useApiQuery } from "@/hooks/apiQuery";
 
-gsap.registerPlugin(ScrollTrigger);
-
 const AboutBanner = () => {
-  const sectionRef = useRef(null);
-  const titleRef = useRef(null);
-  const descRef = useRef(null);
-  const buttonRef = useRef(null);
-  const imageRef = useRef(null);
-  const playRef = useRef(null);
-  const [isPlaying, setIsPlaying] = React.useState(false);
-
   const { data } = useApiQuery({
     queryKey: ["aboutPageBannerSection"],
     url: "/about-page/banner-section",
   });
 
-  const togglePlay = () => {
-    if (imageRef.current) {
-      if (isPlaying) {
-        imageRef.current.pause();
-      } else {
-        imageRef.current.play();
-      }
-      setIsPlaying(!isPlaying);
-    }
-  };
-
-  useEffect(() => {
-    const ctx = gsap.context(() => {
-      const tl = gsap.timeline({
-        scrollTrigger: {
-          trigger: sectionRef.current,
-          start: "top 70%",
-          toggleActions: "play none none none", // Play once, no reverse
-        },
-      });
-
-      // Title
-      tl.from(titleRef.current, {
-        opacity: 0,
-        y: 40,
-        duration: 0.7,
-        ease: "power2.out",
-      });
-
-      // Description
-      tl.from(
-        descRef.current,
-        {
-          opacity: 0,
-          y: 30,
-          duration: 0.6,
-          ease: "power2.out",
-        },
-        "-=0.4",
-      );
-
-      // Button
-      tl.from(
-        buttonRef.current,
-        {
-          opacity: 0,
-          scale: 0.85,
-          duration: 0.6,
-          ease: "back.out(1.6)",
-        },
-        "-=0.3",
-      );
-
-      // Image
-      tl.from(
-        imageRef.current,
-        {
-          opacity: 0,
-          scale: 0.9,
-          y: 35,
-          duration: 0.7,
-          ease: "power2.out",
-        },
-        "-=0.2",
-      );
-
-      // Play Button
-      tl.from(playRef.current, {
-        opacity: 0,
-        scale: 0.3,
-        duration: 0.5,
-        ease: "back.out(1.8)",
-      });
-    }, sectionRef);
-
-    return () => ctx.revert();
-  }, []);
-
   return (
-    <section ref={sectionRef} className="section-padding-x  ">
-      {/* Heading */}
-      <div className="text-center max-w-3xl mx-auto">
-        <div ref={titleRef}>
-          <Title level="title48" className="">
+    <section className="section-padding-x">
+      <div className=" flex flex-col lg:flex-row items-center gap-12 lg:gap-16">
+        
+        {/* Left Side */}
+        <div className="w-full lg:w-[50%] flex flex-col text-center lg:text-left">
+          <h1 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b] leading-[1.15] dark:text-white mb-6">
             {data?.title}
-          </Title>
-        </div>
-
-        <p
-          ref={descRef}
-          className="text-lg mt-4 leading-relaxed"
-          dangerouslySetInnerHTML={{ __html: data?.description }}
-        ></p>
-
-        {/* Button */}
-        <div
-          ref={buttonRef}
-          className="flex justify-center pt-2 sm:pt-4 lg:pt-6"
-        >
-          <CommonButton
-          link={"/courses"}
-            variant="secondary"
-            className="mt-2 sm:mt-4 lg:mt-6 rounded-full group px-6 py-3 sm:px-8 sm:py-4 text-sm sm:text-base lg:text-lg font-semibold"
-          >
-            <span className="flex items-center gap-2 sm:gap-3">
-              Start Your 2 Day Free Trial
-              <span className="rounded-full p-1 sm:p-1.5 bg-black dark:bg-white group-hover:bg-Secondary transition-colors duration-300">
-                <MdArrowOutward className="text-Primary dark:text-black text-xl sm:text-2xl group-hover:text-white transition-colors duration-300" />
+          </h1>
+          <p className="text-lg md:text-[19px] text-[#475569] dark:text-[#BABABA] leading-relaxed mb-10 max-w-[540px] mx-auto lg:mx-0" dangerouslySetInnerHTML={{ __html: data?.description }} />
+{/* 
+          <div className="flex justify-center lg:justify-start mb-12">
+            <button
+              onClick={() => {
+                const section = document.getElementById("whatInsideMentis");
+                if (section) {
+                  section.scrollIntoView({ behavior: "smooth", block: "start" });
+                }
+              }}
+              className="bg-[#5a9cff] hover:bg-[#4585f0] text-white font-medium py-3.5 px-7 rounded-full transition-all flex items-center justify-center gap-3 text-[17px] shadow-sm w-max"
+            >
+              See what's inside 
+              <span className="bg-[#0f172a] rounded-full p-1.5 flex items-center justify-center">
+                <MdArrowOutward className="text-white text-[18px]" strokeWidth={1} />
               </span>
-            </span>
-          </CommonButton>
-        </div>
-      </div>
+            </button>
+          </div> */}
 
-      {/* Video Preview Box */}
-      <div className="max-w-5xl mx-auto md:mt-14 mt-8">
-        <video
-          src={data?.video}
-          poster={data?.image} // Use API image as poster
-          controls
-          className="w-full aspect-video rounded-xl shadow-lg"
-        />
+          <div className="grid grid-cols-2 sm:grid-cols-4 gap-6 sm:gap-4">
+            {/* Feature 1 */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div className="bg-[#e0f2fe] text-[#5a9cff] md:w-14 md:h-14 w-10 h-10 md:rounded-2xl rounded-lg flex items-center justify-center mb-3 shadow-sm">
+                <MdPlayArrow className="text-xl md:text-3xl" />
+              </div>
+              <p className="text-[12px] sm:text-[14px] md:text-[15px] font-semibold text-[#475569] dark:text-gray-300 leading-[1.3]">Grade 9 <br /> Video Lessons</p>
+            </div>
+            
+            {/* Feature 2 */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div className="bg-[#e0f2fe] text-[#5a9cff] md:w-14 md:h-14 w-10 h-10 md:rounded-2xl rounded-lg flex items-center justify-center mb-3 shadow-sm">
+                <MdOutlineEditNote className="text-xl md:text-3xl" />
+              </div>
+              <p className="text-[12px] sm:text-[14px] md:text-[15px] font-semibold text-[#475569] dark:text-gray-300 leading-[1.3]">Task Mode <br /> Practice</p>
+            </div>
+
+            {/* Feature 3 */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div className="bg-[#e0f2fe] text-[#5a9cff] md:w-14 md:h-14 w-10 h-10 md:rounded-2xl rounded-lg flex items-center justify-center mb-3 shadow-sm">
+                <MdOutlineArticle className="text-xl md:text-3xl" />
+              </div>
+              <p className="text-[12px] sm:text-[14px] md:text-[15px] font-semibold text-[#475569] dark:text-gray-300 leading-[1.3]">Past Paper <br /> Walkthroughs</p>
+            </div>
+
+            {/* Feature 4 */}
+            <div className="flex flex-col items-center lg:items-start text-center lg:text-left">
+              <div className="bg-[#e0f2fe] text-[#5a9cff] md:w-14 md:h-14 w-10 h-10 md:rounded-2xl rounded-lg flex items-center justify-center mb-3 shadow-sm">
+                <MdChatBubbleOutline className="text-xl md:text-3xl" />
+              </div>
+              <p className="text-[12px] sm:text-[14px] md:text-[15px] font-semibold text-[#475569] dark:text-gray-300 leading-[1.3]">1-to-1 <br /> Tutor Support</p>
+            </div>
+          </div>
+        </div>
+
+        {/* Right Side */}
+        <div className="w-full lg:w-[50%] relative flex items-center justify-center mt-12 lg:mt-0">
+          <div className="relative w-full">
+            <img 
+              src={data?.image || "https://placehold.co/800x600/e2e8f0/64748b?text=Platform+Mockups"} 
+              alt="Platform Features" 
+              className="w-full h-auto object-contain drop-shadow-2xl transform hover:scale-[1.02] transition-transform duration-500" 
+            />
+          </div>
+        </div>
+
       </div>
     </section>
   );

@@ -59,10 +59,10 @@ console.log(sectionData)
     <section className="section-padding-x py-16 md:py-24 bg-[#F8FAFC] dark:bg-[#0B1120]">
       {/* Header */}
       <div className="text-center mb-16">
-        <Title level="title48" className="text-[#1E293B] font-bold uppercase tracking-tight">
+        <p className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b] dark:text-white">
           {header.title || "HOW MENTIS WORKS"}
-        </Title>
-        <p className="mt-4 text-[#475569] text-base md:text-lg">
+        </p>
+        <p className="mt-4 text-[#475569] dark:text-white text-base md:text-lg">
           A simple loop: <span className="font-bold">Learn</span> →{" "}
           <span className="font-bold">Practise</span> →{" "}
           <span className="font-bold">Get support</span> →{" "}

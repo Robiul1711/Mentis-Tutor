@@ -82,7 +82,7 @@ const WhoMentisWorkFor = () => {
 
   return (
     <section
-      className="section-padding-x section-padding-y dark:bg-slate-950 transition-colors duration-300"
+      className="section-padding-x section-padding-y  transition-colors duration-300"
     >
       {/* Header */}
       <div className="text-center mb-12 lg:mb-16">
@@ -95,8 +95,7 @@ const WhoMentisWorkFor = () => {
           About Mentis
         </span>
 
-        <h2 className="text-2xl sm:text-3xl lg:text-4xl xl:text-5xl 
-        font-bold text-slate-900 dark:text-white mb-5">
+        <h2 className="text-3xl md:text-4xl lg:text-5xl font-bold text-[#1e293b] dark:text-white mb-5">
           Who Mentis is for
         </h2>
 
