@@ -1,7 +1,7 @@
 import React, { useState } from "react";
 import { useForm } from "react-hook-form";
 import { Lock, Eye, EyeOff, Loader2 } from "lucide-react"; // Added Loader2
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useLocation } from "react-router-dom";
 import CommonButton from "@/components/common/CommonButton";
 import logo from "@/assets/images/logo.png";
 import { useApiMutation } from "@/hooks/apiMutation";
@@ -10,6 +10,8 @@ export default function PasswordSetup() {
   const [showPassword, setShowPassword] = useState(false);
   const [showConfirm, setShowConfirm] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
+  const token = location.state?.token;
 
   const {
     register,
@@ -36,7 +38,7 @@ export default function PasswordSetup() {
   });
 
   const onSubmit = (data) => {
-    mutate(data);
+    mutate({ ...data, token });
   };
 
   return (

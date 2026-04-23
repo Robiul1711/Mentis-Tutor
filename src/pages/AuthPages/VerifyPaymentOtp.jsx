@@ -3,32 +3,35 @@ import { Controller, useForm } from "react-hook-form";
 import logo from "@/assets/images/logo.png";
 import { BeatLoader } from "react-spinners";
 import CommonButton from "@/components/common/CommonButton";
-import { Link, useNavigate } from "react-router-dom";
+import { Link, useNavigate, useSearchParams } from "react-router-dom";
 import { useApiMutation } from "@/hooks/apiMutation";
-import { useEmail } from "@/hooks/useEmail";
+
 
 export default function VerifyPaymentOtp() {
-const {email} = useEmail();
-const navigate = useNavigate();
-console.log(email);
+
+  const navigate = useNavigate();
+  const [searchParams] = useSearchParams();
+  const emailFromUrl = searchParams.get("email");
+
   const {
     handleSubmit,
     control,
     formState: { errors },
   } = useForm();
 
-const { mutate, isPending } = useApiMutation({
-  url: "/new-user-verify-otp",
-  method: "POST",
-  secure: false,
-  onSuccess: (data) => {
-    navigate('/auth/password-setup'); 
-  }
-});
+  const { mutate, isPending } = useApiMutation({
+    url: "/new-user-verify-otp",
+    method: "POST",
+    secure: false,
+    onSuccess: (data) => {
+      navigate('/auth/password-setup', { state: { token: data?.token } });
+    }
+  });
 
   const onSubmit = (data) => {
     const payload = {
       otp: data.otp,
+      email: emailFromUrl,
     };
     console.log(data);
     mutate(payload);
