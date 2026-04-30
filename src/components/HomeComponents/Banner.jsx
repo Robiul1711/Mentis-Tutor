@@ -1,11 +1,11 @@
 import React, { useContext, useState, useRef } from "react";
-import bannerthumbnail from "../../assets/images/bannerthumb.png";
+import bannerthumbnail from "@/assets/images/bannerthumb.png";
 import { MdArrowForward } from "react-icons/md";
 import { FaCheck } from "react-icons/fa";
 import VideoButton from "../common/VideoButton";
 import { useApiQuery } from "@/hooks/apiQuery";
-import { AuthContext } from "@/context";
-import { useNavigate } from "react-router-dom";
+import bannerImg from "@/assets/images/banner.jpg"
+import { useAuth } from "@/hooks/useAuth";
 
 // --- SKELETON LOADER COMPONENT ---
 const BannerSkeleton = () => (
@@ -36,8 +36,8 @@ const BannerSkeleton = () => (
 
 // --- MAIN BANNER COMPONENT ---
 const Banner = () => {
-  const { user } = useContext(AuthContext);
-  const navigate = useNavigate();
+  const {user}=useAuth()
+  console.log(user);
   const videoRef = useRef(null);
   const [isHovered, setIsHovered] = useState(false);
   const [isPlaying, setIsPlaying] = useState(false);
@@ -71,7 +71,7 @@ const Banner = () => {
   if (isLoading) return <BannerSkeleton />;
 
   return (
-    <section className="section-padding-x py-8 sm:py-12 md:py-20 overflow-hidden">
+    <section className="section-padding-x py-8 sm:py-12 md:py-20 overflow-hidden bg-white">
       <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
         
         {/* Left Text Section */}
@@ -129,15 +129,15 @@ const Banner = () => {
 
         {/* Right Image/Video Section */}
         <div className="w-full lg:w-1/2 flex flex-col items-center lg:items-end">
-          <div className="relative w-full max-w-[600px] group">
-            <div className="absolute -inset-4 bg-blue-400/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-full"></div>
+          <div className="relative w-full  group">
+            {/* <div className="absolute -inset-4 bg-blue-400/10 blur-3xl opacity-0 group-hover:opacity-100 transition-opacity duration-700 rounded-full"></div> */}
 
-            <div
+            {/* <div
               onMouseEnter={() => setIsHovered(true)}
               onMouseLeave={() => setIsHovered(false)}
               className="relative aspect-video rounded-3xl overflow-hidden border-4 border-white dark:border-slate-800 shadow-2xl bg-slate-100 dark:bg-slate-900 z-10"
-            >
-              {bannerData?.video ? (
+            > */}
+              {/* {bannerData?.video ? (
                 <div className="relative w-full h-full">
                   <video
                     ref={videoRef}
@@ -165,28 +165,28 @@ const Banner = () => {
                     </div>
                   )}
                 </div>
-              ) : (
+              ) : ( */}
                 <div className="relative w-full h-full">
                   <img
-                    src={bannerData?.image || bannerthumbnail}
+                    src={bannerData?.image || bannerImg}
                     alt="banner thumbnail"
-                    className="w-full h-full object-cover"
+              className="w-full h-auto rounded-[30px] object-contain drop-shadow-2xl transform hover:scale-[1.02] transition-transform duration-500" 
                   />
-                  <div className="absolute inset-0 flex items-center justify-center">
+                  {/* <div className="absolute inset-0 flex items-center justify-center">
                     <VideoButton />
-                  </div>
+                  </div> */}
                 </div>
-              )}
-            </div>
+              {/* )} */}
+            {/* </div> */}
 
-            <div className="mt-8 text-right relative z-10 pr-4">
+            {/* <div className="mt-8 text-right relative z-10 pr-4">
               <div className="inline-flex items-center gap-3">
                 <div className="h-px w-8 bg-[#5a9cff]/50"></div>
                 <p className="text-sm font-medium text-slate-500 dark:text-slate-400 uppercase tracking-wide">
                   {bannerData?.sub_title || "Watch how we work"}
                 </p>
               </div>
-            </div>
+            </div> */}
           </div>
         </div>
       </div>

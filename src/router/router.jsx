@@ -32,6 +32,7 @@ import { createBrowserRouter } from "react-router-dom";
 import PrivateRoute from "./PrivateRoute";
 import VerifyPaymentOtp from "@/pages/AuthPages/VerifyPaymentOtp";
 import PasswordSetup from "@/pages/AuthPages/PasswordSetup";
+import NotFound from "@/pages/NotFound/NotFound";
 
 const router = createBrowserRouter([
   // Auth
@@ -165,6 +166,10 @@ const router = createBrowserRouter([
         element: <Settinngs />,
       },
     ],
+  },
+  {
+    path: "*",
+    element: <NotFound />,
   },
 ]);
 

@@ -29,7 +29,7 @@ const Home = () => {
       {/* <Explore /> */}
       <FeaturesSlider />
       <Testimonials />
-      <Guarantee />
+      {/* <Guarantee /> */}
       {/* <OurGrade /> */}
       {/* <WhyChoose /> */}
       {/* <GetInTouch /> */}

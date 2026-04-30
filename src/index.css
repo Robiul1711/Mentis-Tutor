@@ -186,7 +186,7 @@
   }
   body {
     @apply bg-background text-foreground;
-    background: #f0f8fe;
+    /* background: #f0f8fe; */
   }
 }
 .dark body {

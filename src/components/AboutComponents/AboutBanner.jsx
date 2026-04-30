@@ -2,7 +2,7 @@ import React from "react";
 import Title from "../common/Title";
 import { MdArrowOutward, MdPlayArrow, MdOutlineEditNote, MdOutlineArticle, MdChatBubbleOutline } from "react-icons/md";
 import { useApiQuery } from "@/hooks/apiQuery";
-
+import bannerImg from "@/assets/images/banner.jpg"
 const AboutBanner = () => {
   const { data } = useApiQuery({
     queryKey: ["aboutPageBannerSection"],
@@ -76,9 +76,9 @@ const AboutBanner = () => {
         <div className="w-full lg:w-[50%] relative flex items-center justify-center mt-12 lg:mt-0">
           <div className="relative w-full">
             <img 
-              src={data?.image || "https://placehold.co/800x600/e2e8f0/64748b?text=Platform+Mockups"} 
+              src={bannerImg} 
               alt="Platform Features" 
-              className="w-full h-auto object-contain drop-shadow-2xl transform hover:scale-[1.02] transition-transform duration-500" 
+              className="w-full h-auto rounded-[30px] object-contain drop-shadow-2xl transform hover:scale-[1.02] transition-transform duration-500" 
             />
           </div>
         </div>
