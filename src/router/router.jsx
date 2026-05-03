@@ -60,6 +60,7 @@ const router = createBrowserRouter([
         path: "verify-user-otp",
         element: <VerifyPaymentOtp />,
       },
+      
       {
         path: "password-setup",
         element: <PasswordSetup />,
