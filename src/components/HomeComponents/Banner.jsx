@@ -71,7 +71,7 @@ const Banner = () => {
   if (isLoading) return <BannerSkeleton />;
 
   return (
-    <section className="section-padding-x py-8 sm:py-12 md:py-20 overflow-hidden bg-white">
+    <section className="section-padding-x py-8 sm:py-12 md:py-20 overflow-hidden bg-white  dark:bg-[#0f1524]">
       <div className="flex flex-col-reverse lg:flex-row items-center justify-between">
         
         {/* Left Text Section */}

@@ -36,10 +36,10 @@ const AdminLayout = () => {
     },
     {
       id: 3,
-      icon: <MessageIcon />,
-      text: "Message ",
-      path: "/dashboard/message",
-      activePaths: ["/dashboard/message"],
+       icon: <PastPapersIcon />,
+      text: "Past Papers",
+      path: "/dashboard/past-papers",
+      activePaths: ["/dashboard/past-papers"],
       sublink: false,
     },
     {
@@ -52,10 +52,10 @@ const AdminLayout = () => {
     },
     {
       id: 5,
-      icon: <PastPapersIcon />,
-      text: "Past Papers",
-      path: "/dashboard/past-papers",
-      activePaths: ["/dashboard/past-papers"],
+     icon: <MessageIcon />,
+      text: "Message ",
+      path: "/dashboard/message",
+      activePaths: ["/dashboard/message"],
       sublink: false,
     },
     {

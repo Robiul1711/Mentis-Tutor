@@ -1,15 +1,11 @@
 import React, { useContext, useState } from "react";
 import { HiCheck, HiX } from "react-icons/hi";
-import Title from "../common/Title";
 import CommonButton from "../common/CommonButton";
 import { MdArrowOutward, MdStars } from "react-icons/md";
-import { AuthContext } from "@/context";
-import { useNavigate } from "react-router-dom";
 import { useApiQuery } from "@/hooks/apiQuery";
 import { useApiMutation } from "@/hooks/apiMutation";
 
 const PricingComparison = () => {
-  const { user } = useContext(AuthContext);
   const [billingCycle, setBillingCycle] = useState("monthly");
 
   const { data, isLoading } = useApiQuery({
@@ -134,7 +130,6 @@ const PricingComparison = () => {
                 Start Your 2-Day Free Trial
                 <MdArrowOutward className="ml-2 text-2xl group-hover:translate-x-1 group-hover:-translate-y-1 transition-transform" />
               </CommonButton>
-              <p className="text-center text-xs text-gray-400 mt-4">No credit card required to start trial</p>
             </div>
           </div>
 

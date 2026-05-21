@@ -19,17 +19,17 @@ const PrivateRoute = ({ children }) => {
     return <Navigate to="/auth/sign-in" state={{ from: location }} replace />;
   }
 
-  if (isLoading) {
-    return (
-      <div className="h-screen w-screen flex items-center justify-center">
-        <BeatLoader color="#5176ea" size={15} />
-      </div>
-    );
-  }
+  // if (isLoading) {
+  //   return (
+  //     <div className="h-screen w-screen flex items-center justify-center">
+  //       <BeatLoader color="#5176ea" size={15} />
+  //     </div>
+  //   );
+  // }
 
   // Check payment status
   if (userDetails?.userdata && !userDetails.userdata.payment_status) {
-    return <Navigate to="/" replace />;
+    return <Navigate to="/#pricing" replace />;
   }
 
   return children;

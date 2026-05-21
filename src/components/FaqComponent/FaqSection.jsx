@@ -68,7 +68,7 @@ const FaqSection = () => {
           filteredFaqs.map((faq) => (
             <div
               key={faq.id}
-              className="text-white border border-gray-200 bg-Secondary rounded-xl px-4 py-2 shadow-sm"
+              className="text-white border border-gray-200 dark:border-slate-800 bg-Secondary dark:bg-slate-800 rounded-xl px-4 py-2 shadow-sm"
             >
               <AccordionItem value={`item-${faq.id}`} className="border-none">
                 <AccordionTrigger className="font-semibold text-lg text-left">

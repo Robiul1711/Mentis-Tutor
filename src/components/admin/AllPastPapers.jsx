@@ -17,7 +17,7 @@ import { useApiMutation } from "@/hooks/apiMutation";
 // ============================
 // DYNAMIC CONSTANTS
 // ============================
-const YEARS = [2017, 2018, 2019, 2020, 2021, 2022, 2023, 2024];
+// const YEARS = [ 2023];
 const PAPERS = ["P1", "P2", "P3"];
 const EXAM_BOARDS = ["Edexcel", "AQA"];
 
@@ -25,7 +25,6 @@ const EXAM_BOARDS = ["Edexcel", "AQA"];
 // COMPONENTS
 // ============================
 
-// Past paper selection component
 const PastPapers = ({
   selectedBoard,
   setSelectedBoard,
@@ -33,6 +32,7 @@ const PastPapers = ({
   setSelectedYear,
   selectedPaper,
   setSelectedPaper,
+  availableYears,
 }) => {
   return (
     <div className="bg-white dark:bg-[#0B1120] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 xl:p-6 shadow-sm hover:shadow-md transition-shadow duration-300">
@@ -59,43 +59,41 @@ const PastPapers = ({
 
       {/* YEAR + PAPER BUTTONS */}
       <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
-        {YEARS.slice()
-          .reverse()
-          .map((year) => (
-            <div
-              key={year}
-              className="group flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/50 rounded-xl py-2  px-3 transition-all duration-300 hover:border-Secondary/30"
-            >
-              <span className="text-slate-700 dark:text-slate-300 font-bold mb-3 sm:mb-0">
-                {year}
-              </span>
+        {availableYears.map((year) => (
+          <div
+            key={year}
+            className="group flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/50 rounded-xl py-2  px-3 transition-all duration-300 hover:border-Secondary/30"
+          >
+            <span className="text-slate-700 dark:text-slate-300 font-bold mb-3 sm:mb-0">
+              {year}
+            </span>
 
-              <div className="flex gap-2">
-                {PAPERS.map((paper) => {
-                  const isActive =
-                    selectedYear === String(year) && selectedPaper === paper;
-                  return (
-                    <button
-                      key={paper}
-                      onClick={() => {
-                        setSelectedYear(String(year));
-                        setSelectedPaper(paper);
-                      }}
-                      className={`min-w-[50px] px-3 py-2 rounded-lg font-bold text-xs border transition-all duration-300
+            <div className="flex gap-2">
+              {PAPERS.map((paper) => {
+                const isActive =
+                  selectedYear === String(year) && selectedPaper === paper;
+                return (
+                  <button
+                    key={paper}
+                    onClick={() => {
+                      setSelectedYear(String(year));
+                      setSelectedPaper(paper);
+                    }}
+                    className={`min-w-[50px] px-3 py-2 rounded-lg font-bold text-xs border transition-all duration-300
                      ${
                        isActive
                          ? "bg-Secondary text-white border-Secondary shadow-lg shadow-Secondary/20 scale-105"
                          : "bg-white dark:bg-slate-800 border-slate-200 dark:border-slate-700 text-slate-600 dark:text-slate-400 hover:border-Secondary hover:text-Secondary"
                      }
                     `}
-                    >
-                      {paper}
-                    </button>
-                  );
-                })}
-              </div>
+                  >
+                    {paper}
+                  </button>
+                );
+              })}
             </div>
-          ))}
+          </div>
+        ))}
       </div>
     </div>
   );
@@ -111,7 +109,7 @@ const QuestionGrid = ({
   setActiveQuestion,
   isLoading,
 }) => {
-  console.log(activePaperData);
+  // console.log(activePaperData);
   const questions = activePaperData?.question_groups || [];
   const isComingSoon =
     activePaperData?.type === "coming_soon" ||
@@ -190,7 +188,7 @@ const PaperDocuments = ({ activePaperData }) => {
   return (
     <div className="bg-white dark:bg-[#0B1120] border border-slate-200 dark:border-slate-800 rounded-2xl p-4 xl:p-6 shadow-sm hover:shadow-md transition-shadow duration-300 h-fit">
       <h2 className="text-slate-900 dark:text-white text-lg xl:text-xl font-bold mb-4 flex items-center gap-2">
-        <FileText className="text-Secondary" size={24} />
+        <FileText className="text-Secondary dark:text-white" size={24} />
         Paper Documents
       </h2>
 
@@ -249,7 +247,7 @@ const PaperDocuments = ({ activePaperData }) => {
           to={`/dashboard/past-paper-progress-tracker`}
           className="w-full flex items-center gap-3 py-2 px-3 rounded-xl border border-Secondary/30 bg-Secondary/5 text-Secondary hover:bg-Secondary hover:text-white transition-all duration-300 shadow-sm"
         >
-          <div className="p-2 rounded-lg bg-white/20">
+          <div className="p-2 rounded-lg bg-white/20 dark:bg-slate-800">
             <GiProgression size={20} />
           </div>
           <span className="font-bold text-sm">Progress Tracker</span>
@@ -267,7 +265,6 @@ const PaperDocuments = ({ activePaperData }) => {
 
 // Video Show Section
 const VideoPlayerSection = ({ question, paperId }) => {
-  console.log("question", question, "paperId", paperId);
   const [marksObtained, setMarksObtained] = useState({});
   const [submittedData, setSubmittedData] = useState(null);
 
@@ -325,10 +322,10 @@ const VideoPlayerSection = ({ question, paperId }) => {
       <div className="px-4">
         <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-inner relative group border border-slate-200 dark:border-slate-700">
           <iframe
-            src={question.vimeo_url.replace(
+            src={`${question.vimeo_url.replace(
               "vimeo.com",
               "player.vimeo.com/video",
-            )}
+            )}?title=0&byline=0&portrait=0`}
             className="w-full h-full"
             frameBorder="0"
             allow="autoplay; fullscreen; picture-in-picture"
@@ -385,7 +382,10 @@ const VideoPlayerSection = ({ question, paperId }) => {
               <p className="text-sm font-bold text-slate-500 dark:text-slate-400">
                 Total Marks for {question.title}:{" "}
                 <span className="text-slate-900 dark:text-white">
-                  {submittedData?.obtained !== undefined ? submittedData.obtained : "___"} / {question.total_marks}
+                  {submittedData?.obtained !== undefined
+                    ? submittedData.obtained
+                    : "___"}{" "}
+                  / {question.total_marks}
                 </span>
               </p>
             </div>
@@ -437,6 +437,27 @@ export default function AllPastPapers() {
     secure: true,
   });
 
+  // Fetch all papers for this board to get available years/papers
+  const { data: allBoardPapersResponse } = useApiQuery({
+    queryKey: ["all-board-papers", selectedBoard],
+    url: "/past-papers",
+    params: {
+      exam_board: selectedBoard,
+    },
+    secure: true,
+  });
+
+  const availableYears = [
+    ...new Set((allBoardPapersResponse?.data || []).map((p) => String(p.year))),
+  ].sort((a, b) => b - a);
+
+  // Set default year if not selected
+  useEffect(() => {
+    if (!selectedYear && availableYears.length > 0) {
+      setSelectedYear(availableYears[0]);
+    }
+  }, [availableYears, selectedYear]);
+
   // Since the API returns an array, we find the one that matches our filter
   // though if the API is working correctly with params, it should only return matched ones.
   const allPapers = pastPaperResponse?.data || [];
@@ -461,20 +482,10 @@ export default function AllPastPapers() {
 
       {/* ========== GRID ========== */}
       <div className="flex flex-col lg:flex-row w-full gap-4 items-start">
-        {/* Left sidebar: past papers */}
-        <div className="w-full lg:w-1/4">
-          <PastPapers
-            selectedBoard={selectedBoard}
-            setSelectedBoard={setSelectedBoard}
-            selectedYear={selectedYear}
-            setSelectedYear={setSelectedYear}
-            selectedPaper={selectedPaper}
-            setSelectedPaper={setSelectedPaper}
-          />
-        </div>
+ 
 
         {/* centre column: questions + video */}
-        <div className="w-full lg:w-1/2 flex flex-col gap-4">
+        <div className="w-full  h-fit flex flex-col gap-4">
           <QuestionGrid
             selectedBoard={selectedBoard}
             selectedYear={selectedYear}
@@ -510,7 +521,16 @@ export default function AllPastPapers() {
         </div>
 
         {/* right sidebar: documents */}
-        <div className="w-full lg:w-1/4">
+        <div className="w-full lg:w-2/6 sticky top-8 gap-4 flex flex-col">
+              <PastPapers
+            selectedBoard={selectedBoard}
+            setSelectedBoard={setSelectedBoard}
+            selectedYear={selectedYear}
+            setSelectedYear={setSelectedYear}
+            selectedPaper={selectedPaper}
+            setSelectedPaper={setSelectedPaper}
+            availableYears={availableYears}
+          />
           <PaperDocuments activePaperData={activePaperData} />
         </div>
       </div>

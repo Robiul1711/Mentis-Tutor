@@ -306,7 +306,7 @@ const MentisComparison = () => {
             ].map((card, idx) => (
               <div
                 key={idx}
-                className="group flex items-center gap-4 p-3 sm:p-4 rounded-2xl border border-slate-100 hover:border-[#64b5f6]/30 hover:shadow-lg transition-all duration-300"
+                className="group flex items-center gap-4 p-3 sm:p-4 rounded-2xl border border-slate-100 hover:border-[#64b5f6]/30 dark:border-white/5 dark:hover:border-[#64b5f6]/30 dark:hover:shadow-lg transition-all duration-300"
               >
                 <div
                   className={`${card.color} p-2.5  rounded-xl  text-white shadow-lg shrink-0 group-hover:scale-105 transition-transform`}
@@ -327,14 +327,14 @@ const MentisComparison = () => {
 
           {/* Action Buttons */}
           <div className="flex flex-col items-center gap-8">
-            <div className="flex flex-col sm:flex-row gap-4 w-full justify-center max-w-2xl px-2">
+            {/* <div className="flex flex-col sm:flex-row gap-4 w-full justify-center max-w-2xl px-2">
               <button className="w-full sm:w-auto bg-[#64b5f6] hover:bg-[#2a4c67] text-white px-8 md:px-10 py-2  rounded-xl font-bold text-base md:text-lg shadow-lg shadow-[#64b5f6]/20 transition-all active:scale-95">
                 Start 2-Day Free Trial
               </button>
               <button className="w-full sm:w-auto bg-white border-2 border-[#2a4c67] text-[#2a4c67] hover:bg-[#2a4c67] hover:text-white px-8 md:px-10 py-2  rounded-xl font-bold text-base md:text-lg transition-all active:scale-95">
                 See how it works
               </button>
-            </div>
+            </div> */}
 
             <div className="flex flex-wrap justify-center gap-x-6 gap-y-3">
               {[

@@ -58,10 +58,10 @@ const SideBar = ({ sidebar, open, setOpen, isCollapsed, isMobileOpen, setIsMobil
         <div
           className={`pt-8 transition-all duration-500 flex items-center justify-between ${isCollapsed ? "justify-center px-0" : "px-4"}`}
         >
-          <Link
+          {/* <Link
             to={"/"}
             className="flex items-center justify-center overflow-hidden"
-          >
+          > */}
             <img
               src={logo}
               alt="Logo"
@@ -69,7 +69,7 @@ const SideBar = ({ sidebar, open, setOpen, isCollapsed, isMobileOpen, setIsMobil
                 isCollapsed ? "hidden" : "h-12 md:h-16"
               }`}
             />
-          </Link>
+          {/* </Link> */}
           <div>
               {/* Mobile Toggle */}
         <span

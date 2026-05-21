@@ -4,7 +4,7 @@ import { MdDashboard } from "react-icons/md";
 import { FiSettings } from "react-icons/fi";
 import { Link, useNavigate } from "react-router-dom";
 import Swal from "sweetalert2";
-import profile from "@/assets/images/avatar.png";
+import profile from "@/assets/images/avatar.SVG";
 import { useApiQuery } from "@/hooks/apiQuery";
 import { useApiMutation } from "@/hooks/apiMutation";
 import { useAuth } from "@/hooks/useAuth";
@@ -86,11 +86,19 @@ const UserDropdown = () => {
         onClick={toggleDropdown}
         className="flex items-center gap-2 focus:outline-none"
       >
-        <img
-          className=" size-8 sm:size-9 md:size-10  bg-white rounded-full object-cover border border-gray-200"
-          src={userDetails?.userData?.avatar || profile}
-          alt="User Profile"
-        />
+    <img
+  className="size-8 sm:size-9 md:size-10 p-0.5 bg-white rounded-full object-cover border border-gray-200"
+  src={
+    typeof userDetails?.userdata?.avatar === "string" &&
+    userDetails?.userdata?.avatar
+      ? userDetails?.userdata?.avatar
+      : profile
+  }
+  alt="User Profile"
+  onError={(e) => {
+    e.currentTarget.src = profile;
+  }}
+/>
       </button>
 
       {isOpen && (
@@ -104,24 +112,20 @@ const UserDropdown = () => {
             </p>
           </div>
           <div className="py-1">
-            {userDetails?.userdata?.payment_status && (
-              <>
-              <Link
-                to={`/dashboard`}
-                onClick={() => setIsOpen(false)}
-                className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
-              >
-                <MdDashboard className="mr-2 text-[#5176ea]" /> Dashboard
-              </Link>
             <Link
-            to={`/dashboard/settings`}
-            onClick={() => setIsOpen(false)}
-            className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
+              to={userDetails?.userdata?.payment_status ? "/dashboard" : "/#pricing"}
+              onClick={() => setIsOpen(false)}
+              className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
+            >
+              <MdDashboard className="mr-2 text-[#5176ea]" /> Dashboard
+            </Link>
+            <Link
+              to={userDetails?.userdata?.payment_status ? "/dashboard/settings" : "/#pricing"}
+              onClick={() => setIsOpen(false)}
+              className="flex w-full items-center px-4 py-2 text-sm hover:bg-gray-100 transition-colors"
             >
               <FiSettings className="mr-2 text-[#5176ea]" /> Setting
             </Link>
-                </>
-            )}
 
             <button
               onClick={handleLogout}

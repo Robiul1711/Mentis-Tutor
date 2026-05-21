@@ -1,8 +1,4 @@
 import React from "react";
-import { GiHamburgerMenu } from "react-icons/gi";
-import { useLocation } from "react-router-dom";
-import profile from "@/assets/images/avatar.png";
-import { IoNotificationsOutline } from "react-icons/io5";
 import UserDropdown from "@/shared/navbar/UserDropdown";
 import ThemeToggleButton from "@/components/common/ThemeToggleButton";
 import { useAuth } from "@/hooks/useAuth";
