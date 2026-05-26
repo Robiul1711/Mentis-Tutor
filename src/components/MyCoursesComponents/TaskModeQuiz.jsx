@@ -1,9 +1,11 @@
-import React, { useState } from "react";
+import React, { useState, useEffect } from "react";
 import {
   BsCheckCircleFill,
   BsQuestionCircle,
   BsDownload,
   BsPlayFill,
+  BsPauseFill,
+  BsArrowRepeat,
   BsLockFill,
   BsInfoCircle,
 } from "react-icons/bs";
@@ -16,10 +18,45 @@ const TaskModeQuiz = ({ quizData }) => {
   const [selectedMarks, setSelectedMarks] = useState({}); // { questionIdx: [markType, ...] }
   const [submissionResult, setSubmissionResult] = useState(null);
   const [revealedQuestions, setRevealedQuestions] = useState({});
+  const [time, setTime] = useState(0);
+  const [isActive, setIsActive] = useState(false);
 
   const questions = quizData?.questions || [];
   const currentQ = questions[currentQuestionIdx];
   const isCurrentRevealed = revealedQuestions[currentQuestionIdx];
+
+  // Timer Logic
+  useEffect(() => {
+    let interval = null;
+    if (isActive) {
+      interval = setInterval(() => {
+        setTime((prevTime) => prevTime + 1);
+      }, 1000);
+    } else {
+      clearInterval(interval);
+    }
+    return () => clearInterval(interval);
+  }, [isActive]);
+
+  // Stop timer on submission
+  useEffect(() => {
+    if (submissionResult) {
+      setIsActive(false);
+    }
+  }, [submissionResult]);
+
+  const formatTime = (seconds) => {
+    const mins = Math.floor(seconds / 60);
+    const secs = seconds % 60;
+    return `${mins.toString().padStart(2, "0")}:${secs.toString().padStart(2, "0")}`;
+  };
+
+  const toggleTimer = () => setIsActive(!isActive);
+
+  const resetTimer = () => {
+    setTime(0);
+    setIsActive(false);
+  };
 
   const handleReveal = () => {
     setRevealedQuestions({
@@ -88,27 +125,57 @@ const TaskModeQuiz = ({ quizData }) => {
   return (
     <div className=" sm:dark:bg-[#0f172a] min-h-[600px] rounded-xl overflow-hidden sm:border border-[#f1f5f9] dark:border-slate-800 shadow-xl shadow-slate-200/50 dark:shadow-none animate-in fade-in duration-500">
       {/* Tab Navigation */}
-      <div className="px-2 pt-6 flex gap-3 overflow-x-auto scrollbar-hide pb-2 border-b border-slate-50 dark:border-slate-800/50">
-        {tabs.map((tab) => {
-          const isDisabled = !isCurrentRevealed && tab.id !== "question";
-          return (
+      <div className="flex justify-between items-center">
+        <div className="px-2 pt-6 flex gap-3 overflow-x-auto scrollbar-hide pb-2 border-b border-slate-50 dark:border-slate-800/50">
+          {tabs.map((tab) => {
+            const isDisabled = !isCurrentRevealed && tab.id !== "question";
+            return (
+              <button
+                key={tab.id}
+                disabled={isDisabled}
+                onClick={() => setActiveTab(tab.id)}
+                className={`px-3 md:px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 whitespace-nowrap flex items-center gap-2 ${
+                  activeTab === tab.id
+                    ? "bg-[#1e293b] text-white shadow-lg shadow-slate-200 dark:shadow-none dark:bg-blue-600"
+                    : isDisabled
+                      ? "bg-slate-50 text-slate-300 cursor-not-allowed dark:bg-slate-800/20 dark:text-slate-600"
+                      : "bg-slate-50 text-slate-500 hover:bg-slate-100 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:bg-slate-800"
+                }`}
+              >
+                {tab.label}
+                {isDisabled && <BsLockFill className="text-xs" />}
+              </button>
+            );
+          })}
+        </div>
+        <div className="px-4 pt-4 md:pt-6">
+          <div className="flex items-center gap-2 ">
             <button
-              key={tab.id}
-              disabled={isDisabled}
-              onClick={() => setActiveTab(tab.id)}
-              className={`px-3 md:px-6 py-2.5 rounded-lg text-sm font-bold transition-all duration-300 whitespace-nowrap flex items-center gap-2 ${
-                activeTab === tab.id
-                  ? "bg-[#1e293b] text-white shadow-lg shadow-slate-200 dark:shadow-none dark:bg-blue-600"
-                  : isDisabled
-                    ? "bg-slate-50 text-slate-300 cursor-not-allowed dark:bg-slate-800/20 dark:text-slate-600"
-                    : "bg-slate-50 text-slate-500 hover:bg-slate-100 dark:bg-slate-800/50 dark:text-slate-400 dark:hover:bg-slate-800"
-              }`}
+              onClick={toggleTimer}
+              title={isActive ? "Pause Timer" : "Start Timer"}
+              className="flex items-center gap-2 px-3 py-1.5 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-800 hover:bg-slate-100 dark:hover:bg-slate-700 transition-colors group"
             >
-              {tab.label}
-              {isDisabled && <BsLockFill className="text-xs" />}
+              {isActive ? (
+                <BsPauseFill className="text-orange-500" />
+              ) : (
+                <BsPlayFill className="text-blue-500" />
+              )}
+              <span className="text-[10px] font-black text-slate-400 uppercase tracking-widest hidden md:inline">
+                {isActive ? "Running" : "Start"}
+              </span>
+              <span className="text-sm font-black text-slate-700 dark:text-slate-200 tabular-nums">
+                {formatTime(time)}
+              </span>
             </button>
-          );
-        })}
+            <button
+              onClick={resetTimer}
+              title="Reset Timer"
+              className="p-1.5 bg-slate-50 dark:bg-slate-800/50 rounded-lg border border-slate-100 dark:border-slate-800 hover:bg-red-50 dark:hover:bg-red-900/20 text-slate-400 hover:text-red-500 transition-colors"
+            >
+              <BsArrowRepeat size={18} />
+            </button>
+          </div>
+        </div>
       </div>
 
       <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:p-4">
@@ -253,10 +320,15 @@ const TaskModeQuiz = ({ quizData }) => {
                       ></iframe>
                     </div>
                   ) : (
-                    <div className="flex flex-col items-center justify-center p-20 bg-slate-50 dark:bg-slate-800/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-800">
-                      <BsPlayFill className="text-4xl text-slate-300 mb-4" />
-                      <p className="text-slate-500 font-medium italic">
-                        No video tutorial available.
+                    <div className="flex flex-col items-center justify-center p-12 md:p-20 bg-slate-50 dark:bg-slate-800/30 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 text-center group transition-all duration-300 hover:border-blue-500/30">
+                      <div className="bg-amber-50 dark:bg-amber-950/30 p-3.5 rounded-full mb-3.5 text-amber-500 dark:text-amber-400 group-hover:scale-110 transition-transform duration-300">
+                        <BsLockFill className="text-2xl" />
+                      </div>
+                      <h3 className="text-slate-900 dark:text-white font-extrabold text-lg mb-1.5 animate-pulse">
+                        Coming Soon
+                      </h3>
+                      <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm max-w-md font-medium leading-relaxed">
+                        Video walkthroughs for this paper will be released weekly.
                       </p>
                     </div>
                   )}
@@ -282,6 +354,8 @@ const TaskModeQuiz = ({ quizData }) => {
                       setCurrentQuestionIdx(idx);
                       setActiveTab("question");
                       setSubmissionResult(null);
+                      setTime(0);
+                      setIsActive(false);
                     }}
                     className={`w-8 h-8 flex-shrink-0 flex items-center justify-center text-xs font-black rounded-md transition-all duration-300 ${
                       currentQuestionIdx === idx
@@ -436,6 +510,8 @@ const TaskModeQuiz = ({ quizData }) => {
                         setCurrentQuestionIdx((prev) => prev - 1);
                         setActiveTab("question");
                         setSubmissionResult(null);
+                        setTime(0);
+                        setIsActive(false);
                       }}
                       className="flex-1 py-3 bg-slate-100 dark:bg-slate-700 text-slate-600 dark:text-slate-200 font-bold rounded-lg text-xs hover:bg-slate-200 dark:hover:bg-slate-600 transition-all disabled:opacity-30 uppercase tracking-widest"
                     >
@@ -449,12 +525,15 @@ const TaskModeQuiz = ({ quizData }) => {
                             setCurrentQuestionIdx((prev) => prev + 1);
                             setActiveTab("question");
                             setSubmissionResult(null);
+                            setTime(0);
+                            setIsActive(false);
                           }
                         } else {
                           submitQuiz({
                             marks: {
                               [currentQ.id]: marksForCurrent.length,
                             },
+                            total_time_formated: formatTime(time),
                           });
                         }
                       }}

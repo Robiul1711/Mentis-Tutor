@@ -18,7 +18,7 @@ import { useApiMutation } from "@/hooks/apiMutation";
 // DYNAMIC CONSTANTS
 // ============================
 // const YEARS = [ 2023];
-const PAPERS = ["P1", "P2", "P3"];
+const PAPERS = ["Paper 1", "Paper 2", "Paper 3"];
 const EXAM_BOARDS = ["Edexcel", "AQA"];
 
 // ============================
@@ -59,6 +59,7 @@ const PastPapers = ({
 
       {/* YEAR + PAPER BUTTONS */}
       <div className="space-y-3 max-h-[500px] overflow-y-auto pr-2 custom-scrollbar">
+        {console.log(availableYears)}
         {availableYears.map((year) => (
           <div
             key={year}
@@ -120,12 +121,18 @@ const QuestionGrid = ({
       <div className="mb-4">
         <h2 className="text-slate-900 dark:text-white text-lg xl:text-xl font-bold mb-1">
           {selectedYear && selectedPaper
-            ? `${selectedBoard} AS LEVEL ${selectedPaper} ${selectedYear}`
+            ? `${selectedBoard} GCSE Maths Higher ${selectedPaper} ${selectedYear}`
             : "Select a Paper"}
         </h2>
-        <p className="text-slate-500 dark:text-slate-400 text-sm">
+        <p
+          className={`text-slate-500 dark:text-slate-400 text-sm ${
+            isComingSoon
+              ? "!text-amber-500 !dark:text-amber-500 font-semibold !bg-[#FFF9E6] p-2 rounded-full inline-block !border-[#FFF9E6] !dark:border-[#0B1120]"
+              : ""
+          }`}
+        >
           {isComingSoon
-            ? "This paper is not yet available."
+            ? "OLDER YEAR / COMING SOON"
             : "Choose a question to watch the video solution:"}
         </p>
       </div>
@@ -145,16 +152,41 @@ const QuestionGrid = ({
           </p>
         </div>
       ) : isComingSoon ? (
-        <div className="flex flex-col items-center justify-center py-12 text-center">
-          <div className="bg-amber-50 dark:bg-amber-900/20 p-4 rounded-full mb-4">
-            <Lock size={32} className="text-amber-500" />
+        <div className="relative min-h-[250px]">
+          <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-h-[400px] overflow-hidden pr-2 blur-[1px] opacity-70 pointer-events-none select-none">
+            {(questions.length > 0
+              ? questions
+              : Array.from({ length: 12 })
+            ).map((q, i) => (
+              <div
+                key={q?.id || i}
+                className="flex items-center justify-between px-3 py-2 rounded-xl border border-slate-200 dark:border-slate-800 bg-white dark:bg-slate-900"
+              >
+                <span className="font-bold text-sm tracking-wide text-slate-800 dark:text-slate-200">
+                  {q?.title || `Question ${i + 1}`}
+                </span>
+                <div className="p-1.5 rounded-full bg-slate-100 dark:bg-slate-800 text-slate-400">
+                  <Play size={14} />
+                </div>
+              </div>
+            ))}
           </div>
-          <h3 className="text-amber-600 dark:text-amber-400 font-bold text-lg mb-1">
-            Coming Soon
-          </h3>
-          <p className="text-slate-500 dark:text-slate-400 text-sm max-w-[200px]">
-            We are working on adding questions for this paper.
-          </p>
+          <div className="absolute inset-0 flex flex-col items-center justify-center z-10 text-center">
+            <div className="bg-white/80 w-full h-full dark:bg-slate-900/80 p-6 md:p-10  rounded-2xl shadow-xl backdrop-blur-md border border-slate-200/50 dark:border-slate-700/50 flex flex-col items-center">
+              <div className="bg-amber-100 dark:bg-amber-900/50 p-4 rounded-full mb-4">
+                <Lock size={32} className="text-amber-500" />
+              </div>
+              <h3 className="text-slate-900 dark:text-white font-bold text-xl mb-2 text-center ">
+                Weekly Past Paper Walkthroughs Coming Soon
+              </h3>
+        
+              <span className="text-slate-600 dark:text-slate-400 text-sm ">
+        Question Paper and Mark Scheme are available now.
+        <br />Video walkthroughs for older papers will be released weekly.
+              </span>
+              
+            </div>
+          </div>
         </div>
       ) : (
         <div className="grid sm:grid-cols-2 lg:grid-cols-3 xl:grid-cols-4 gap-3 max-h-[400px] overflow-y-auto pr-2 custom-scrollbar">
@@ -166,6 +198,7 @@ const QuestionGrid = ({
                 
               `}
             >
+              {console.log(q)}
               <span className="font-bold text-sm tracking-wide">{q.title}</span>
               <div
                 className={`p-1.5 rounded-full transition-colors ${activeQuestion?.id === q.id ? "bg-Secondary text-white" : "bg-slate-100 dark:bg-slate-800 text-slate-400 group-hover:text-Secondary"}`}
@@ -245,10 +278,10 @@ const PaperDocuments = ({ activePaperData }) => {
 
         <Link
           to={`/dashboard/past-paper-progress-tracker`}
-          className="w-full flex items-center gap-3 py-2 px-3 rounded-xl border border-Secondary/30 bg-Secondary/5 text-Secondary hover:bg-Secondary hover:text-white transition-all duration-300 shadow-sm"
+          className="w-full flex items-center gap-3 py-2 px-3 rounded-xl border border-slate-200 dark:border-slate-800  bg-green-50/20 text-green-500 hover:bg-green-50 hover:text-Secondary transition-all duration-300 shadow-sm"
         >
           <div className="p-2 rounded-lg bg-white/20 dark:bg-slate-800">
-            <GiProgression size={20} />
+            <GiProgression size={20} className="text-green-500" />
           </div>
           <span className="font-bold text-sm">Progress Tracker</span>
         </Link>
@@ -273,8 +306,13 @@ const VideoPlayerSection = ({ question, paperId }) => {
     method: "POST",
     secure: true,
   });
+  const { mutate: mutate2, isPending: isPending2 } = useApiMutation({
+    url: `/past-paper-video-progress/update`,
+    method: "POST",
+    secure: true,
+  });
 
-  if (!question || !question.vimeo_url) return null;
+  if (!question) return null;
 
   const parts = question.parts || [];
 
@@ -303,6 +341,26 @@ const VideoPlayerSection = ({ question, paperId }) => {
     });
   };
 
+  const handleDownload = async (url, filename) => {
+    try {
+      const response = await fetch(url);
+      const blob = await response.blob();
+
+      const blobUrl = window.URL.createObjectURL(blob);
+
+      const link = document.createElement("a");
+      link.href = blobUrl;
+      link.download = filename;
+
+      document.body.appendChild(link);
+      link.click();
+
+      document.body.removeChild(link);
+      window.URL.revokeObjectURL(blobUrl);
+    } catch (error) {
+      console.error("Download failed:", error);
+    }
+  };
   return (
     <div className=" bg-white dark:bg-[#0B1120] border border-slate-200 dark:border-slate-800 rounded-3xl overflow-hidden animate-in fade-in slide-in-from-bottom-5 duration-500 ">
       {/* Header Section */}
@@ -311,28 +369,42 @@ const VideoPlayerSection = ({ question, paperId }) => {
           <h2 className="text-2xl font-bold text-slate-800 dark:text-white flex items-center gap-2">
             {question.title}
           </h2>
-          <p className="text-sm text-slate-500 dark:text-slate-400">
+          {/* <p className="text-sm text-slate-500 dark:text-slate-400">
             Difficulty:{" "}
             <span className="text-Secondary font-medium">Apprentice</span>
-          </p>
+          </p> */}
         </div>
       </div>
 
       {/* Video Section */}
       <div className="px-4">
-        <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-inner relative group border border-slate-200 dark:border-slate-700">
-          <iframe
-            src={`${question.vimeo_url.replace(
-              "vimeo.com",
-              "player.vimeo.com/video",
-            )}?title=0&byline=0&portrait=0`}
-            className="w-full h-full"
-            frameBorder="0"
-            allow="autoplay; fullscreen; picture-in-picture"
-            allowFullScreen
-            title={question.title}
-          ></iframe>
-        </div>
+        {question.vimeo_url ? (
+          <div className="aspect-video bg-black rounded-xl overflow-hidden shadow-inner relative group border border-slate-200 dark:border-slate-700">
+            <iframe
+              src={`${question.vimeo_url.replace(
+                "vimeo.com",
+                "player.vimeo.com/video",
+              )}?title=0&byline=0&portrait=0`}
+              className="w-full h-full"
+              frameBorder="0"
+              allow="autoplay; fullscreen; picture-in-picture"
+              allowFullScreen
+              title={question.title}
+            ></iframe>
+          </div>
+        ) : (
+          <div className="aspect-video bg-slate-50 dark:bg-slate-900/50 rounded-xl border border-dashed border-slate-200 dark:border-slate-800 flex flex-col items-center justify-center p-6 text-center transition-all duration-300 hover:border-Secondary/30 group">
+            <div className="bg-amber-50 dark:bg-amber-950/30 p-3.5 rounded-full mb-3.5 text-amber-500 dark:text-amber-400 group-hover:scale-110 transition-transform duration-300">
+              <Lock size={28} />
+            </div>
+            <h3 className="text-slate-900 dark:text-white font-extrabold text-lg sm:text-xl mb-1.5">
+              Coming Soon
+            </h3>
+            <p className="text-slate-500 dark:text-slate-400 text-xs sm:text-sm max-w-md font-medium leading-relaxed">
+              Video walkthroughs for this paper will be released weekly.
+            </p>
+          </div>
+        )}
       </div>
 
       {/* Bottom Section - Marks & Buttons */}
@@ -390,29 +462,29 @@ const VideoPlayerSection = ({ question, paperId }) => {
               </p>
             </div>
           </div>
-
-          {/* Action Buttons */}
           <div className="w-full md:w-auto flex flex-wrap gap-3 text-xs sm:text-sm">
-            <a
-              href={question.question_image}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 bg-[#5B89C1] hover:bg-[#4a72a1] text-white font-bold rounded-md md:rounded-lg transition-all shadow-sm"
-            >
-              <Upload size={18} />
-              QUESTION
-              {/* <Check size={16} className="ml-2" /> */}
-            </a>
-
-            <a
-              href={question.mark_scheme_image}
-              target="_blank"
-              rel="noopener noreferrer"
-              className="flex-1 md:flex-none inline-flex items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-md md:rounded-lg hover:bg-slate-50 transition-all shadow-sm"
-            >
-              <BookOpen size={18} />
-              MARK SCHEME
-            </a>
+            {parts[0]?.question_image && (
+              <button
+                onClick={() =>
+                  handleDownload(parts[0].question_image, "question-file")
+                }
+                className="flex-1 md:flex-none inline-flex cursor-pointer items-center justify-center gap-2 px-4 py-2 bg-[#5B89C1] hover:bg-[#4a72a1] text-white font-bold rounded-md md:rounded-lg transition-all shadow-sm"
+              >
+                <Upload size={18} />
+                QUESTION
+              </button>
+            )}
+            {parts[0]?.mark_scheme_image && (
+              <button
+                onClick={() =>
+                  handleDownload(parts[0].mark_scheme_image, "mark-scheme-file")
+                }
+                className="flex-1 md:flex-none inline-flex cursor-pointer items-center justify-center gap-2 px-4 py-2 bg-white dark:bg-slate-800 border border-slate-200 dark:border-slate-700 text-slate-700 dark:text-slate-200 font-bold rounded-md md:rounded-lg hover:bg-slate-50 transition-all shadow-sm"
+              >
+                <BookOpen size={18} />
+                MARK SCHEME
+              </button>
+            )}
           </div>
         </div>
       </div>
@@ -482,8 +554,6 @@ export default function AllPastPapers() {
 
       {/* ========== GRID ========== */}
       <div className="flex flex-col lg:flex-row w-full gap-4 items-start">
- 
-
         {/* centre column: questions + video */}
         <div className="w-full  h-fit flex flex-col gap-4">
           <QuestionGrid
@@ -495,6 +565,7 @@ export default function AllPastPapers() {
             setActiveQuestion={setActiveQuestion}
             isLoading={isLoading}
           />
+
           <div>
             {activeQuestion ? (
               <VideoPlayerSection
@@ -522,7 +593,7 @@ export default function AllPastPapers() {
 
         {/* right sidebar: documents */}
         <div className="w-full lg:w-2/6 sticky top-8 gap-4 flex flex-col">
-              <PastPapers
+          <PastPapers
             selectedBoard={selectedBoard}
             setSelectedBoard={setSelectedBoard}
             selectedYear={selectedYear}

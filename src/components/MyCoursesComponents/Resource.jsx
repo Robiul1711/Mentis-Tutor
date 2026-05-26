@@ -7,7 +7,7 @@ const Resource = () => {
   return (
     <div className="space-y-4">
       <Title level="title24">
-        Master Algebra with Confidence Build Strong Foundations for Exams
+        Master Algebra with Confidence Build Strong GCSE Maths for Exams
       </Title>
       <Title level="title18">
         Dorem ipsum dolor sit amet, consectetur adipiscing elit, sed do eiusmod

@@ -29,7 +29,7 @@ const CourseDetail = () => {
             <span>July 11, 2025</span>
           </div>
           <h1 className="text-2xl  font-semibold mt-2">
-            Master Algebra with Confidence Build Strong Foundations for Exams
+            Master Algebra with Confidence Build Strong GCSE Maths for Exams
           </h1>
           <button className="mt-4 px-6 py-2 bg-Secondary text-white rounded-full hover:bg-blue-700 transition-all">
             Overview

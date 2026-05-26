@@ -16,11 +16,11 @@ import { useApiQuery } from "@/hooks/apiQuery";
 
 
 const StatCard = ({ icon: Icon, label, value, subtext, color, grade }) => (
-  <div className="bg-white rounded-2xl p-6 shadow-sm border border-gray-100 flex items-center gap-5">
+  <div className="bg-white dark:bg-[#0f172a] rounded-2xl p-6 shadow-sm border border-gray-100 dark:border-gray-800 flex items-center gap-5">
     <div className={`p-3 rounded-xl ${color} bg-opacity-10`}>
       {grade ? (
         <div className={`w-12 h-12 rounded-full border-4 flex flex-col items-center justify-center ${color.replace('bg-', 'border-').replace('text-', 'border-')}`}>
-           <span className="text-xl font-bold">{grade}</span>
+           <span className="text-xl font-bold dark:text-white">{grade}</span>
         </div>
       ) : (
         <Icon className={`w-8 h-8 ${color.replace('bg-', 'text-')}`} />
@@ -28,10 +28,10 @@ const StatCard = ({ icon: Icon, label, value, subtext, color, grade }) => (
     </div>
     <div>
       <div className="flex items-center gap-1">
-        <p className="text-gray-500 text-sm font-medium">{label}</p>
+        <p className="text-gray-500 text-sm font-medium dark:text-gray-400">{label}</p>
         <div className="w-4 h-4 rounded-full border border-gray-300 flex items-center justify-center text-[10px] text-gray-400">?</div>
       </div>
-      <p className="text-2xl font-bold text-gray-800">{value}</p>
+      <p className="text-2xl font-bold text-gray-800 dark:text-white">{value}</p>
       {subtext && (
         <div className="flex items-center gap-1 mt-1">
           <span className="text-sm font-bold text-gray-800">{grade || value}</span>
@@ -87,8 +87,8 @@ const PastPaperProgressTracker = () => {
       <div className="">
         <div className="flex justify-between items-start mb-8">
           <div>
-            <h1 className="text-3xl font-bold text-[#2d3a5a] mb-2">Past Paper Progress Tracker</h1>
-            <p className="text-gray-500">Track your paper attempts, scores, and reflections over time.</p>
+            <h1 className="text-3xl font-bold text-[#2d3a5a] mb-2 dark:text-white">Past Paper Progress Tracker</h1>
+            <p className="text-gray-500 dark:text-gray-400">Track your paper attempts, scores, and reflections over time.</p>
           </div>
           <Link to="/dashboard/past-papers" className="bg-Secondary text-white px-6 py-2.5 rounded-xl font-semibold shadow-md hover:bg-Primary transition">
             Go to Past Papers
@@ -104,8 +104,8 @@ const PastPaperProgressTracker = () => {
         </div>
 
         {/* Chart Section */}
-        <div className="bg-white rounded-3xl p-8 border border-gray-100 shadow-sm mb-10">
-          <h2 className="text-xl font-bold text-[#2d3a5a] mb-8">Progress Over Time</h2>
+        <div className="bg-white dark:bg-[#0f172a] rounded-3xl p-8 border border-gray-100 dark:border-gray-800 shadow-sm mb-10">
+          <h2 className="text-xl font-bold text-[#2d3a5a] dark:text-white mb-8">Progress Over Time</h2>
           <div className="h-[350px] w-full">
             <ResponsiveContainer width="100%" height="100%">
               <AreaChart data={chartData}>
@@ -140,19 +140,19 @@ const PastPaperProgressTracker = () => {
         </div>
 
         {/* Table Filters */}
-        <div className="bg-white rounded-3xl p-4 border border-gray-100 shadow-sm mb-6 flex flex-wrap items-center gap-4">
+        <div className="bg-white dark:bg-[#0f172a] rounded-3xl p-4 border border-gray-100 dark:border-gray-800 shadow-sm mb-6 flex flex-wrap items-center gap-4">
           <div className="relative flex-1 min-w-[300px]">
-            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400" size={18} />
+            <Search className="absolute left-4 top-1/2 -translate-y-1/2 text-gray-400 dark:text-gray-200 pointer-events-none " size={18} />
             <input 
               type="text" 
               placeholder="Search papers..." 
               value={search}
               onChange={(e) => setSearch(e.target.value)}
-              className="w-full bg-gray-50 border-none rounded-2xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-blue-100 transition" 
+              className="w-full bg-gray-50 dark:text-white dark:bg-gray-800 border-none rounded-2xl py-3 pl-12 pr-4 focus:ring-2 focus:ring-blue-100 transition" 
             />
           </div>
           
-          <div className="flex items-center gap-4 text-sm font-medium text-gray-600 px-2">
+          <div className="flex items-center gap-4 text-sm font-medium text-gray-600 dark:text-gray-400 px-2">
             <label className="flex items-center gap-2">
               <input 
                 type="checkbox" 
@@ -161,7 +161,7 @@ const PastPaperProgressTracker = () => {
                 className="rounded text-blue-600" 
               /> Edexcel
             </label>
-            <label className="flex items-center gap-2">
+            <label className="flex items-center gap-2 ">
               <input 
                 type="checkbox" 
                 checked={selectedBoards.includes("AQA")} 
@@ -174,7 +174,7 @@ const PastPaperProgressTracker = () => {
               <select 
                 value={year} 
                 onChange={(e) => setYear(e.target.value)}
-                className="appearance-none bg-gray-50 border border-gray-100 rounded-lg py-1.5 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-100 text-gray-600 font-medium cursor-pointer"
+                className="appearance-none bg-gray-50 border border-gray-100 dark:text-white dark:bg-gray-800 rounded-lg py-1.5 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-100 text-gray-600 font-medium cursor-pointer"
               >
                 <option value="">Year</option>
                 <option value="2024">2024</option>
@@ -190,7 +190,7 @@ const PastPaperProgressTracker = () => {
               <select 
                 value={paper} 
                 onChange={(e) => setPaper(e.target.value)}
-                className="appearance-none bg-gray-50 border border-gray-100 rounded-lg py-1.5 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-100 text-gray-600 font-medium cursor-pointer"
+                className="appearance-none bg-gray-50 border dark:text-white dark:bg-gray-800   border-gray-100 rounded-lg py-1.5 pl-3 pr-8 focus:outline-none focus:ring-2 focus:ring-blue-100 text-gray-600 font-medium cursor-pointer"
               >
                 <option value="">Paper</option>
                 <option value="P1">P1</option>
@@ -199,10 +199,10 @@ const PastPaperProgressTracker = () => {
               </select>
               <ChevronDown size={14} className="absolute right-2.5 top-1/2 -translate-y-1/2 text-gray-400 pointer-events-none" />
             </div>
-            <Filter size={18} className="text-gray-400" />
+            <Filter size={18} className="text-gray-400 dark:text-white" />
             <button 
               onClick={() => { setYear(""); setPaper(""); setSearch(""); setSelectedBoards(["Edexcel", "AQA"]); }}
-              className="flex items-center gap-1 text-gray-400 ml-4 hover:text-gray-600 transition"
+              className="flex items-center gap-1 text-gray-400 dark:text-white ml-4 hover:text-gray-600 transition"
             >
               <MapPin size={16}/> Clear filters
             </button>
@@ -210,36 +210,36 @@ const PastPaperProgressTracker = () => {
         </div>
 
         {/* Table Section */}
-        <div className="bg-white rounded-3xl border border-gray-100 shadow-sm overflow-hidden">
+        <div className="bg-white dark:bg-gray-800 rounded-3xl border border-gray-100 dark:border-gray-800 shadow-sm overflow-hidden">
           <table className="w-full text-left">
             <thead>
-              <tr className="bg-gray-50/50 text-gray-400 text-sm border-b border-gray-100">
-                <th className="px-8 py-4 font-medium italic text-gray-400">Date</th>
-                <th className="px-8 py-4 font-medium italic text-gray-400">Board</th>
-                <th className="px-8 py-4 font-medium italic text-gray-400">Paper</th>
-                <th className="px-8 py-4 font-medium italic text-gray-400">Score</th>
-                <th className="px-8 py-4 font-medium italic text-gray-400">Grade</th>
+              <tr className="bg-gray-50/50 text-gray-400 text-sm border-b border-gray-100 dark:border-gray-800">
+                <th className="px-8 py-4 font-medium italic text-gray-400 dark:text-white">Date</th>
+                <th className="px-8 py-4 font-medium italic text-gray-400 dark:text-white">Board</th>
+                <th className="px-8 py-4 font-medium italic text-gray-400 dark:text-white">Paper</th>
+                <th className="px-8 py-4 font-medium italic text-gray-400 dark:text-white">Score</th>
+                <th className="px-8 py-4 font-medium italic text-gray-400 dark:text-white">Grade</th>
                 {/* <th className="px-8 py-4 font-medium italic text-gray-400">Notes</th> */}
               </tr>
             </thead>
             <tbody className="divide-y divide-gray-50">
               {attemptsData.map((item, i) => (
                 <tr key={i} className="hover:bg-blue-50/30 transition group">
-                  <td className="px-8 py-5 text-gray-600 font-medium">{item.date}</td>
+                  <td className="px-8 py-5 text-gray-600 dark:text-white font-medium">{item.date}</td>
                   <td className="px-8 py-5">
-                    <div className="flex items-center gap-2 text-gray-800 font-semibold">
+                    <div className="flex items-center gap-2 text-gray-800 dark:text-white font-semibold">
                       <div className="w-6 h-6 bg-gray-800 rounded flex items-center justify-center text-[10px] text-white">
                         {item.exam_board ? item.exam_board.charAt(0) : 'E'}
                       </div>
                       {item.exam_board}
                     </div>
                   </td>
-                  <td className="px-8 py-5 text-blue-600 font-medium">
+                  <td className="px-8 py-5 text-blue-600 dark:text-blue-400 font-medium">
                     <div className="flex items-center gap-2">
                        {item.paper}
                     </div>
                   </td>
-                  <td className="px-8 py-5 font-bold text-gray-800 text-lg">{item.score_percentage}%</td>
+                  <td className="px-8 py-5 font-bold text-gray-800 dark:text-white text-lg">{item.score_percentage}%</td>
                   <td className="px-8 py-5">
                     <span className={`px-4 py-1.5 rounded-xl text-xs font-bold border ${getGradeColor(item.grade_label)}`}>
                       {item.grade_label}

@@ -100,7 +100,10 @@ const AdminLayout = () => {
         <div className="flex-1 bg-white dark:bg-[#0B1120] flex flex-col overflow-auto custom-scrollbar">
           <div className="flex flex-col">
             <CommonNavbar
-
+              isMobileOpen={isMobileOpen}
+              setIsMobileOpen={setIsMobileOpen}
+              isCollapsed={isCollapsed}
+              setIsCollapsed={setIsCollapsed}
             />
             <div className="p-4 sm:p-6">
               <Outlet />

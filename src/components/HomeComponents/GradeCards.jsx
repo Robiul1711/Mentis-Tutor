@@ -10,7 +10,7 @@ const gradeData = [
     icon: Grade1Icon,
     gradeBg: "bg-[#ebea32]",
     grade: "Grade 2–4",
-    title: "Build Strong Foundations",
+    title: "Build Strong Confidence",
     desc: "Regain your confidence and strengthen your basics with guided video lessons.",
     // Fixed: Only apply offset on medium screens and up
     desktopOffset: "md:translate-y-20", 
