@@ -63,7 +63,7 @@ const PastPapers = ({
         {availableYears.map((year) => (
           <div
             key={year}
-            className="group flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/50 rounded-xl py-2  px-3 transition-all duration-300 hover:border-Secondary/30"
+            className="group gap-2 flex flex-col sm:flex-row sm:items-center justify-between bg-slate-50 dark:bg-slate-900/50 border border-slate-100 dark:border-slate-800/50 rounded-xl py-2  px-3 transition-all duration-300 hover:border-Secondary/30"
           >
             <span className="text-slate-700 dark:text-slate-300 font-bold mb-3 sm:mb-0">
               {year}
