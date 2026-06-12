@@ -10,7 +10,98 @@ import {
   BsInfoCircle,
 } from "react-icons/bs";
 import { useApiMutation } from "@/hooks/apiMutation";
-import { Image } from "antd";
+import { InlineMath, BlockMath } from "react-katex";
+import katex from "katex";
+import "katex/dist/katex.min.css";
+
+/**
+ * Renders plain text that may contain LaTeX math delimiters:
+ *   \[...\]  → BlockMath (display)
+ *   \(...\)  → InlineMath
+ * Also converts \r\n / \n to <br /> for multi-line questions.
+ */
+const MathText = ({ text }) => {
+  if (!text) return null;
+
+  // Split on block math \[...\] first
+  const blockParts = String(text).split(/(\\\[[\s\S]+?\\\])/);
+
+  return (
+    <span>
+      {blockParts.map((part, bi) => {
+        if (part.startsWith("\\[") && part.endsWith("\\]")) {
+          const latex = part.slice(2, -2);
+          return (
+            <span key={bi} className="block my-3">
+              <BlockMath math={latex} />
+            </span>
+          );
+        }
+
+        // Split on inline math \(...\)
+        const inlineParts = part.split(/(\\\([\s\S]+?\\\))/);
+        return inlineParts.map((seg, si) => {
+          if (seg.startsWith("\\(") && seg.endsWith("\\)")) {
+            const latex = seg.slice(2, -2);
+            return <InlineMath key={`${bi}-${si}`} math={latex} />;
+          }
+          // Render plain text — convert newlines to <br />
+          const lines = seg.split(/\r?\n/);
+          return lines.map((line, li) => (
+            <React.Fragment key={`${bi}-${si}-${li}`}>
+              {line}
+              {li < lines.length - 1 && <br />}
+            </React.Fragment>
+          ));
+        });
+      })}
+    </span>
+  );
+};
+
+/**
+ * Renders HTML content (with <p>, <br> etc.) or plain text that may contain
+ * LaTeX math delimiters \(...\) and \[...\].
+ * If the input text has no HTML tags, newlines (\r\n or \n) are converted to <br />.
+ * Uses katex.renderToString to pre-render math into HTML, then
+ * sets the full result via dangerouslySetInnerHTML.
+ */
+const HtmlMathRenderer = ({ html, className }) => {
+  if (!html) return null;
+
+  let content = String(html);
+  
+  // If the content does not contain HTML tags, convert newlines to <br />
+  const hasHtmlTags = /<[a-z][\s\S]*>/i.test(content);
+  if (!hasHtmlTags) {
+    content = content.replace(/\r?\n/g, "<br />");
+  }
+
+  let processed = content
+    // Block math \[...\]
+    .replace(/\\\[([\s\S]+?)\\\]/g, (_, latex) => {
+      try {
+        return katex.renderToString(latex, { throwOnError: false, displayMode: true });
+      } catch {
+        return latex;
+      }
+    })
+    // Inline math \(...\)
+    .replace(/\\\(([\s\S]+?)\\\)/g, (_, latex) => {
+      try {
+        return katex.renderToString(latex, { throwOnError: false, displayMode: false });
+      } catch {
+        return latex;
+      }
+    });
+
+  return (
+    <div
+      className={className}
+      dangerouslySetInnerHTML={{ __html: processed }}
+    />
+  );
+};
 
 const TaskModeQuiz = ({ quizData }) => {
   const [activeTab, setActiveTab] = useState("question"); // question, markScheme, modelSolution, video
@@ -178,7 +269,7 @@ const TaskModeQuiz = ({ quizData }) => {
         </div>
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 sm:p-4">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-8 p-4 sm:p-6">
         {/* Left Side: Content */}
         <div className="lg:col-span-8">
           <div className="flex flex-col min-h-[500px]">
@@ -208,41 +299,23 @@ const TaskModeQuiz = ({ quizData }) => {
             </div>
 
             {/* Dynamic Content Area */}
-            <div className="flex-grow space-y-6">
+            <div className="flex-grow space-y-6 overflow-x-auto">
               {activeTab === "question" && (
                 <div className="space-y-6">
-                  <h3 className="text-xl font-bold text-slate-800 dark:text-white leading-tight">
-                    {currentQ.question}
-                  </h3>
-                  {currentQ.question_image && (
-                    <div className="group relative">
-                      <Image
-                        width="100%"
-                        src={currentQ.question_image}
-                        alt="Question"
-                        className="max-w-full h-auto rounded-lg"
-                      />
-                    </div>
-                  )}
+                  <HtmlMathRenderer
+                    html={currentQ.question}
+                    className=" md:text-xl  text-slate-800 dark:text-white"
+                  />
                 </div>
               )}
 
               {activeTab === "markScheme" && (
                 <div className="space-y-6 transition-all duration-300">
                   <div className="space-y-6">
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">
-                      {currentQ.scheme_title || "Mark Scheme Overview"}
-                    </h3>
-                    {currentQ.scheme_image && (
-                      <div className="">
-                        <Image
-                          width="100%"
-                          src={currentQ.scheme_image}
-                          alt="Mark Scheme"
-                          className="max-w-full h-80 rounded-lg"
-                        />
-                      </div>
-                    )}
+                    <HtmlMathRenderer
+                      html={currentQ.scheme_title || "Mark Scheme Overview"}
+                      className="md:text-xl font-bold text-slate-800 dark:text-white"
+                    />
                   </div>
 
                   {currentQ.marking_breakdown?.length > 0 && (
@@ -274,7 +347,7 @@ const TaskModeQuiz = ({ quizData }) => {
                                   </span>
                                 </td>
                                 <td className="px-4 md:px-6 py-3 md:py-4 text-xs md:text-sm font-medium text-slate-600 dark:text-slate-300 leading-relaxed">
-                                  {mb.description}
+                                  <HtmlMathRenderer html={mb.description} />
                                 </td>
                                 <td className="px-4 md:px-6 py-3 md:py-4 text-right font-black text-slate-800 dark:text-slate-100 text-xs md:text-sm">
                                   {mb.value}
@@ -292,15 +365,14 @@ const TaskModeQuiz = ({ quizData }) => {
               {activeTab === "modelSolution" && (
                 <div className="space-y-4 transition-all duration-300">
                   {currentQ.solution_title && (
-                    <h3 className="text-xl font-bold text-slate-800 dark:text-white">
-                      {currentQ.solution_title}
-                    </h3>
+                    <HtmlMathRenderer
+                      html={currentQ.solution_title}
+                      className="md:text-xl text-slate-800 dark:text-white"
+                    />
                   )}
-                  <div
+                  <HtmlMathRenderer
+                    html={currentQ.soluation_explanation}
                     className="prose prose-slate dark:prose-invert max-w-full text-slate-600 dark:text-slate-300 bg-green-50/30 dark:bg-green-900/10 p-4 rounded-xl border border-green-100/50 dark:border-green-900/20"
-                    dangerouslySetInnerHTML={{
-                      __html: currentQ.soluation_explanation,
-                    }}
                   />
                 </div>
               )}
@@ -337,14 +409,7 @@ const TaskModeQuiz = ({ quizData }) => {
             </div>
 
             {/* Footer Actions */}
-            <div className="mt-4 pt-4  border-t border-slate-100 dark:border-slate-800/50 flex flex-col sm:flex-row items-center justify-between gap-6">
-              <button
-                onClick={() => handleDownload(currentQ.question_image)}
-                disabled={!currentQ.question_image}
-                className="w-full sm:w-auto flex items-center justify-center gap-2.5 text-xs font-black text-slate-500 dark:text-slate-400 bg-slate-50 dark:bg-slate-800 px-6 py-3 rounded-lg  disabled:opacity-30 uppercase tracking-widest"
-              >
-                <BsDownload /> Download Image
-              </button>
+            <div className="mt-4 pt-4  border-t border-slate-100 dark:border-slate-800/50 flex flex-col sm:flex-row items-center justify-end gap-6">
 
               <div className="flex items-center gap-1.5 bg-slate-50 dark:bg-slate-800 p-1 rounded-lg">
                 {questions.map((_, idx) => (
@@ -373,7 +438,7 @@ const TaskModeQuiz = ({ quizData }) => {
 
         {/* Right Side: Sidebar */}
         <div className="lg:col-span-4 space-y-4">
-          <div className="bg-slate-50 dark:bg-slate-900/80 rounded-xl md:p-4 md:border border-slate-100 dark:border-slate-800 shadow-sm sticky top-6">
+          <div className="bg-slate-50 dark:bg-slate-900/80 rounded-xl p-3 md:p-4 md:border border-slate-100 dark:border-slate-800 shadow-sm sticky top-6">
             <h3 className="text-xs font-black text-slate-400 uppercase tracking-widest mb-4">
               Marking System
             </h3>

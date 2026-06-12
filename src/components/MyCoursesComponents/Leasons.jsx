@@ -11,7 +11,7 @@ import ConfidenceMeter from "./ConfidenceMeter";
 import ResourcesTab from "./ResourcesTab";
 import CommentsTab from "./CommentsTab";
 
-const Lessons = ({ currentVideo, activeCategory, lessonsCount }) => {
+const Lessons = ({ currentVideo, activeCategory, lessonsCount, isSidebarOpen, setIsSidebarOpen }) => {
   const { user } = useAuth();
   const [showQuiz, setShowQuiz] = useState(false);
   const [activeTab, setActiveTab] = useState("resources");
@@ -118,10 +118,12 @@ const Lessons = ({ currentVideo, activeCategory, lessonsCount }) => {
   };
 
   return (
-    <div ref={topRef} className="space-y-6">
+    <div ref={topRef} className="space-y-4">
       {/* Main Content Box */}
       <div className="sm:dark:bg-[#1E293B] rounded-xl  sm:p-6 shadow-[0_8px_30px_rgb(0,0,0,0.04)] sm:border border-[#f1f5f9] dark:border-slate-800">
         <LessonHeader
+          isSidebarOpen={isSidebarOpen}
+          setIsSidebarOpen={setIsSidebarOpen}
           showQuiz={showQuiz}
           setShowQuiz={setShowQuiz}
           currentVideo={currentVideo}

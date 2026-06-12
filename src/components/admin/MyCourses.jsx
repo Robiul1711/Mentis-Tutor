@@ -5,10 +5,13 @@ import { BsArrowRight, BsClock, BsThreeDots } from "react-icons/bs";
 import { ClipboardList } from "lucide-react";
 import { useLocation } from "react-router-dom";
 import { getSubjectIcon } from "../DashboardComponents/subjectIcons";
-
+import { motion, AnimatePresence } from "framer-motion";
+import { FaAngleRight } from "react-icons/fa6";
+import { FaAngleLeft } from "react-icons/fa";
 const MyCourses = () => {
   const [activeSectionIndex, setActiveSectionIndex] = useState(0);
   const [currentVideo, setCurrentVideo] = useState(null);
+  const [isSidebarOpen, setIsSidebarOpen] = useState(true);
   const location = useLocation();
 
   const { data, isLoading } = useApiQuery({
@@ -66,6 +69,11 @@ const MyCourses = () => {
     }
   };
 
+  // Determine initial sidebar state depending on window width
+  useEffect(() => {
+    setIsSidebarOpen(window.innerWidth >= 1280);
+  }, []);
+
   if (isLoading) {
     return (
       <div className="flex items-center justify-center min-h-[700px]">
@@ -79,63 +87,72 @@ const MyCourses = () => {
       {/* <h1 className="text-3xl font-extrabold text-[#1e293b] mb-4 md:mb-6 dark:text-slate-100 ">
         Lessons
       </h1> */}
-      {/* Topic Tabs - Responsive Horizontal Scroll */}
-      <div className="flex items-start gap-2 sm:gap-4 mb-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory px-4 pb-2">
-        {sections.map((section, index) => {
-          const isActive = activeSectionIndex === index;
-          const iconConfig = getSubjectIcon(section.title);
-          return (
-            <div
-              key={index}
-              className="flex flex-col gap-1.5 min-w-max snap-start"
-            >
-              <button
-                onClick={() => {
-                  setActiveSectionIndex(index);
-                  const firstVideo = section.videos?.[0];
-                  if (firstVideo) {
-                    handleVideoSelect(firstVideo);
-                  }
-                }}
-                className={`flex items-center gap-2 px-3 py-1.5 sm:px-4 md:py-2 rounded-xl text-[13px] font-bold transition-all duration-300 whitespace-nowrap border ${
-                  isActive
-                    ? "bg-blue-500 border-blue-500 text-white shadow-sm shadow-blue-100"
-                    : "bg-white border-slate-100 text-slate-600 hover:border-slate-200 dark:bg-slate-900 dark:border-slate-800"
-                }`}
+      {/* Topic Tabs & Sidebar Toggle */}
+      <div className="flex flex-col md:flex-row md:items-center justify-between gap-4 mb-4 px-1">
+        {/* Topic Tabs - Responsive Horizontal Scroll */}
+        <div className="flex items-start gap-2 sm:gap-4 overflow-x-auto scrollbar-hide snap-x snap-mandatory pb-2 flex-1 scroll-smooth">
+          {sections.map((section, index) => {
+            const isActive = activeSectionIndex === index;
+            const iconConfig = getSubjectIcon(section.title);
+            return (
+              <div
+                key={index}
+                className="flex flex-col gap-1.5 min-w-max snap-start"
               >
-                <div
-                  className={`flex items-center justify-center w-6 h-6 rounded-md shrink-0 transition-colors duration-300 ${
+                <button
+                  onClick={() => {
+                    setActiveSectionIndex(index);
+                    const firstVideo = section.videos?.[0];
+                    if (firstVideo) {
+                      handleVideoSelect(firstVideo);
+                    }
+                  }}
+                  className={`flex items-center gap-2 px-3 py-1.5 sm:px-4 md:py-2 rounded-xl text-[13px] font-bold transition-all duration-300 whitespace-nowrap border cursor-pointer ${
                     isActive
-                      ? "bg-white/20 text-white"
-                      : `${iconConfig.bg} ${iconConfig.text}`
+                      ? "bg-blue-500 border-blue-500 text-white shadow-sm shadow-blue-100"
+                      : "bg-white border-slate-100 text-slate-600 hover:border-slate-200 dark:bg-slate-900 dark:border-slate-800"
                   }`}
                 >
-                  {iconConfig.icon}
-                </div>
-                {section.title}
-              </button>
+                  <div
+                    className={`flex items-center justify-center w-6 h-6 rounded-md shrink-0 transition-colors duration-300 ${
+                      isActive
+                        ? "bg-white/20 text-white"
+                        : `${iconConfig.bg} ${iconConfig.text}`
+                    }`}
+                  >
+                    {iconConfig.icon}
+                  </div>
+                  {section.title}
+                </button>
 
-              <div className="flex items-center justify-center gap-1.5">
-                <span
-                  className={`text-[10px] font-black uppercase tracking-tighter ${
-                    isActive ? "text-blue-500" : "text-slate-400"
-                  }`}
-                >
-                  {section.videos?.length || 0} Lessons
-                </span>
-                {isActive && (
-                  <div className="w-1 h-1 rounded-full bg-blue-500 animate-pulse"></div>
-                )}
+                <div className="flex items-center justify-center gap-1.5">
+                  <span
+                    className={`text-[10px] font-black uppercase tracking-tighter ${
+                      isActive ? "text-blue-500" : "text-slate-400"
+                    }`}
+                  >
+                    {section.videos?.length || 0} Lessons
+                  </span>
+                  {isActive && (
+                    <div className="w-1 h-1 rounded-full bg-blue-500 animate-pulse"></div>
+                  )}
+                </div>
               </div>
-            </div>
-          );
-        })}
+            );
+          })}
+        </div>
+
+    
       </div>
 
-      <div className="grid grid-cols-1 lg:grid-cols-12 gap-6  ">
+      <div className="grid grid-cols-1 lg:grid-cols-12 gap-4 items-start">
         {/* Main Learning Hub */}
-        <div className="md:col-span-8 xl:col-span-9">
+        <div className={`transition-all duration-500 ease-in-out ${
+          isSidebarOpen ? "lg:col-span-8 xl:col-span-9" : "lg:col-span-12"
+        }`}>
           <Lessons
+            isSidebarOpen={isSidebarOpen}
+            setIsSidebarOpen={setIsSidebarOpen}
             activeCategory={activeSection?.title}
             lessonsCount={activeSection?.videos?.length || 0}
             currentVideo={currentVideoToDisplay}
@@ -143,8 +160,8 @@ const MyCourses = () => {
         </div>
 
         {/* Sidebar: Next Lesson & Progress */}
-        <div className="md:col-span-4 xl:col-span-3">
-          <div className="sticky top-6 space-y-4 ">
+        <div className={`lg:col-span-4 xl:col-span-3 w-full ${isSidebarOpen ? "block" : "block lg:hidden"}`}>
+          <div className="sticky top-6 space-y-4">
             {/* Main Progress Card */}
             <div className="bg-white dark:bg-slate-900 rounded-xl p-4 sm:p-6 shadow-sm border border-slate-100 dark:border-slate-800">
               <h2 className="text-lg font-black text-slate-800 dark:text-slate-100 mb-4 tracking-tight">
@@ -167,7 +184,7 @@ const MyCourses = () => {
 
                   <button
                     onClick={handleContinueLearning}
-                    className="w-full bg-[#4e94ff] hover:bg-blue-600 text-white font-bold py-3.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 group  active:scale-[0.98]"
+                    className="w-full bg-[#4e94ff] hover:bg-blue-600 text-white font-bold py-3.5 px-4 rounded-xl transition-all flex items-center justify-center gap-2 group cursor-pointer active:scale-[0.98]"
                   >
                     <span className="text-sm">Continue Learning</span>
                     <BsArrowRight className="group-hover:translate-x-1 transition-transform" />
@@ -198,10 +215,6 @@ const MyCourses = () => {
                       <p className="text-[10px] font-bold text-slate-500 dark:text-slate-100 uppercase tracking-tight">
                         Progress: {currentIndex + 1}/{videos.length}
                       </p>
-                      <p className="text-[10px] font-black text-blue-500 italic">
-                        {Math.round(((currentIndex + 1) / videos.length) * 100)}
-                        %
-                      </p>
                     </div>
                   </div>
                 </div>
@@ -217,7 +230,7 @@ const MyCourses = () => {
                   {sections[activeSectionIndex + 1] && (
                     <button
                       onClick={handleContinueLearning}
-                      className="w-full bg-white text-blue-600 font-bold py-2.5 text-xs rounded-lg border border-blue-200 hover:bg-blue-600 hover:text-white transition-all shadow-sm"
+                      className="w-full bg-white text-blue-600 font-bold py-2.5 text-xs rounded-lg border border-blue-200 hover:bg-blue-600 hover:text-white transition-all shadow-sm cursor-pointer"
                     >
                       Start Next Topic
                     </button>
